@@ -1,25 +1,21 @@
 #pragma once
 
 #include <random>
-
+#include "Definition.h"
 
 
 class RandomGenerater{
 private:
-	std::default_random_engine dre;
+	std::mt19937 gen;
 	
-
+	
 public:
 
-	RandomGenerater() {}
-
-
+	RandomGenerater(PARAMETERVOID) : gen(std::random_device{}()) {}
 	
-	int RandInt();
-	float RandFloat();
-	double RandDouble();
-
-
+	int RandInt(int min,int max);
+	float RandFloat(float min,float max);
+	double RandDouble(double min,double max);
 
 };
 

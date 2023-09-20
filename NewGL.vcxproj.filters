@@ -24,6 +24,12 @@
     <ClCompile Include="RandomGenerater.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLH.h">
@@ -33,6 +39,18 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="RandomGenerater.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Definition.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene1.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

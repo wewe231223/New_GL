@@ -16,6 +16,13 @@ public:
 	
 	virtual RETURNVOID Draw(PARAMETERVOID);
 
+
+	
+
+	bool IsPointInside(int , int);
+
+
+
 };
 
 
@@ -53,7 +60,10 @@ public:
 
 namespace CallBackFunctions {
 	RETURNVOID Render(PARAMETERVOID);
+
 	RETURNVOID ReShape(int, int);
+
+	RETURNVOID MouseOnClick(int, int, int, int);
 	CallbackFunc CreateCallBackFunction(PARAMETERVOID);
 
 

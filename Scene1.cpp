@@ -1,7 +1,7 @@
 #include "Scene1.h"
 
 Scene1_Rect::Scene1_Rect(PARAMETERVOID){
-	//this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+	this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
 }
 
 RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
@@ -19,6 +19,39 @@ RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 
 
 }
+
+
+bool Scene1_Rect::IsPointInside(int PixelX, int PixelY) {
+
+
+	float glX, glY = 0;
+
+
+
+
+
+
+	glX = static_cast<float>(PixelX) / static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)) * 2.0f - 1.0f;
+	glY = 1.0f - static_cast<float>(PixelY) / static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT)) * 2.0f;
+
+
+	std::cout << this->Center.x - this->Size.Width / 2.f << " , " << this->Center.y - this->Size.Height / 2 << std::endl;
+	std::cout << glX << " , " << glY << std::endl;
+	std::cout << this->Center.x + this->Size.Width / 2.f << " , " << this->Center.y + this->Size.Height / 2 << std::endl << std::endl;
+
+
+	if (glX > this->Center.x - this->Size.Width / 2 && glX < this->Center.x + this->Size.Width / 2) {
+		if (glY > this->Center.y - this->Size.Height / 2 && glY < this->Center.y + this->Size.Height / 2) {
+			return true;
+		}
+	}
+
+
+
+	return false;
+
+}
+
 
 
 
@@ -56,7 +89,7 @@ RETURNVOID Scene1::Render(PARAMETERVOID) {
 
 	for (auto& i : this->Rects) {
 		i.Draw();
-		std::cout << "Draw!" << std::endl;
+		
 	}
 
 
@@ -70,36 +103,59 @@ namespace CallBackFunctions {
 
 	RETURNVOID Render(PARAMETERVOID) {
 		SC1.Render();
+		glColor3f(1.0f, 1.0f, 1.0f); // Set grid color
+
+		glBegin(GL_LINES);
+		for (float i = -1.0f; i <= 1.0f; i += 0.1f) {
+			glVertex2f(i, -1.0f);
+			glVertex2f(i, 1.0f);
+			glVertex2f(-1.0f, i);
+			glVertex2f(1.0f, i);
+		}
+		glEnd();
+
 		glutSwapBuffers();
 
 	}
 
 
 	RETURNVOID ReShape(int width, int height) {
-
-		if (height == 0) {
-			height = 1;
-		}
-
-		// Set the viewport to be the entire window
 		glViewport(0, 0, width, height);
-
-		// Reset the coordinate system before modifying
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-
-		// Set the orthographic projection considering the aspect ratio
-		float aspectRatio = (float)width / height;
-		if (width >= height) {
-			glOrtho(-aspectRatio, aspectRatio, -1.0, 1.0, -1.0, 1.0);
-		}
-		else {
-			glOrtho(-1.0, 1.0, -1.0 / aspectRatio, 1.0 / aspectRatio, -1.0, 1.0);
-		}
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
 	}
+
+
+
+	
+	RETURNVOID MouseOnClick(int Button, int state , int x, int y) {
+		if (state == GLUT_DOWN) {
+
+			for (auto& i : SC1.Rects) {
+				if (i.IsPointInside(x, y)) {
+					std::cout << "Picked!" << std::endl;
+				}
+			}
+
+
+		}
+		else if (state == GLUT_UP) {
+
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	CallbackFunc CreateCallBackFunction(PARAMETERVOID) {
@@ -107,6 +163,7 @@ namespace CallBackFunctions {
 
 		result.DrawCall = CallBackFunctions::Render;
 		result.ReShapeCall = CallBackFunctions::ReShape;
+		result.MouseCall = CallBackFunctions::MouseOnClick;
 		return result;
 	}
 

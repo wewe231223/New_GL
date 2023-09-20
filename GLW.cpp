@@ -68,6 +68,11 @@ RETURNVOID GLW::ResisterCallBackFunctions(CallbackFunc CF) {
 	}
 
 
+	if (CF.MouseCall != nullptr) {
+		glutMouseFunc(CF.MouseCall);
+	}
+
+
 
 }
 

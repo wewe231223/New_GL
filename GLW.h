@@ -2,23 +2,29 @@
 #include "GLH.h"
 
 
-#define INITPOSX 300
-#define INITPOSY 300
 
 
 
-
-inline void DEFAULTDRAW(void) {
-	glClearColor(0.0, 0.0, 0.0, 1.0);
+inline RETURNVOID DEFAULTDRAW(PARAMETERVOID) {
+	glClearColor(0.0, 0.0, 1.0, 1.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutSwapBuffers();
 }
 
-inline void DEFAULTRESHAPE(int w, int h) {
+inline RETURNVOID DEFAULTRESHAPE(int w, int h) {
 	glViewport(0, 0, w, h);
 }
 
 
+
+
+
+
+
+inline RETURNVOID INIT(int argc, char** argv) {
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+}
 
 class GLW
 {
@@ -26,11 +32,12 @@ private:
 	CallbackFunc WindowCallBackFuctions{};
 
 public:
+	GLW(const char*);
 	GLW(int,int,const char*);
 	
 
 
-	RETURNVOID ResisterCallBackFunctions(PARAMETERVOID);
+	RETURNVOID ResisterCallBackFunctions(CallbackFunc);
 
 
 	RETURNVOID Run();

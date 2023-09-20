@@ -1,1 +1,16 @@
 #pragma once
+
+
+#define DEFAULT_SCREEN_WIDTH		1920
+#define DEFAULT_SCREEN_HEIGHT		1080
+
+
+#define DEFAULT_SCREEN_POSITION_X	300
+#define DEAFAULT_SCREEN_POSITION_Y	300
+
+
+typedef void RETURNVOID;
+typedef void PARAMETERVOID;
+
+
+

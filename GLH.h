@@ -4,6 +4,10 @@
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
 
+#include "Definition.h"
+
+
+
 typedef struct _CALLBACKFUNC {
 
 	GLvoid(*DrawCall)					(GLvoid) = nullptr;
@@ -26,14 +30,3 @@ typedef struct _CALLBACKFUNC {
 
 
 
-typedef void RETURNVOID;
-typedef void PARAMETERVOID;
-
-
-
-
-
-inline void INIT(int argc,char** argv) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-}

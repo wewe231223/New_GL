@@ -5,6 +5,8 @@
 #include "GLW.h"
 
 
+#include "Scene1.h"
+
 
 
 int main(int argc, char** argv) {
@@ -12,10 +14,14 @@ int main(int argc, char** argv) {
 	INIT(argc, argv);
 
 
-	GLW* MAINWINDOW = new GLW(300, 300, "TEST");
+	GLW* MAINWINDOW = new GLW("THIS IS TEST");
 
-	MAINWINDOW->ResisterCallBackFunctions();
 
+
+
+	glutSetWindow(1);
+
+	MAINWINDOW->ResisterCallBackFunctions(CallBackFunctions::CreateCallBackFunction());
 	MAINWINDOW->Run();
 
 }

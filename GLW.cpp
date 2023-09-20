@@ -1,12 +1,11 @@
 #include "GLW.h"
-#include "RandomGenerater.h"
 #include <iostream>
 
-RandomGenerater rg;
+
 
 GLW::GLW(int W, int H,const char* title) {
 	glutInitWindowSize(W, H);
-	glutInitWindowPosition(INITPOSX, INITPOSY);
+	glutInitWindowPosition(DEFAULT_SCREEN_POSITION_X, DEAFAULT_SCREEN_POSITION_Y);
 
 	glutCreateWindow(title);
 
@@ -18,11 +17,8 @@ GLW::GLW(int W, int H,const char* title) {
 	}
 	else {
 		std::cout << "INIT GLEW!" << std::endl;
-		std::cout << rg.RandInt() << " " << rg.RandFloat() << " " << rg.RandDouble() << std::endl;
 	}
 #endif // !_GLEWINITED
-
-
 
 
 
@@ -30,19 +26,42 @@ GLW::GLW(int W, int H,const char* title) {
 }
 
 
+GLW::GLW(const char* title) {
+	glutInitWindowSize(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+	glutInitWindowPosition(DEFAULT_SCREEN_POSITION_X, DEAFAULT_SCREEN_POSITION_Y);
+
+	glutCreateWindow(title);
 
 
-RETURNVOID GLW::ResisterCallBackFunctions(PARAMETERVOID) {
+#ifndef _GLEWINITED
+#define _GLEWINITED
+	if (glewInit() != GLEW_OK) {
+		std::cerr << "FAIL TO INIT" << std::endl;
+	}
+	else {
+		std::cout << "INIT GLEW!" << std::endl;
+	}
+#endif // !_GLEWINITED
 
-	if (this->WindowCallBackFuctions.DrawCall != nullptr) {
-		glutDisplayFunc(this->WindowCallBackFuctions.DrawCall);
+}
+
+
+
+
+RETURNVOID GLW::ResisterCallBackFunctions(CallbackFunc CF) {
+
+	
+
+	
+	if (CF.DrawCall != nullptr) {
+		glutDisplayFunc(CF.DrawCall);
 	}
 	else {
 		glutDisplayFunc(DEFAULTDRAW);
 	}
 
-	if (this->WindowCallBackFuctions.ReShapeCall != nullptr) {
-		glutReshapeFunc(this->WindowCallBackFuctions.ReShapeCall);
+	if (CF.ReShapeCall != nullptr) {
+		glutReshapeFunc(CF.ReShapeCall);
 	}
 	else {
 		glutReshapeFunc(DEFAULTRESHAPE);

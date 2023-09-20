@@ -23,6 +23,16 @@ typedef struct _CALLBACKFUNC {
 }CallbackFunc;
 
 
+
+
+
+typedef void RETURNVOID;
+typedef void PARAMETERVOID;
+
+
+
+
+
 inline void INIT(int argc,char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);

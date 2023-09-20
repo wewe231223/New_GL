@@ -130,10 +130,12 @@
   <ItemGroup>
     <ClCompile Include="GLW.cpp" />
     <ClCompile Include="NewGL.cpp" />
+    <ClCompile Include="RandomGenerater.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLH.h" />
     <ClInclude Include="GLW.h" />
+    <ClInclude Include="RandomGenerater.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

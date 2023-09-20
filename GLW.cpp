@@ -1,6 +1,8 @@
 #include "GLW.h"
-
+#include "RandomGenerater.h"
 #include <iostream>
+
+RandomGenerater rg;
 
 GLW::GLW(int W, int H,const char* title) {
 	glutInitWindowSize(W, H);
@@ -16,6 +18,7 @@ GLW::GLW(int W, int H,const char* title) {
 	}
 	else {
 		std::cout << "INIT GLEW!" << std::endl;
+		std::cout << rg.RandInt() << " " << rg.RandFloat() << " " << rg.RandDouble() << std::endl;
 	}
 #endif // !_GLEWINITED
 

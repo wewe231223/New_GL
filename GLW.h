@@ -6,8 +6,6 @@
 #define INITPOSY 300
 
 
-typedef void RETURNVOID;
-typedef void PARAMETERVOID;
 
 
 inline void DEFAULTDRAW(void) {

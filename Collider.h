@@ -2,17 +2,19 @@
 #include "Geometry.h"
 #include "GLH.h"
 
-class BoxCollider{
-private:
+
+class Collider {
+public:
 	PIVOT BottomLeft{};
 	PIVOT TopRight{};
 
 public:
 
-	BoxCollider() {};
 
 
-	bool operator[](const BoxCollider&) const;
+	Collider() {};
+	RETURNVOID Update(SizeF,Point2F);
+	bool Check(const Collider other);
 
 };
 

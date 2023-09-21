@@ -10,11 +10,15 @@
 #include "Rect.h"
 #include "GLH.h"
 
+#include "Collider.h"
+
+
 class Scene1_Rect : public Rect {
 public:
 	Scene1_Rect(PARAMETERVOID);
-
 	
+	Collider RectCollider{};
+
 	virtual RETURNVOID Draw(PARAMETERVOID);
 
 
@@ -45,6 +49,8 @@ public:
 
 	Color4f BackgroundColor{};
 	std::vector<Scene1_Rect> Rects;
+	Scene1_Rect* Eraser = nullptr;
+
 
 
 	float OldWidth = DEFAULT_SCREEN_WIDTH;
@@ -58,6 +64,8 @@ public:
 
 	
 	RETURNVOID Render(PARAMETERVOID);
+	RETURNVOID ReFill(PARAMETERVOID);
+
 
 };
 
@@ -72,6 +80,9 @@ namespace CallBackFunctions {
 
 	RETURNVOID MouseDrag(int, int);
 	RETURNVOID Idle(PARAMETERVOID);
+	RETURNVOID KeyboardInput(unsigned char, int, int);
+
+
 	CallbackFunc CreateCallBackFunction(PARAMETERVOID);
 
 

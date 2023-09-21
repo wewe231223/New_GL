@@ -3,11 +3,19 @@
 Scene1_Rect::Scene1_Rect(PARAMETERVOID){
 	
 	
-	this->VectorX = this->RandomEngine.RandFloat(-0.05f, 0.05f);
-	this->VectorY = this->RandomEngine.RandFloat(-0.05f, 0.05f);
+	this->VectorX = this->RandomEngine.RandFloat(-0.005f, 0.005f);
+	this->VectorY = this->RandomEngine.RandFloat(-0.005f, 0.005f);
 
 
-	this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+	this->RectCollider.TopRight.x = this->Center.x + this->Size.Width / 2;
+	this->RectCollider.TopRight.y = this->Center.y + this->Size.Height / 2;
+
+
+	this->RectCollider.BottomLeft.x = this->Center.x - this->Size.Width / 2;
+	this->RectCollider.BottomLeft.y = this->Center.y - this->Size.Height / 2;
+
+
+
 
 
 }
@@ -15,16 +23,11 @@ Scene1_Rect::Scene1_Rect(PARAMETERVOID){
 RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 {
 
-	float ScreenW = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
-	float ScreenH = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
+
+	this->OnWindow();
 
 
-
-
-
-	this->Center.x = std::clamp(this->Center.x, -1.0f, 1.0f);
-	this->Center.y = std::clamp(this->Center.y, -1.0f, 1.0f);
-
+	this->RectCollider.Update(this->Size, this->Center);
 
 	glColor3f(this->Color.r, this->Color.g, this->Color.b);
 	glRectf(
@@ -32,6 +35,14 @@ RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 		this->Center.y - this->Size.Height	/	2,
 		this->Center.x + this->Size.Width	/	2,
 		this->Center.y + this->Size.Height	/	2);
+
+
+
+
+	
+
+
+
 
 
 	if (this->Picking) {
@@ -65,15 +76,8 @@ RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 
 bool Scene1_Rect::IsPointInside(int PixelX, int PixelY) {
 	float glX, glY = 0;
-
-
 	glX = static_cast<float>(PixelX) / static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)) * 2.0f - 1.0f;
 	glY = 1.0f - static_cast<float>(PixelY) / static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT)) * 2.0f;
-
-
-	std::cout << this->Center.x - this->Size.Width / 2.f << " , " << this->Center.y - this->Size.Height / 2 << std::endl;
-	std::cout << glX << " , " << glY << std::endl;
-	std::cout << this->Center.x + this->Size.Width / 2.f << " , " << this->Center.y + this->Size.Height / 2 << std::endl << std::endl;
 
 
 	if (glX > this->Center.x - this->Size.Width / 2 && glX < this->Center.x + this->Size.Width / 2) {
@@ -90,6 +94,30 @@ bool Scene1_Rect::IsPointInside(int PixelX, int PixelY) {
 
 
 
+RETURNVOID Scene1_Rect::OnWindow(PARAMETERVOID) {
+	if (this->Center.x > 1.f - this->Size.Width / 2) {
+		this->VectorX *= -1.f;
+	}
+
+	if (this->Center.x < -1.f + this->Size.Width / 2) {
+		this->VectorX *= -1.f;
+	}
+
+
+
+
+	if (this->Center.y > 1.f - this->Size.Height / 2) {
+		this->VectorY *= -1.f;
+	}
+	if (this->Center.y < -1.f + this->Size.Height / 2) {
+		this->VectorY *= -1.f;
+	}
+
+
+
+}
+
+
 
 
 // ===============================Scene=======================================================================
@@ -100,7 +128,7 @@ bool Scene1_Rect::IsPointInside(int PixelX, int PixelY) {
 Scene1::Scene1(PARAMETERVOID) {
 
 
-	for (auto i = 0; i < this->RandomEngine.RandInt(5,20); ++i) {
+	for (auto i = 0; i < this->RandomEngine.RandInt(5, 20); ++i) {
 		Scene1_Rect NewRect;
 		this->Rects.push_back(NewRect);
 	}
@@ -112,6 +140,11 @@ Scene1::Scene1(PARAMETERVOID) {
 	this->BackgroundColor.g = this->RandomEngine.RandFloat(0.f, 1.f);
 	this->BackgroundColor.b = this->RandomEngine.RandFloat(0.f, 1.f);
 	this->BackgroundColor.a = this->RandomEngine.RandFloat(0.f, 1.f);
+
+
+
+
+	
 
 
 
@@ -136,8 +169,33 @@ RETURNVOID Scene1::Render(PARAMETERVOID) {
 		
 	}
 
+	if (this->Eraser != nullptr) {
+		this->Eraser->Draw();
+	}
+
 
 }
+
+RETURNVOID Scene1::ReFill(PARAMETERVOID)
+{
+	std::vector<Scene1_Rect>().swap(this->Rects);
+
+
+	for (auto i = 0; i < this->RandomEngine.RandInt(5, 20); ++i) {
+		Scene1_Rect NewRect;
+		this->Rects.push_back(NewRect);
+	}
+
+	return RETURNVOID();
+}
+
+
+
+
+
+// ===============================CallBacks=======================================================================
+
+
 
 
 namespace CallBackFunctions {
@@ -148,6 +206,8 @@ namespace CallBackFunctions {
 	RETURNVOID Render(PARAMETERVOID) {
 
 		SC1.Render();
+		
+
 
 		glutSwapBuffers();
 
@@ -176,52 +236,91 @@ namespace CallBackFunctions {
 
 
 	
-	RETURNVOID MouseOnClick(int Button, int state , int x, int y) {
+	RETURNVOID MouseOnClick(int Button, int state , int pixelX, int pixelY) {
 		if (state == GLUT_DOWN) {
+		
+			SC1.Eraser = new Scene1_Rect;
+			SC1.Eraser->Translate(pixelX, pixelY);
+			SC1.Eraser->Color.r = 0.f;
+			SC1.Eraser->Color.g = 0.f;
+			SC1.Eraser->Color.b = 0.f;
+			SC1.Eraser->Size.Width = 0.25f;
+			SC1.Eraser->Size.Height = 0.25f;
+			SC1.Eraser->ScaleByScreen(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
 
-			for (auto iter = SC1.Rects.rbegin(); iter != SC1.Rects.rend(); ++iter) {
 
-				if ((*iter).IsPointInside(x,y)) {
-					(*iter).Picking = true;
-					break;
+			SC1.Eraser->RectCollider.TopRight.x = SC1.Eraser->Center.x + SC1.Eraser->Size.Width / 2;
+			SC1.Eraser->RectCollider.TopRight.y = SC1.Eraser->Center.y + SC1.Eraser->Size.Height / 2;
+
+			SC1.Eraser->RectCollider.BottomLeft.x = SC1.Eraser->Center.x - SC1.Eraser->Size.Width / 2;
+			SC1.Eraser->RectCollider.BottomLeft.y = SC1.Eraser->Center.y - SC1.Eraser->Size.Height / 2;
+
+
+
+
+			for (auto i = 0; i < SC1.Rects.size(); ++i) {
+				if (SC1.Eraser->RectCollider.Check(SC1.Rects[i].RectCollider)) {
+					SC1.Eraser->Color.r += (SC1.Rects[i].Color.r * 0.001f);
+					SC1.Eraser->Color.g += (SC1.Rects[i].Color.g * 0.001f);
+					SC1.Eraser->Color.b += (SC1.Rects[i].Color.b * 0.001f);
+
+					SC1.Eraser->Size.Width += 0.01f;
+					SC1.Eraser->Size.Height += 0.01f;
+
+
+					SC1.Rects.erase(SC1.Rects.begin() + i);
+				
+				
 				}
 
 			}
 
 
+
+
 		}
 		else if (state == GLUT_UP) {
+			
+			
+			delete SC1.Eraser;
+			SC1.Eraser = nullptr;
 
-			for (auto& i : SC1.Rects) {
-				i.Picking = false;
-			}
 
 
 
 		}
+
+
+		
+
+
 
 		glutPostRedisplay();
 	}
 
 
 	RETURNVOID MouseDrag(int pixelX, int pixelY) {
-		int Width = glutGet(GLUT_WINDOW_WIDTH);
-		int Height = glutGet(GLUT_WINDOW_HEIGHT);
 
-		float glX, glY;
+		SC1.Eraser->Translate(pixelX, pixelY);
+		SC1.Eraser->RectCollider.Update(SC1.Eraser->Size, SC1.Eraser->Center);
 
-		glX = static_cast<float>(pixelX) / static_cast<float>(Width) * 2.0f - 1.0f;
-		glY = 1.0f - static_cast<float>(pixelY) / static_cast<float>(Height) * 2.0f;
+		for (auto i = 0; i < SC1.Rects.size(); ++i) {
+			if (SC1.Eraser->RectCollider.Check(SC1.Rects[i].RectCollider)) {
+				SC1.Eraser->Color.r += SC1.Rects[i].Color.r;
+				SC1.Eraser->Color.g += SC1.Rects[i].Color.g;
+				SC1.Eraser->Color.b += SC1.Rects[i].Color.b;
+
+				SC1.Eraser->Size.Width += 0.01f;
+				SC1.Eraser->Size.Height += 0.01f;
 
 
+				SC1.Rects.erase(SC1.Rects.begin() + i);
 
-		for (auto iter = SC1.Rects.rbegin(); iter != SC1.Rects.rend(); ++iter) {
-			if ((*iter).Picking) {
-				(*iter).Center.x = glX;
-				(*iter).Center.y = glY;
-				break;
+
 			}
+
 		}
+
 
 		glutPostRedisplay();
 	}
@@ -231,11 +330,27 @@ namespace CallBackFunctions {
 
 	RETURNVOID Idle(PARAMETERVOID) {
 
+		for (auto& i : SC1.Rects) {
+			i.Center.x += i.VectorX;
+			i.Center.y += i.VectorY;
+		}
+		glutPostRedisplay();
+
 	}
 
 
 
+	RETURNVOID KeyboardInput(unsigned char key, int x, int y) {
+		if (key == 'r') {
+			
+			SC1.ReFill();
 
+
+		}
+
+
+		glutPostRedisplay();
+	}
 
 
 
@@ -246,8 +361,14 @@ namespace CallBackFunctions {
 
 		result.DrawCall = CallBackFunctions::Render;
 		result.ReShapeCall = CallBackFunctions::ReShape;
+		
+
+		result.KeyboardInputCall = CallBackFunctions::KeyboardInput;
+		result.IdleCall = CallBackFunctions::Idle;
 		result.MouseCall = CallBackFunctions::MouseOnClick;
 		result.MouseDragCall = CallBackFunctions::MouseDrag;
+
+		
 		return result;
 	}
 

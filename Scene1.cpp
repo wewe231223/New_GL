@@ -1,7 +1,7 @@
 #include "Scene1.h"
 
 Scene1_Rect::Scene1_Rect(PARAMETERVOID){
-	this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+	//this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
 }
 
 RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
@@ -14,13 +14,7 @@ RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 
 
 
-
-
-	this->Size.Width = this->Size.Width * (ScreenH * 0.001f);
-	this->Size.Height = this->Size.Height * (ScreenW * 0.001f);
-
-	//this->Size.Width = DEFAULT_WIDTH * (ScreenH * 0.001f);
-	//this->Size.Height = DEFAULT_HEIGHT * (ScreenW * 0.001f);
+	
 
 
 
@@ -126,6 +120,21 @@ namespace CallBackFunctions {
 
 
 	RETURNVOID ReShape(int width, int height) {
+
+		float ScaleX =  SC1.OldWidth / static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
+		float ScaleY = SC1.OldHeight / static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
+		for (auto& i : SC1.Rects) {
+			i.Size.Width *= ScaleX;
+			i.Size.Height *= ScaleY;
+		}
+
+
+
+
+		SC1.OldWidth = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
+		SC1.OldHeight = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
+
+	
 		glViewport(0, 0, width, height);
 	}
 
@@ -138,9 +147,6 @@ namespace CallBackFunctions {
 			for (auto& i : SC1.Rects) {
 				if (i.IsPointInside(x, y)) {
 					std::cout << "Picked!" << std::endl;
-
-					i.Size.Height += 0.5f;
-
 				}
 			}
 

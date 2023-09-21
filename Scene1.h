@@ -43,6 +43,9 @@ public:
 	std::vector<Scene1_Rect> Rects;
 
 
+	float OldWidth = DEFAULT_SCREEN_WIDTH;
+	float OldHeight = DEFAULT_SCREEN_HEIGHT;
+
 
 
 public:

@@ -12,6 +12,10 @@ typedef struct _POINT2f {
 }Point2F;
 
 typedef Point2F PIVOT;
+typedef Point2F Vector2F;
+
+
+
 
 typedef struct _SIZE2I{
 	int Width;

@@ -1,6 +1,6 @@
 #pragma once
 #include "Geometry.h"
-#include "GLH.h"
+#include "Definition.h"
 
 
 class Collider {

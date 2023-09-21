@@ -6,7 +6,7 @@
 
 
 #include "Scene1.h"
-
+#include "Scene2.h"
 
 
 int main(int argc, char** argv) {
@@ -20,8 +20,8 @@ int main(int argc, char** argv) {
 
 
 	glutSetWindow(1);
-
-	MAINWINDOW->ResisterCallBackFunctions(CallBackFunctions::CreateCallBackFunction());
+	//MAINWINDOW->ResisterCallBackFunctions(Scene1_CallBackFunctions::CreateCallBackFunction());
+	MAINWINDOW->ResisterCallBackFunctions(Scene2_CallBackFunctions::CreateCallBackFunction());
 	MAINWINDOW->Run();
 
 }

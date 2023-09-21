@@ -126,7 +126,7 @@ RETURNVOID Scene1_Rect::OnWindow(PARAMETERVOID) {
 
 
 Scene1::Scene1(PARAMETERVOID) {
-
+	glutSetWindowTitle("#5");
 
 	for (auto i = 0; i < this->RandomEngine.RandInt(5, 20); ++i) {
 		Scene1_Rect NewRect;
@@ -198,7 +198,7 @@ RETURNVOID Scene1::ReFill(PARAMETERVOID)
 
 
 
-namespace CallBackFunctions {
+namespace Scene1_CallBackFunctions {
 
 	Scene1 SC1;
 
@@ -260,9 +260,9 @@ namespace CallBackFunctions {
 
 			for (auto i = 0; i < SC1.Rects.size(); ++i) {
 				if (SC1.Eraser->RectCollider.Check(SC1.Rects[i].RectCollider)) {
-					SC1.Eraser->Color.r += (SC1.Rects[i].Color.r * 0.001f);
-					SC1.Eraser->Color.g += (SC1.Rects[i].Color.g * 0.001f);
-					SC1.Eraser->Color.b += (SC1.Rects[i].Color.b * 0.001f);
+					SC1.Eraser->Color.r += (SC1.Rects[i].Color.r * 0.1f);
+					SC1.Eraser->Color.g += (SC1.Rects[i].Color.g * 0.1f);
+					SC1.Eraser->Color.b += (SC1.Rects[i].Color.b * 0.1f);
 
 					SC1.Eraser->Size.Width += 0.01f;
 					SC1.Eraser->Size.Height += 0.01f;
@@ -306,10 +306,9 @@ namespace CallBackFunctions {
 
 		for (auto i = 0; i < SC1.Rects.size(); ++i) {
 			if (SC1.Eraser->RectCollider.Check(SC1.Rects[i].RectCollider)) {
-				SC1.Eraser->Color.r += SC1.Rects[i].Color.r;
-				SC1.Eraser->Color.g += SC1.Rects[i].Color.g;
-				SC1.Eraser->Color.b += SC1.Rects[i].Color.b;
-
+				SC1.Eraser->Color.r += (SC1.Rects[i].Color.r * 0.1f);
+				SC1.Eraser->Color.g += (SC1.Rects[i].Color.g * 0.1f);
+				SC1.Eraser->Color.b += (SC1.Rects[i].Color.b * 0.1f);
 				SC1.Eraser->Size.Width += 0.01f;
 				SC1.Eraser->Size.Height += 0.01f;
 
@@ -359,14 +358,14 @@ namespace CallBackFunctions {
 	CallbackFunc CreateCallBackFunction(PARAMETERVOID) {
 		CallbackFunc result;
 
-		result.DrawCall = CallBackFunctions::Render;
-		result.ReShapeCall = CallBackFunctions::ReShape;
+		result.DrawCall = Scene1_CallBackFunctions::Render;
+		result.ReShapeCall = Scene1_CallBackFunctions::ReShape;
 		
 
-		result.KeyboardInputCall = CallBackFunctions::KeyboardInput;
-		result.IdleCall = CallBackFunctions::Idle;
-		result.MouseCall = CallBackFunctions::MouseOnClick;
-		result.MouseDragCall = CallBackFunctions::MouseDrag;
+		result.KeyboardInputCall = Scene1_CallBackFunctions::KeyboardInput;
+		result.IdleCall = Scene1_CallBackFunctions::Idle;
+		result.MouseCall = Scene1_CallBackFunctions::MouseOnClick;
+		result.MouseDragCall = Scene1_CallBackFunctions::MouseDrag;
 
 		
 		return result;

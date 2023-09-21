@@ -71,7 +71,7 @@ public:
 
 
 
-namespace CallBackFunctions {
+namespace Scene1_CallBackFunctions {
 	RETURNVOID Render(PARAMETERVOID);
 
 	RETURNVOID ReShape(int, int);

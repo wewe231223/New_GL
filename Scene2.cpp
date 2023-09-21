@@ -62,8 +62,10 @@ ParticleRect::ParticleRect(){
 
 RETURNVOID ParticleRect::Clicked(PARAMETERVOID)
 {
-
 	this->Visible = false;
+
+
+
 
 
 	return RETURNVOID();
@@ -76,12 +78,19 @@ RETURNVOID ParticleRect::Clicked(PARAMETERVOID)
 RETURNVOID ParticleRect::Draw(){
 
 	if (this->Visible) {
+		//클릭되기전 
 		glColor3f(this->Color.r, this->Color.g, this->Color.b);
 		glRectf(
 			this->Center.x - this->Size.Width / 2,
 			this->Center.y - this->Size.Height / 2,
 			this->Center.x + this->Size.Width / 2,
 			this->Center.y + this->Size.Height / 2);
+	}
+	else {
+		//클릭되고 난 후 
+
+
+
 	}
 
 	return RETURNVOID();

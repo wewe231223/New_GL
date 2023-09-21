@@ -31,6 +31,7 @@ public:
 //클릭하면 이 자체 사각형은 사라지고 각각 particle에게 type에 따른 값 분배하는 역할 
 class ParticleRect : public Rect{
 public:
+	std::vector<Particle> Particles;
 	bool Visible = true;
 public:
 	ParticleRect();

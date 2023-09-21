@@ -2,8 +2,8 @@
 #include "Geometry.h"
 #include "RandomGenerater.h"
 
-#define DEFAULT_WIDTH	0.5f
-#define DEFAULT_HEIGHT	0.5f
+#define DEFAULT_WIDTH	0.3f
+#define DEFAULT_HEIGHT	0.3f
 
 class Rect{
 public:

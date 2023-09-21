@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "RandomGenerater.h"
 #include "Definition.h"
@@ -17,11 +18,14 @@ public:
 	virtual RETURNVOID Draw(PARAMETERVOID);
 
 
-	bool Picking = false;
+	float VectorX{};
+	float VectorY{};
 
+
+	bool Picking = false;
 	bool IsPointInside(int , int);
 
-
+	RETURNVOID OnWindow(PARAMETERVOID);
 
 };
 
@@ -65,6 +69,9 @@ namespace CallBackFunctions {
 	RETURNVOID ReShape(int, int);
 
 	RETURNVOID MouseOnClick(int, int, int, int);
+
+	RETURNVOID MouseDrag(int, int);
+	RETURNVOID Idle(PARAMETERVOID);
 	CallbackFunc CreateCallBackFunction(PARAMETERVOID);
 
 

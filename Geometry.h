@@ -11,6 +11,7 @@ typedef struct _POINT2f {
 	float y;
 }Point2F;
 
+typedef Point2F PIVOT;
 
 typedef struct _SIZE2I{
 	int Width;

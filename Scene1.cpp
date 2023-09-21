@@ -126,7 +126,6 @@ RETURNVOID Scene1_Rect::OnWindow(PARAMETERVOID) {
 
 
 Scene1::Scene1(PARAMETERVOID) {
-	glutSetWindowTitle("#5");
 
 	for (auto i = 0; i < this->RandomEngine.RandInt(5, 20); ++i) {
 		Scene1_Rect NewRect;

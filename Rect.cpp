@@ -1,8 +1,8 @@
 #include "Rect.h"
 
 Rect::Rect(PARAMETERVOID){
-	this->Center.x = this->RandomEngine.RandFloat(-1.f, 1.f);
-	this->Center.y = this->RandomEngine.RandFloat(-1.f, 1.f);
+	this->Center.x = this->RandomEngine.RandFloat(-0.9f, 0.9f);
+	this->Center.y = this->RandomEngine.RandFloat(-0.9f, 0.9f);
 
 
 	this->Color.r = this->RandomEngine.RandFloat(0.f,1.f);

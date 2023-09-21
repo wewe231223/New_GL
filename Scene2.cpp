@@ -27,7 +27,7 @@ Particle::Particle(SizeF s,Vector2F dir, Color3f c){
 
 RETURNVOID Particle::Draw()
 {
-
+	
 	glColor3f(this->Color.r, this->Color.g, this->Color.b);
 	glRectf(
 		this->Center.x - this->Size.Width / 2,
@@ -46,6 +46,50 @@ RETURNVOID Particle::Draw()
 
 
 //=================================Particle Rect====================================================================
+
+
+
+ParticleRect::ParticleRect(){
+	this->Size.Width = 0.5f;
+	this->Size.Height = 0.5f;
+
+	this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+}
+
+
+
+
+
+RETURNVOID ParticleRect::Clicked(PARAMETERVOID)
+{
+
+	this->Visible = false;
+
+
+	return RETURNVOID();
+}
+
+
+
+
+
+RETURNVOID ParticleRect::Draw(){
+
+	if (this->Visible) {
+		glColor3f(this->Color.r, this->Color.g, this->Color.b);
+		glRectf(
+			this->Center.x - this->Size.Width / 2,
+			this->Center.y - this->Size.Height / 2,
+			this->Center.x + this->Size.Width / 2,
+			this->Center.y + this->Size.Height / 2);
+	}
+
+	return RETURNVOID();
+}
+
+
+
+
 
 bool ParticleRect::IsPointInside(int PixelX, int PixelY) {
 	float glX, glY = 0;
@@ -68,10 +112,19 @@ bool ParticleRect::IsPointInside(int PixelX, int PixelY) {
 
 
 
+
 //=================================Scene2=============================================================================
 
 Scene2::Scene2() {
-	glutSetWindowTitle("#6");
+	for (auto i = 0; i < RandomEngine.RandInt(1,3); ++i) {
+		ParticleRect NewParticleRect;
+
+		this->Rects.push_back(NewParticleRect);
+
+	}
+
+
+
 }
 
 
@@ -84,7 +137,9 @@ RETURNVOID Scene2::Render(){
 		this->BackgroundColor.a);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
+	for (auto& i : this->Rects) {
+		i.Draw();
+	}
 
 
 
@@ -116,7 +171,10 @@ namespace Scene2_CallBackFunctions {
 		float ScaleY = SC2.OldHeight / static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
 
 
-
+		for (auto& i : SC2.Rects) {
+			i.Size.Width *= ScaleX;
+			i.Size.Height *= ScaleY;
+		}
 
 		SC2.OldWidth = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
 		SC2.OldHeight = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
@@ -127,11 +185,71 @@ namespace Scene2_CallBackFunctions {
 
 
 
+
+
+
+
+
+	RETURNVOID MouseOnClick(int Button, int State, int x, int y) {
+		
+		if (Button == GLUT_LEFT_BUTTON) {
+			for (auto& i : SC2.Rects) {
+				if (i.IsPointInside(x, y)) {
+					i.Clicked();
+				}
+
+
+			}
+
+
+
+		}
+		else if (GLUT_RIGHT_BUTTON) {
+
+
+
+
+
+		}
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	CallbackFunc CreateCallBackFunction(PARAMETERVOID) {
 		CallbackFunc result;
 
 		result.DrawCall = Scene2_CallBackFunctions::Render;
 		result.ReShapeCall = Scene2_CallBackFunctions::ReShape;
+		result.MouseCall = Scene2_CallBackFunctions::MouseOnClick;
 
 
 		return result;

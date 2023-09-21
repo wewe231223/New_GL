@@ -17,7 +17,7 @@ public:
 	virtual RETURNVOID Draw(PARAMETERVOID);
 
 
-	
+	bool Picking = false;
 
 	bool IsPointInside(int , int);
 

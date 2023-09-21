@@ -1,7 +1,7 @@
 #include "Scene1.h"
 
 Scene1_Rect::Scene1_Rect(PARAMETERVOID){
-	//this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
+	this->ScaleByScreen(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);
 }
 
 RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
@@ -9,14 +9,6 @@ RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 
 	float ScreenW = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
 	float ScreenH = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
-
-
-
-
-
-	
-
-
 
 
 	glColor3f(this->Color.r, this->Color.g, this->Color.b);
@@ -27,17 +19,37 @@ RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 		this->Center.y + this->Size.Height	/	2);
 
 
+	if (this->Picking) {
+		glColor3f(1.0f, 1.0f, 1.0f);
+		glBegin(GL_LINE_LOOP);
+
+		glVertex2f(
+			this->Center.x - this->Size.Width / 2, 
+			this->Center.y - this->Size.Height / 2);
+
+		glVertex2f(
+			this->Center.x - this->Size.Width / 2 + this->Size.Width, 
+			this->Center.y - this->Size.Height / 2);
+
+		glVertex2f(
+			this->Center.x - this->Size.Width / 2 + this->Size.Width, 
+			this->Center.y - this->Size.Height / 2 + this->Size.Height);
+
+		glVertex2f(
+			this->Center.x - this->Size.Width / 2, 
+			this->Center.y - this->Size.Height / 2 + this->Size.Height);
+
+
+		glEnd();
+	}
+	
+
+
 }
 
 
 bool Scene1_Rect::IsPointInside(int PixelX, int PixelY) {
-
-
 	float glX, glY = 0;
-
-
-
-
 
 
 	glX = static_cast<float>(PixelX) / static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)) * 2.0f - 1.0f;
@@ -80,6 +92,9 @@ Scene1::Scene1(PARAMETERVOID) {
 	this->BackgroundColor.g = this->RandomEngine.RandFloat(0.f, 1.f);
 	this->BackgroundColor.b = this->RandomEngine.RandFloat(0.f, 1.f);
 	this->BackgroundColor.a = this->RandomEngine.RandFloat(0.f, 1.f);
+
+
+
 
 
 
@@ -147,12 +162,19 @@ namespace CallBackFunctions {
 			for (auto& i : SC1.Rects) {
 				if (i.IsPointInside(x, y)) {
 					std::cout << "Picked!" << std::endl;
+					i.Picking = true;
 				}
 			}
 
 
 		}
 		else if (state == GLUT_UP) {
+
+			for (auto& i : SC1.Rects) {
+				i.Picking = false;
+			}
+
+
 
 		}
 

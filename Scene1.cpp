@@ -7,6 +7,21 @@ Scene1_Rect::Scene1_Rect(PARAMETERVOID){
 RETURNVOID Scene1_Rect::Draw(PARAMETERVOID)
 {
 
+	float ScreenW = static_cast<float>(glutGet(GLUT_WINDOW_WIDTH));
+	float ScreenH = static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT));
+
+
+
+
+
+
+
+	this->Size.Width = this->Size.Width * (ScreenH * 0.001f);
+	this->Size.Height = this->Size.Height * (ScreenW * 0.001f);
+
+	//this->Size.Width = DEFAULT_WIDTH * (ScreenH * 0.001f);
+	//this->Size.Height = DEFAULT_HEIGHT * (ScreenW * 0.001f);
+
 
 
 
@@ -102,17 +117,8 @@ namespace CallBackFunctions {
 
 
 	RETURNVOID Render(PARAMETERVOID) {
-		SC1.Render();
-		glColor3f(1.0f, 1.0f, 1.0f); // Set grid color
 
-		glBegin(GL_LINES);
-		for (float i = -1.0f; i <= 1.0f; i += 0.1f) {
-			glVertex2f(i, -1.0f);
-			glVertex2f(i, 1.0f);
-			glVertex2f(-1.0f, i);
-			glVertex2f(1.0f, i);
-		}
-		glEnd();
+		SC1.Render();
 
 		glutSwapBuffers();
 
@@ -132,6 +138,9 @@ namespace CallBackFunctions {
 			for (auto& i : SC1.Rects) {
 				if (i.IsPointInside(x, y)) {
 					std::cout << "Picked!" << std::endl;
+
+					i.Size.Height += 0.5f;
+
 				}
 			}
 
@@ -140,6 +149,8 @@ namespace CallBackFunctions {
 		else if (state == GLUT_UP) {
 
 		}
+
+		glutPostRedisplay();
 	}
 
 

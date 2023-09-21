@@ -42,8 +42,6 @@ public:
 	Color4f BackgroundColor{};
 	std::vector<Scene1_Rect> Rects;
 
-	int OldWidth = DEFAULT_SCREEN_WIDTH;
-	int OldHeight = DEFAULT_SCREEN_HEIGHT;
 
 
 

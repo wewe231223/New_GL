@@ -7,6 +7,9 @@
 
 #include "Collider.h"
 
+
+
+
 enum PARTICLETYPE {
 	CROSSTYPE,
 	DIAGONALTYPE,
@@ -15,11 +18,17 @@ enum PARTICLETYPE {
 
 // 나눠질 사각형 
 class Particle : public Rect {
-private:
+public:
 	Vector2F Direction{};
 public:
 	Particle() {};
-	Particle(SizeF,Vector2F,Color3f);
+	Particle(SizeF,Point2F,Vector2F,Color3f);
+
+
+
+
+
+	
 	virtual RETURNVOID Draw() ;
 	
 
@@ -44,6 +53,11 @@ public:
 
 	RETURNVOID Clicked(PARAMETERVOID);
 
+	RETURNVOID CreateParticle_CrossType(float);
+	RETURNVOID CreateParticle_DiagnalType(float);
+	RETURNVOID CreateParticle_OctagonType(float);
+
+
 
 
 	virtual RETURNVOID Draw();
@@ -66,7 +80,7 @@ public:
 
 
 	RETURNVOID Render();
-	
+	RETURNVOID Reset(PARAMETERVOID);
 
 };
 
@@ -78,6 +92,10 @@ namespace Scene2_CallBackFunctions {
 	RETURNVOID Render(PARAMETERVOID);
 	RETURNVOID ReShape(int, int);
 	RETURNVOID MouseOnClick(int, int, int, int);
+	RETURNVOID Idle(PARAMETERVOID);
+
+
+
 
 
 

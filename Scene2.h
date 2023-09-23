@@ -10,11 +10,6 @@
 
 
 
-enum PARTICLETYPE {
-	CROSSTYPE,
-	DIAGONALTYPE,
-	OCTAGONTYPE
-};
 
 // 나눠질 사각형 
 class Particle : public Rect {

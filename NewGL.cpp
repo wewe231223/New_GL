@@ -9,6 +9,17 @@
 #include "Scene2.h"
 
 
+
+
+void Make_VertexShaders();
+void Make_VertexShaders();
+GLuint Make_shadeProgram();
+GLvoid drawScene();
+GLvoid ReShape(int w, int h);
+
+
+	
+
 int main(int argc, char** argv) {
 
 	INIT(argc, argv);

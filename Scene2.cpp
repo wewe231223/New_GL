@@ -414,8 +414,8 @@ namespace Scene2_CallBackFunctions {
 				for (auto& j : i.Particles) {
 					j.Center.x += j.Direction.x;
 					j.Center.y += j.Direction.y;
-					j.Size.Width *= 0.999f;
-					j.Size.Height *= 0.999f;
+					j.Size.Width *= 0.99f;
+					j.Size.Height *= 0.99f;
 				}
 			}
 		}

@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GLW.cpp" />
     <ClCompile Include="NewGL.cpp" />
     <ClCompile Include="RandomGenerater.cpp" />
@@ -142,6 +143,7 @@
   <ItemGroup>
     <ClInclude Include="Collider.h" />
     <ClInclude Include="Definition.h" />
+    <ClInclude Include="FileReader.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GLH.h" />
     <ClInclude Include="GLW.h" />

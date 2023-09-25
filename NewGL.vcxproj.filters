@@ -36,6 +36,9 @@
     <ClCompile Include="Scene2.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="FileReader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLH.h">
@@ -65,5 +68,12 @@
     <ClInclude Include="Scene2.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="FileReader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Fragment.glsl" />
+    <None Include="Vertex.glsl" />
   </ItemGroup>
 </Project>

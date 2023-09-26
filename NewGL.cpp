@@ -32,42 +32,72 @@ GLuint fragmentShader{};
 int main(int argc, char** argv) {
 
 
-	INIT(argc, argv);
+	INIT(&argc, argv);
 
 
-	GLW* MAINWINDOW = new GLW("THIS IS TEST");
+	GLW* MAINWINDOW = new GLW(800,600,"THIS IS TEST");
 
 
 
 
-	glutSetWindow(1);
 	//MAINWINDOW->ResisterCallBackFunctions(Scene1_CallBackFunctions::CreateCallBackFunction());
 	//MAINWINDOW->ResisterCallBackFunctions(Scene2_CallBackFunctions::CreateCallBackFunction());
-	CallbackFunc Cf;
 
+	CallbackFunc CF;
+
+
+	CF.DrawCall = drawScene;
+	CF.ReShapeCall = ReShape;
 
 
 
 
 	Make_VertexShaders();
 	Make_FragmentShaders();
-
-
-
-
 	shaderProgramId = Make_shadeProgram();
 
 
 
-	Cf.DrawCall = drawScene;
-	Cf.ReShapeCall = ReShape;
 
-
-
-	MAINWINDOW->ResisterCallBackFunctions(Cf);
-	
+	MAINWINDOW->ResisterCallBackFunctions(CF);
 
 	MAINWINDOW->Run();
+
+
+
+	//int width = 500;
+	//int height = 500;
+
+
+	//glutInit(&argc, argv);
+
+	//glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+
+	//glutInitWindowPosition(100, 100);
+
+	//glutInitWindowSize(width, height);
+
+
+	//glutCreateWindow("Example 1");
+
+
+	//glewExperimental = GL_TRUE;
+	//glewInit();
+
+
+	//Make_VertexShaders();
+	//Make_FragmentShaders();
+	//shaderProgramId = Make_shadeProgram();
+
+
+	//glutDisplayFunc(drawScene);
+	//glutReshapeFunc(ReShape);
+
+	//glutMainLoop();
+
+
+
+
 
 }
 
@@ -89,7 +119,9 @@ GLvoid drawScene() {
 
 	glPointSize(5.0f);
 
+	glDrawArrays(GL_POINTS, 0, 1);
 
+	glutSwapBuffers();
 
 
 }
@@ -128,6 +160,9 @@ void Make_VertexShaders(){
 		glGetShaderInfoLog(vertexShader, 512, NULL, errorLog);
 		std::cerr << "ERROR : VERTEX SHADER COMPILE FAILED" << std::endl << errorLog << std::endl;
 		return;
+	}
+	else {
+		std::cerr << "VERTEX SHADER SUCESSFULLY COMPILED" << std::endl;
 	}
 
 
@@ -173,6 +208,10 @@ void Make_FragmentShaders()
 		std::cerr << "ERROR : FRAGMENT SHADER COMPILE FAILED" << std::endl << errorLog << std::endl;
 		return;
 	}
+	else {
+		std::cerr << "FRAGMENT SHADER SUCESSFULLY COMPILED" << std::endl;
+	}
+
 
 }
 
@@ -207,6 +246,10 @@ GLuint Make_shadeProgram()
 		std::cerr << "ERROR : SHADER LINK FAILED" << std::endl << errorLog << std::endl;
 		return -1;
 	}
+	else {
+		std::cerr << "SHADERS SUCESSFULLY LINKED" << std::endl;
+	}
+
 
 	glUseProgram(ShaderId);
 

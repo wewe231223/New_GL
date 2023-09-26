@@ -18,6 +18,7 @@ FileReader::FileReader(const char* path){
 	}
 
 
+	this->toFree = nullptr;
 
 	
 }

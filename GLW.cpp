@@ -10,15 +10,12 @@ GLW::GLW(int W, int H,const char* title) {
 	glutCreateWindow(title);
 
 
-#ifndef _GLEWINITED
-#define _GLEWINITED
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "FAIL TO INIT" << std::endl;
 	}
 	else {
 		std::cout << "INIT GLEW!" << std::endl;
 	}
-#endif // !_GLEWINITED
 
 
 
@@ -33,16 +30,12 @@ GLW::GLW(const char* title) {
 	glutCreateWindow(title);
 
 
-#ifndef _GLEWINITED
-#define _GLEWINITED
 	if (glewInit() != GLEW_OK) {
 		std::cerr << "FAIL TO INIT" << std::endl;
 	}
 	else {
 		std::cout << "INIT GLEW!" << std::endl;
 	}
-#endif // !_GLEWINITED
-
 }
 
 

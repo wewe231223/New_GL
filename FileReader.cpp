@@ -1,4 +1,6 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "FileReader.h"
+
 
 FileReader::FileReader(const char* path){
 
@@ -14,10 +16,37 @@ FileReader::FileReader(const char* path){
 	else {
 		std::cerr << "Failed to Open FILE" << std::endl;
 	}
+
+
+
+	
 }
 
-void FileReader::Test()
+
+
+
+
+
+
+
+
+
+void FileReader::Debug()
 {
 	std::cout << this->Buffer->str() << std::endl;
 
+}
+
+
+
+char* FileReader::GetSource()
+{
+	char* result = new char[this->Buffer->str().length() + 1];
+	
+	strcpy(result, this->Buffer->str().c_str());
+	
+	this->toFree = (void*)result;
+
+
+	return result;
 }

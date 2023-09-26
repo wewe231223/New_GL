@@ -13,6 +13,8 @@
 
 void Make_VertexShaders();
 void Make_FragmentShaders();
+void InitBuffer();
+
 GLuint Make_shadeProgram();
 GLvoid drawScene();
 GLvoid ReShape(int w, int h);
@@ -23,11 +25,26 @@ GLuint shaderProgramId;
 
 GLuint fragmentShader{};
 
+const GLfloat vPositionList[] = {
+	0.5f, 0.5f, 0.0f,	// 우측 상단
+	0.5f, -0.5f, 0.0f,	// 우측 하단
+	-0.5f, -0.5f, 0.0f, // 좌측 하단
+	-0.5f, 0.5f, 0.0f	// 좌측 상단
+};
+
+const GLuint index[] = {
+	0,1,3,
+	1,2,3
 
 
+};
+
+const GLfloat colors[3][3] = {
+	{ 1.0, 0.0, 0.0 }, { 0.0, 1.0, 0.0 }, { 0.0, 0.0, 1.0 }
+};
 
 
-	
+GLuint VAO, VBO[2], EBO;
 
 int main(int argc, char** argv) {
 
@@ -55,6 +72,7 @@ int main(int argc, char** argv) {
 	Make_VertexShaders();
 	Make_FragmentShaders();
 	shaderProgramId = Make_shadeProgram();
+	InitBuffer();
 
 
 
@@ -109,17 +127,16 @@ int main(int argc, char** argv) {
 
 
 GLvoid drawScene() {
-	Color4f BackGroundColor{ 0.f,0.f,1.f,1.f};
+	Color4f BackGroundColor{ 1.f,1.f,1.f,1.f};
 
 	glClearColor(BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
-	glClear(GL_COLOR_BUFFER_BIT);
-
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
 	glUseProgram(shaderProgramId);
+	glBindVertexArray(VAO);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	
 
-
-	glPointSize(5.0f);
-
-	glDrawArrays(GL_POINTS, 0, 1);
 
 	glutSwapBuffers();
 
@@ -254,5 +271,39 @@ GLuint Make_shadeProgram()
 	glUseProgram(ShaderId);
 
 
-	return GLuint();
+	return ShaderId;
+}
+
+void InitBuffer() {
+
+
+
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+
+	glGenBuffers(2, VBO);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vPositionList), vPositionList,GL_STATIC_DRAW);
+
+
+	glGenBuffers(1, &EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float),0);
+	glEnableVertexAttribArray(0);
+
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[1]);
+	glBufferData(GL_ARRAY_BUFFER, 9 * sizeof(GLfloat), colors, GL_STATIC_DRAW);
+
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glEnableVertexAttribArray(1);
+
+
+
+
+
 }

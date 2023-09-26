@@ -13,6 +13,7 @@ private:
 public:
 	FileReader(const char*);
 
+
 	void Debug();
 	char* GetSource();
 };

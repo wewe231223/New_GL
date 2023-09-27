@@ -11,13 +11,19 @@ private:
 	std::ifstream* Fptr = nullptr;
 	std::stringstream* Buffer = nullptr;
 	void* toFree;
+	bool Available = false;
 
 public:
 	FileReader(const char*);
 	FileReader() {};
+	
+	
+	
 	RETURNVOID ReleaseMemory(PARAMETERVOID);
-
 	RETURNVOID Debug(PARAMETERVOID);
+
+
+	bool GetAvailable();
 	char* GetSource(PARAMETERVOID);
 };
 

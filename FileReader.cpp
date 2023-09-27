@@ -11,10 +11,11 @@ FileReader::FileReader(const char* path){
 	if (this->Fptr->is_open()) {
 		*this->Buffer << this->Fptr->rdbuf();
 		this->Fptr->close();
-
+		this->Available = true;
 	}
 	else {
 		std::cerr << "Failed to Open FILE" << std::endl;
+		
 	}
 
 
@@ -22,6 +23,8 @@ FileReader::FileReader(const char* path){
 
 	
 }
+
+
 
 
 RETURNVOID FileReader::ReleaseMemory(PARAMETERVOID) {
@@ -41,6 +44,11 @@ RETURNVOID FileReader::Debug(PARAMETERVOID)
 }
 
 
+
+bool FileReader::GetAvailable()
+{
+	return this->Available;
+}
 
 char* FileReader::GetSource(PARAMETERVOID)
 {

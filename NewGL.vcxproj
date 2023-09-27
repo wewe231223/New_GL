@@ -135,6 +135,7 @@
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GLW.cpp" />
     <ClCompile Include="NewGL.cpp" />
+    <ClCompile Include="Object.cpp" />
     <ClCompile Include="RandomGenerater.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Scene1.cpp" />
@@ -148,6 +149,7 @@
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GLH.h" />
     <ClInclude Include="GLW.h" />
+    <ClInclude Include="Object.h" />
     <ClInclude Include="RandomGenerater.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Scene1.h" />

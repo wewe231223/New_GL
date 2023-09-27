@@ -11,6 +11,9 @@ enum ShaderType {
 	Fragment
 };
 
+enum DataName {
+	ShaderProgramID
+};
 
 
 
@@ -38,7 +41,11 @@ public:
 
 
 
-	void Create_Shader(ShaderType);
+	RETURNVOID Create_Shader(ShaderType);
+	RETURNVOID LINK_SHADER(PARAMETERVOID);
+
+
+	GLuint GetInfo(DataName);
 
 };
 

@@ -10,7 +10,7 @@ class FileReader{
 private:
 	std::ifstream* Fptr = nullptr;
 	std::stringstream* Buffer = nullptr;
-	void* toFree;
+	void* toFree = nullptr;
 	bool Available = false;
 
 public:

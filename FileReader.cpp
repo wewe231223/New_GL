@@ -24,6 +24,9 @@ FileReader::FileReader(const char* path){
 }
 
 
+RETURNVOID FileReader::ReleaseMemory(PARAMETERVOID) {
+	delete this->toFree;
+}
 
 
 
@@ -31,8 +34,7 @@ FileReader::FileReader(const char* path){
 
 
 
-
-void FileReader::Debug()
+RETURNVOID FileReader::Debug(PARAMETERVOID)
 {
 	std::cout << this->Buffer->str() << std::endl;
 
@@ -40,7 +42,7 @@ void FileReader::Debug()
 
 
 
-char* FileReader::GetSource()
+char* FileReader::GetSource(PARAMETERVOID)
 {
 	char* result = new char[this->Buffer->str().length() + 1];
 	

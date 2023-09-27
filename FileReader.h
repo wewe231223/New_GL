@@ -4,17 +4,20 @@
 #include <fstream>
 #include <sstream>
 
+#include "Definition.h"
+
 class FileReader{
 private:
-	std::ifstream* Fptr;
-	std::stringstream* Buffer;
+	std::ifstream* Fptr = nullptr;
+	std::stringstream* Buffer = nullptr;
 	void* toFree;
 
 public:
 	FileReader(const char*);
+	FileReader() {};
+	RETURNVOID ReleaseMemory(PARAMETERVOID);
 
-
-	void Debug();
-	char* GetSource();
+	RETURNVOID Debug(PARAMETERVOID);
+	char* GetSource(PARAMETERVOID);
 };
 

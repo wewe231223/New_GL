@@ -137,7 +137,6 @@ GLvoid drawScene() {
 
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-	glDrawElements(GL_LINES, 6, GL_UNSIGNED_INT, 0);
 	
 
 
@@ -155,27 +154,42 @@ GLvoid ReShape(int w, int h) {
 
 void InitBuffer() {
 
-
+	// 쓰기위한 VAO 생성
 	glGenVertexArrays(1, &VAO);
+	
+	//정점 쓰기위한 VBO 생성
 	glGenBuffers(1, &VBO);
 	
+	// 이제부터 VAO를 사용한다 
 	glBindVertexArray(VAO);
+	// 이제부터 VBO를 사용한다 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
 
-
+	// VertexData의 내용을 가져온다
 	glBufferData(GL_ARRAY_BUFFER, sizeof(VertexData), VertexData, GL_STATIC_DRAW);
 
+
+	// 아래 두 행위는 총 6개의 float를 하나의 블럭으로 인식한다 
+	// VertexData중에 블록당 3개의 정보를 0번지부터 VBO에 쓴다 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	// Shader Layout 0번에 넘겨준다 
 	glEnableVertexAttribArray(0);
 
+	//VertexData중에 블록당 3개의 정보를 3번지부터 VBO에 쓴다 
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), ( (void*)(3 * sizeof(float) ) ));
+	// Shader Layout 1번에 넘겨준다 
 	glEnableVertexAttribArray(1);
 
+	
 
-
+	//쓰기위한 EBO생성 
 	glGenBuffers(1, &EBO);
+
+	//이제부터 EBO를 사용한다 ( 아직 VAO사용중 )
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO); //--- GL_ELEMENT_ARRAY_BUFFER 버퍼 유형으로 바인딩
+
+	//EBO에 Index의 내용을 가져온다
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(index), index, GL_STATIC_DRAW);
 
 

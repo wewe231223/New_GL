@@ -11,6 +11,13 @@ typedef struct _POINT2f {
 	float y;
 }Point2F;
 
+
+typedef struct _POINT3F {
+	float x;
+	float y;
+	float z;
+}Point3F;
+
 typedef Point2F PIVOT;
 typedef Point2F Vector2F;
 
@@ -41,3 +48,11 @@ typedef struct _COLOR3F {
 	float g;
 	float b;
 }Color3f;
+
+
+
+
+typedef struct _VERTEXPACKAGE {
+	Point3F VertexPosition{};
+	Color3f VertexColor{};
+}VertexElement;

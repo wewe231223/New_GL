@@ -9,6 +9,7 @@
 #include "Scene2.h"
 #include "Shader.h"
 #include "FileReader.h"
+#include "Object.h"
 
 
 
@@ -25,7 +26,7 @@ const GLfloat VertexData[] = {
 	0.5f , 0.5f , 0.0f,			1.0f, 0.0f, 0.0f,
 	0.5f , -0.5f, 0.0f,			0.0f, 1.0f, 0.0f,
 	-0.5f, -0.5f, 0.0f,			0.0f, 0.0f, 1.0f,
-	-0.5f, 0.5f , 0.0f,			0.1f, 0.1f, 0.1f	
+	-0.5f, 0.5f , 0.0f,			1.0f, 1.0f, 1.0f	
 };
 
 const GLuint index[] = {
@@ -40,26 +41,39 @@ void InitShader();
 
 GLuint VAO, VBO, EBO;
 
+float V1[3] = {	-0.5f,	-0.5f,	0.0f};
+float V2[3] = {	0.5f,	-0.5f,0.0f };
+float V3[3] = { 0.0f,0.5f,0.0f };
+
+
+float VC1[3] = { 1.0f,0.0f,0.0f };
+float VC2[3] = { 0.0f,1.0f,0.0f };
+float VC3[3] = { 0.0f,0.0f,1.0f };
+
+VertexObject* Vo;
+
 int main(int argc, char** argv) {
-
-
 	INIT(&argc, argv);
-
-
 	GLW* MAINWINDOW = new GLW(800,600,"THIS IS TEST");
 
 
 
-	//MAINWINDOW->ResisterCallBackFunctions(Scene1_CallBackFunctions::CreateCallBackFunction());
-	//MAINWINDOW->ResisterCallBackFunctions(Scene2_CallBackFunctions::CreateCallBackFunction());
-
 	CallbackFunc CF;
 
+	
 
-
-	InitBuffer();
 	InitShader();
+	//InitBuffer();
 
+	Vo = new VertexObject;
+	Vo->Init();
+	Vo->ResisterVertex(Vertex_1, TVertex, V1);
+	Vo->ResisterVertex(Vertex_2, TVertex, V2);
+	Vo->ResisterVertex(Vertex_3, TVertex, V3);
+
+	Vo->ResisterVertex(Vertex_1, TColor, VC1);
+	Vo->ResisterVertex(Vertex_2, TColor, VC2);
+	Vo->ResisterVertex(Vertex_3, TColor, VC3);
 
 
 	CF.DrawCall = drawScene;
@@ -68,41 +82,6 @@ int main(int argc, char** argv) {
 	MAINWINDOW->ResisterCallBackFunctions(CF);
 
 	MAINWINDOW->Run();
-
-
-
-	//int width = 500;
-	//int height = 500;
-
-
-	//glutInit(&argc, argv);
-
-	//glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-
-	//glutInitWindowPosition(100, 100);
-
-	//glutInitWindowSize(width, height);
-
-
-	//glutCreateWindow("Example 1");
-
-
-	//glewExperimental = GL_TRUE;
-	//glewInit();
-
-
-	//Make_VertexShaders();
-	//Make_FragmentShaders();
-	//shaderProgramId = Make_shadeProgram();
-
-
-	//glutDisplayFunc(drawScene);
-	//glutReshapeFunc(ReShape);
-
-	//glutMainLoop();
-
-
-
 
 
 }
@@ -127,18 +106,20 @@ void InitShader() {
 
 
 
+
 GLvoid drawScene() {
-	Color4f BackGroundColor{ 0.f,0.f,0.f,1.f};
+
+	Color4f BackGroundColor{ 1.f,1.f,1.f,1.f};
 
 	glClearColor(BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		
 
-
-	glBindVertexArray(VAO);
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	//glBindVertexArray(VAO);
+	//glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	
-
+	glUseProgram(TestShader->GetInfo(ShaderProgramID));
+	Vo->Render();
 
 	glutSwapBuffers();
 

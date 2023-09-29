@@ -127,7 +127,7 @@ RETURNVOID Scene1_Rect::OnWindow(PARAMETERVOID) {
 
 Scene1::Scene1(PARAMETERVOID) {
 
-	for (auto i = 0; i < this->RandomEngine.RandInt(5, 20); ++i) {
+	for (auto i = 0; i < this->RandomEngine.RandInt(15, 30); ++i) {
 		Scene1_Rect NewRect;
 		this->Rects.push_back(NewRect);
 	}
@@ -328,10 +328,10 @@ namespace Scene1_CallBackFunctions {
 
 	RETURNVOID Idle(PARAMETERVOID) {
 
-		for (auto& i : SC1.Rects) {
-			i.Center.x += i.VectorX;
-			i.Center.y += i.VectorY;
-		}
+		//for (auto& i : SC1.Rects) {
+		//	i.Center.x += i.VectorX;
+		//	i.Center.y += i.VectorY;
+		//}
 		glutPostRedisplay();
 
 	}

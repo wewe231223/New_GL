@@ -143,7 +143,7 @@ GLuint Shader::GetInfo(DataName D)
 		return this->ShaderProgramID;
 	}
 
-	return GLuint();
+	
 }
 
 

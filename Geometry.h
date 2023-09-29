@@ -67,3 +67,8 @@ inline Point2F Translate(int PixelX, int PixelY,float DisplayWidth,float Display
 
 	return result;
 }
+
+enum PropertiesType {
+	Defined,
+	Random
+};

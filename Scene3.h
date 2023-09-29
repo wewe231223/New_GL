@@ -7,11 +7,11 @@
 
 
 
-class Triangle : public VertexObject {
+class IsoscelesTriangle : public VertexObject {
 private:
 
 	//이등변삼각형을 그린다 
-	Point2F Center{};
+	Point3F Center{};
 	GLfloat Width{};
 	GLfloat Height{};
 
@@ -19,34 +19,86 @@ private:
 
 
 public:
-	Triangle() { this->Init(); this->Properties(0.0f, 0.0f, 0.0f, 0.0f); };
+	IsoscelesTriangle() { this->Init(); };
 	
-	RETURNVOID CalculateVertex();
+	RETURNVOID Resister();
 
 
-	RETURNVOID Properties(float, float, float, float);
-	
+	RETURNVOID Properties(PropertiesType,float, float, float, float);
 	virtual RETURNVOID Render() override;
 	
 
 };
+
+class RightTriangle : public VertexObject {
+private:
+	
+
+
+};
+
+
+
+class Rectangle {
+
+private:
+	
+
+
+
+};
+
+
+
+
+
+class Dot : public VertexObject {
+private:
+	Point3F Center{};
+
+	RandomGenerater RG;
+
+public:
+	Dot() { this->Init(); };
+
+	RETURNVOID Resister();
+	RETURNVOID Properties(PropertiesType,float, float, float z);
+	virtual RETURNVOID Render() override;
+	
+
+
+};
+
+
+
+
+
+
+
+
+
 
 
 class Scene3
 {
 private:
 
-	std::vector<Triangle> Triangles{};
+	std::vector<IsoscelesTriangle> Triangles{};
+	std::vector<Dot> Dots{};
+
 	int ShapeCount = 0;
 
 public:
 
-	Scene3() {};
-	std::vector<Triangle> GetTriangles() { return this->Triangles; };
+	Scene3() {  };
+	std::vector<IsoscelesTriangle> GetTriangles() { return this->Triangles; };
+	std::vector<Dot> GetDots() { return this->Dots; }
 
-	RETURNVOID NewTriangle(Triangle);
 
+	RETURNVOID NewTriangle(IsoscelesTriangle);
+	RETURNVOID NewDot(Dot);
 
+	
 
 
 

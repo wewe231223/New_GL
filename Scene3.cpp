@@ -1,6 +1,6 @@
 #include "Scene3.h"
 
-RETURNVOID Triangle::CalculateVertex()
+RETURNVOID IsoscelesTriangle::Resister()
 {
 	const float V1[] = {
 	this->Center.x - this->Width / 2, 
@@ -10,16 +10,16 @@ RETURNVOID Triangle::CalculateVertex()
 
 
 	const float V2[] = {
-	this->Center.x + this->Width / 2, 
-	this->Center.y, 
-	0.0f
+	this->Center.x + this->Width / 2,
+	this->Center.y,
+	this->Center.z
 	};
 
 
 	const float V3[] = {
-	this->Center.x , 
+	this->Center.x ,
 	this->Center.y + this->Height,
-	0.0f
+	this->Center.z
 	};
 
 
@@ -97,11 +97,12 @@ RETURNVOID Triangle::CalculateVertex()
 	return RETURNVOID();
 }
 
-RETURNVOID Triangle::Properties(float Cx = 0.0f, float Cy = 0.0f , float W = 0.0f, float H = 0.0f)
+RETURNVOID IsoscelesTriangle::Properties(PropertiesType T, float Cx , float Cy  , float W , float H )
 {
-	if (W == 0.0f) {
+	if (T == Random) {
 		this->Center.x = this->RG.RandFloat(-1.0f, 1.0f);
 		this->Center.y = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Center.z = 0.0f;
 		
 		this->Width = this->RG.RandFloat(0.1f, 0.3f);
 		this->Height = this->RG.RandFloat(0.3f, 0.5f);
@@ -109,6 +110,7 @@ RETURNVOID Triangle::Properties(float Cx = 0.0f, float Cy = 0.0f , float W = 0.0
 	else {
 		this->Center.x = Cx;
 		this->Center.y = Cy;
+		this->Center.z = 0.0f;
 
 		this->Width = W;
 		this->Height = H;
@@ -118,20 +120,84 @@ RETURNVOID Triangle::Properties(float Cx = 0.0f, float Cy = 0.0f , float W = 0.0
 	return RETURNVOID();
 }
 
-RETURNVOID Triangle::Render()
+RETURNVOID IsoscelesTriangle::Render()
 {
-	this->CalculateVertex();
+
 	VertexObject::Render();
 	glDrawArrays(GL_TRIANGLES, 0, 3);
+	
+
+
 	return RETURNVOID();
 }
 
+//============================Dots==========================================================
+
+RETURNVOID Dot::Resister()
+{
+	float Color[] = {this->RG.RandFloat(0.0f,1.0f),this->RG.RandFloat(0.0f,1.0f),this->RG.RandFloat(0.0f,1.0f)};
+	float Point[] = {this->Center.x,this->Center.y,this->Center.y};
+
+	this->ResisterVertex(Vertex_1, TVertex, Point);
+	this->ResisterVertex(Vertex_1, TColor, Color);
+
+
+
+	this->ResisterVertex(Vertex_2, TVertex, Point);
+	this->ResisterVertex(Vertex_2, TColor, Color);
+
+
+	this->ResisterVertex(Vertex_3, TVertex, Point);
+	this->ResisterVertex(Vertex_3, TColor, Color);
+
+	return RETURNVOID();
+}
+
+RETURNVOID Dot::Properties(PropertiesType T, float x, float y, float z)
+{
+	if (T == Random) {
+		this->Center.x = this->RG.RandFloat(-1.f, 1.f);
+		this->Center.y = this->RG.RandFloat(-1.f, 1.f);
+		this->Center.z = 0.0f;
+	}
+	else {
+
+		this->Center.x = x;
+		this->Center.y = y;
+		this->Center.z = z;
+	}
+
+
+	return RETURNVOID();
+}
+
+
+RETURNVOID Dot::Render()
+{
+	glPointSize(10.0f);
+	VertexObject::Render();
+	glDrawArrays(GL_POINTS, 0, 1);
+	return RETURNVOID();
+}
+
+
+
+
 //============================Scenes==========================================================
 
-RETURNVOID Scene3::NewTriangle(Triangle T)
+RETURNVOID Scene3::NewTriangle(IsoscelesTriangle T)
 {
-	if (this->ShapeCount < 10) {
+	if (this->ShapeCount < 100) {
 		this->Triangles.push_back(T);
+		this->ShapeCount += 1;
+	}
+
+	return RETURNVOID();
+}
+
+RETURNVOID Scene3::NewDot(Dot D){
+	if (this->ShapeCount < 100) {
+		this->Dots.push_back(D);
 		this->ShapeCount += 1;
 	}
 
@@ -153,6 +219,7 @@ namespace Scene3_CallBackFunctions {
 RETURNVOID Scene3_CallBackFunctions::Draw()
 {
 
+
 	Color4f BackGroundColor{ 1.f,1.f,1.f,1.f };
 
 	glClearColor(BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
@@ -160,6 +227,10 @@ RETURNVOID Scene3_CallBackFunctions::Draw()
 
 
 	for (auto& i : Scene3_CallBackFunctions::SC3.GetTriangles()) {
+		i.Render();
+	}
+
+	for (auto& i : Scene3_CallBackFunctions::SC3.GetDots()) {
 		i.Render();
 	}
 
@@ -185,10 +256,21 @@ RETURNVOID Scene3_CallBackFunctions::MouseOnClick(int Button,int State,int x,int
 RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int y)
 {
 
-	if (key == 't') {
+	if (key == 't' || key == 'T') {
 		
-		Triangle newTriangle;
+		IsoscelesTriangle newTriangle;
+		newTriangle.Properties(Random, 0.f, 0.f, 0.f, 0.f);
+		newTriangle.Resister();
 		SC3.NewTriangle(newTriangle);
+	} 
+
+	if (key == 'p' || key == 'P') {
+
+		Dot newDot;
+		newDot.Properties(Random, 0.0f, 0.0f, 0.0f);
+		newDot.Resister();
+		SC3.NewDot(newDot);
+
 	}
 
 

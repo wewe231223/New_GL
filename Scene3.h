@@ -34,6 +34,8 @@ class RightTriangle : public VertexObject {
 private:
 	Point3F Center{};
 	GLfloat Side{};
+	Color3f Color{};
+
 
 	RandomGenerater RG;
 
@@ -41,7 +43,7 @@ public:
 	RightTriangle() { this->Init(); };
 
 	RETURNVOID Resister();
-	RETURNVOID Properties(PropertiesType, float, float, float);
+	RETURNVOID Properties(PropertiesType, float, float, float,Color3f);
 	virtual RETURNVOID Render() override;
 
 
@@ -56,7 +58,7 @@ private:
 	RightTriangle T1{};
 	RightTriangle T2{};
 
-	
+
 	Point3F Center{};
 	GLfloat Side{};
 
@@ -96,7 +98,22 @@ public:
 };
 
 
+class Line : public VertexObject {
+private:
+	Point3F Start{};
+	Point3F End{};
+	Color3f Color{};
 
+	RandomGenerater RG;
+public:
+	Line() { this->Init(); }
+
+	RETURNVOID Resister();
+	RETURNVOID Properties(PropertiesType, Point2F, Point2F,Color3f);
+	virtual RETURNVOID Render() override;
+
+
+};
 
 
 
@@ -112,6 +129,7 @@ private:
 	std::vector<IsoscelesTriangle> Triangles{};
 	std::vector<Dot> Dots{};
 	std::vector<Rectangle_> Rectangles{};
+	std::vector<Line> Lines{};
 
 	int ShapeCount = 0;
 
@@ -121,13 +139,14 @@ public:
 	std::vector<IsoscelesTriangle> GetTriangles() { return this->Triangles; };
 	std::vector<Dot> GetDots() { return this->Dots; }
 	std::vector<Rectangle_> GetRects() { return this->Rectangles; }
+	std::vector<Line> GetLines() { return this->Lines; }
 
 
 
 	RETURNVOID NewTriangle(IsoscelesTriangle);
 	RETURNVOID NewDot(Dot);
 	RETURNVOID NewRect(Rectangle_);
-	
+	RETURNVOID NewLine(Line);
 
 
 

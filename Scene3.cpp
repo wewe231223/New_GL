@@ -1,5 +1,7 @@
 #include "Scene3.h"
 
+#define MAX_SHAPES 100
+
 RETURNVOID IsoscelesTriangle::Resister()
 {
 	const float V1[] = {
@@ -158,9 +160,9 @@ RETURNVOID RightTriangle::Resister()
 
 
 
-	float R = this->RG.RandFloat(0.0f, 1.0f);
-	float G = this->RG.RandFloat(0.0f, 1.0f);
-	float B = this->RG.RandFloat(0.0f, 1.0f);
+	float R = this->Color.r;
+	float G = this->Color.g;
+	float B = this->Color.b;
 
 
 	// Random Color all Vertex
@@ -231,7 +233,7 @@ RETURNVOID RightTriangle::Resister()
 	return RETURNVOID();
 }
 
-RETURNVOID RightTriangle::Properties(PropertiesType T, float Cx, float Cy, float s)
+RETURNVOID RightTriangle::Properties(PropertiesType T, float Cx, float Cy, float s,Color3f C)
 {
 
 	if (T == Random) {
@@ -240,13 +242,26 @@ RETURNVOID RightTriangle::Properties(PropertiesType T, float Cx, float Cy, float
 		this->Center.z = 0.0f;
 
 		this->Side = this->RG.RandFloat(0.1f, 0.3f);
+
+		float ColorCode = this->RG.RandFloat(0.f, 1.f);
+		this->Color.r = ColorCode;
+		this->Color.g = ColorCode;
+		this->Color.b = ColorCode;
+
 	}
 	else {
 		this->Center.x = Cx;
 		this->Center.y = Cy;
 		this->Center.z = 0.0f;
 
+
 		this->Side = s;
+		
+		this->Color.r = C.r;
+		this->Color.g = C.g;
+		this->Color.b = C.b;
+
+
 	}
 
 
@@ -266,9 +281,17 @@ RETURNVOID RightTriangle::Render()
 
 RETURNVOID Rectangle_::Resister()
 {
-	this->T1.Properties(Defined, this->Center.x - this->Side / 2, this->Center.y - this->Side / 2, this->Side);
 
-	this->T2.Properties(Defined, this->Center.x + this->Side / 2, this->Center.y + this->Side / 2, -this->Side);
+	Color3f Color = {
+		this->RG.RandFloat(0.f,1.f),
+		this->RG.RandFloat(0.f,1.f),
+		this->RG.RandFloat(0.f,1.f)
+	};
+
+
+	this->T1.Properties(Defined, this->Center.x - this->Side / 2, this->Center.y - this->Side / 2, this->Side,Color);
+	
+	this->T2.Properties(Defined, this->Center.x + this->Side / 2, this->Center.y + this->Side / 2, -this->Side,Color);
 
 	this->T1.Resister();
 	this->T2.Resister();
@@ -365,6 +388,83 @@ RETURNVOID Dot::Render()
 	return RETURNVOID();
 }
 
+//============================Lines==========================================================
+
+
+RETURNVOID Line::Resister()
+{
+	const float Color[] = { this->Color.r,this->Color.g,this->Color.b };
+	const float V1[] = { this->Start.x,this->Start.y,this->Start.z };
+	const float V2[] = { this->End.x,this->End.y,this->End.z };
+
+
+	this->ResisterVertex(Vertex_1, TVertex, V1);
+	this->ResisterVertex(Vertex_2, TVertex, V2);
+	this->ResisterVertex(Vertex_3, TVertex, V1);
+
+
+	this->ResisterVertex(Vertex_1, TColor, Color);
+	this->ResisterVertex(Vertex_2, TColor, Color);
+	this->ResisterVertex(Vertex_3, TColor, Color);
+
+	
+
+
+	return RETURNVOID();
+}
+
+
+RETURNVOID Line::Properties(PropertiesType T, Point2F S,Point2F E,Color3f C) {
+
+	if (T == Random) {
+		this->Color.r = this->RG.RandFloat(0.0f, 1.0f);
+		this->Color.g = this->RG.RandFloat(0.0f, 1.0f);
+		this->Color.b = this->RG.RandFloat(0.0f, 1.0f);
+
+
+		this->Start.x = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Start.y = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Start.z = 0.0f;
+
+
+		this->End.x = this->RG.RandFloat(-1.0f, 1.0f);
+		this->End.y = this->RG.RandFloat(-1.0f, 1.0f);
+		this->End.z = 0.0f;
+
+	}
+	else if (T == Defined) {
+		this->Color.r = C.r;
+		this->Color.g = C.g;
+		this->Color.b = C.b;
+
+
+		this->Start.x = S.x;
+		this->Start.y = S.y;
+		this->Start.z = 0.f;
+
+		this->End.x = E.x;
+		this->End.y = E.y;
+		this->End.z = 0.0f;
+
+
+	}
+
+
+
+	return RETURNVOID();
+}
+
+
+
+RETURNVOID Line::Render()
+{
+
+	glLineWidth(5.f);
+
+	VertexObject::Render();
+	glDrawArrays(GL_LINES, 0, 2);
+	return RETURNVOID();
+}
 
 
 
@@ -372,7 +472,7 @@ RETURNVOID Dot::Render()
 
 RETURNVOID Scene3::NewTriangle(IsoscelesTriangle T)
 {
-	if (this->ShapeCount < 100) {
+	if (this->ShapeCount < MAX_SHAPES) {
 		this->Triangles.push_back(T);
 		this->ShapeCount += 1;
 	}
@@ -381,7 +481,7 @@ RETURNVOID Scene3::NewTriangle(IsoscelesTriangle T)
 }
 
 RETURNVOID Scene3::NewDot(Dot D){
-	if (this->ShapeCount < 100) {
+	if (this->ShapeCount < MAX_SHAPES) {
 		this->Dots.push_back(D);
 		this->ShapeCount += 1;
 	}
@@ -391,7 +491,7 @@ RETURNVOID Scene3::NewDot(Dot D){
 
 RETURNVOID Scene3::NewRect(Rectangle_ R) 
 {
-	if (this->ShapeCount < 100) {
+	if (this->ShapeCount < MAX_SHAPES) {
 		this->Rectangles.push_back(R);
 		this->ShapeCount += 1;
 	}
@@ -401,7 +501,15 @@ RETURNVOID Scene3::NewRect(Rectangle_ R)
 }
 
 
+RETURNVOID Scene3::NewLine(Line L)
+{
+	if (this->ShapeCount < MAX_SHAPES) {
+		this->Lines.push_back(L);
+		this->ShapeCount += 1;
+	}
 
+	return RETURNVOID();
+}
 
 
 
@@ -433,6 +541,12 @@ RETURNVOID Scene3_CallBackFunctions::Draw()
 	for (auto& i : Scene3_CallBackFunctions::SC3.GetRects()) {
 		i.Render();
 	}
+
+	for (auto& i : Scene3_CallBackFunctions::SC3.GetLines()) {
+		i.Render();
+	}
+
+
 
 	glutSwapBuffers();
 
@@ -479,6 +593,13 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 		newRect.Resister();
 		SC3.NewRect(newRect);
 
+	}
+	
+	if (key == 'l' || key == 'L') {
+		Line newLine;
+		newLine.Properties(Random, Point2F{0.0f,0.0f}, Point2F{ 0.0f,0.0f }, Color3f{0.0f,0.f,0.f});
+		newLine.Resister();
+		SC3.NewLine(newLine);
 	}
 
 	glutPostRedisplay();

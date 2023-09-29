@@ -23,8 +23,10 @@ public:
 	
 	RETURNVOID CalculateVertex();
 
+
 	RETURNVOID Properties(float, float, float, float);
 	
+	virtual RETURNVOID Render() override;
 	
 
 };
@@ -35,14 +37,14 @@ class Scene3
 private:
 
 	std::vector<Triangle> Triangles{};
-
+	int ShapeCount = 0;
 
 public:
 
 	Scene3() {};
 	std::vector<Triangle> GetTriangles() { return this->Triangles; };
 
-	RETURNVOID NewTriangle(Triangle T) { this->Triangles.push_back(T); };
+	RETURNVOID NewTriangle(Triangle);
 
 
 

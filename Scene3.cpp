@@ -23,23 +23,57 @@ RETURNVOID Triangle::CalculateVertex()
 	};
 
 
+	float R = this->RG.RandFloat(0.0f, 1.0f);
+	float G = this->RG.RandFloat(0.0f, 1.0f);
+	float B = this->RG.RandFloat(0.0f, 1.0f);
+
+
+	// Random Color all Vertex
 	const float VC1[] = {
-	this->RG.RandFloat(0.0f,1.0f),
-	this->RG.RandFloat(0.0f,1.0f),
-	this->RG.RandFloat(0.0f,1.0f)
+	R,
+	G,
+	B
 	};
+
 
 	const float VC2[] = {
-	this->RG.RandFloat(0.0f,1.0f),
-	this->RG.RandFloat(0.0f,1.0f),
-	this->RG.RandFloat(0.0f,1.0f)
+	R,
+	G,
+	B	
 	};
 
+
 	const float VC3[] = {
-	this->RG.RandFloat(0.0f,1.0f),
-	this->RG.RandFloat(0.0f,1.0f),
-	this->RG.RandFloat(0.0f,1.0f)
+	R,
+	G,
+	B
 	};
+
+
+
+
+
+
+
+	// Random Color each Vertex
+
+	//const float VC1[] = {
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f)
+	//};
+
+	//const float VC2[] = {
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f)
+	//};
+
+	//const float VC3[] = {
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f)
+	//};
 
 
 
@@ -84,6 +118,32 @@ RETURNVOID Triangle::Properties(float Cx = 0.0f, float Cy = 0.0f , float W = 0.0
 	return RETURNVOID();
 }
 
+RETURNVOID Triangle::Render()
+{
+	this->CalculateVertex();
+	VertexObject::Render();
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	return RETURNVOID();
+}
+
+//============================Scenes==========================================================
+
+RETURNVOID Scene3::NewTriangle(Triangle T)
+{
+	if (this->ShapeCount < 10) {
+		this->Triangles.push_back(T);
+		this->ShapeCount += 1;
+	}
+
+	return RETURNVOID();
+}
+
+
+
+
+
+
+//============================CallBacks==========================================================
 
 namespace Scene3_CallBackFunctions {
 	Scene3 SC3{};
@@ -100,7 +160,6 @@ RETURNVOID Scene3_CallBackFunctions::Draw()
 
 
 	for (auto& i : Scene3_CallBackFunctions::SC3.GetTriangles()) {
-		i.CalculateVertex();
 		i.Render();
 	}
 
@@ -127,6 +186,7 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 {
 
 	if (key == 't') {
+		
 		Triangle newTriangle;
 		SC3.NewTriangle(newTriangle);
 	}

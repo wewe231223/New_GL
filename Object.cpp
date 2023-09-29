@@ -96,9 +96,6 @@ RETURNVOID VertexObject::Render()
 
 
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-
-
 
 }
 

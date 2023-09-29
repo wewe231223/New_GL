@@ -12,34 +12,7 @@
 #include "FileReader.h"
 
 
-
-
-
-void InitBuffer();
-
-GLvoid drawScene();
-GLvoid ReShape(int w, int h);
-
-
-
-
-const GLfloat VertexData[] = {
-	0.5f , 0.5f , 0.0f,			1.0f, 0.0f, 0.0f,
-	0.5f , -0.5f, 0.0f,			0.0f, 1.0f, 0.0f,
-	-0.5f, -0.5f, 0.0f,			0.0f, 0.0f, 1.0f,
-	-0.5f, 0.5f , 0.0f,			1.0f, 1.0f, 1.0f	
-};
-
-const GLuint index[] = {
-	0,1,3,
-	1,2,3
-};
-
-
-Shader* TestShader;
-
-void InitShader();
-
+Shader* MainShader;
 
 
 int main(int argc, char** argv) {
@@ -47,17 +20,17 @@ int main(int argc, char** argv) {
 	GLW* MAINWINDOW = new GLW(800,600,"THIS IS TEST");
 
 
-	TestShader = new Shader;
+	MainShader = new Shader;
 
 
-	TestShader->Resister_ShaderSource("Vertex.glsl", Vertex);
-	TestShader->Resister_ShaderSource("Fragment.glsl", Fragment);
+	MainShader->Resister_ShaderSource("Vertex.glsl", Vertex);
+	MainShader->Resister_ShaderSource("Fragment.glsl", Fragment);
 
-	TestShader->Create_Shader(Vertex);
-	TestShader->Create_Shader(Fragment);
+	MainShader->Create_Shader(Vertex);
+	MainShader->Create_Shader(Fragment);
 
 
-	TestShader->LINK_SHADER();
+	MainShader->LINK_SHADER();
 
 
 	MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
@@ -66,12 +39,6 @@ int main(int argc, char** argv) {
 
 }
 
-
-
-void InitShader() {
-
-
-}
 
 
 

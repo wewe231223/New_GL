@@ -130,6 +130,191 @@ RETURNVOID IsoscelesTriangle::Render()
 
 	return RETURNVOID();
 }
+//============================RightTriangle==========================================================
+
+
+RETURNVOID RightTriangle::Resister()
+{
+	
+
+	const float V1[] = {
+		this->Center.x,
+		this->Center.y,
+		this->Center.z
+	};
+
+	const float V2[] = {
+		this->Center.x + this->Side,
+		this->Center.y,
+		this->Center.z
+	};
+
+
+	const float V3[] = {
+		this->Center.x,
+		this->Center.y + this->Side,
+		this->Center.z
+	};
+
+
+
+	float R = this->RG.RandFloat(0.0f, 1.0f);
+	float G = this->RG.RandFloat(0.0f, 1.0f);
+	float B = this->RG.RandFloat(0.0f, 1.0f);
+
+
+	// Random Color all Vertex
+	const float VC1[] = {
+	R,
+	G,
+	B
+	};
+
+
+	const float VC2[] = {
+	R,
+	G,
+	B
+	};
+
+
+	const float VC3[] = {
+	R,
+	G,
+	B
+	};
+
+
+
+
+
+
+
+	// Random Color each Vertex
+
+	//const float VC1[] = {
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f)
+	//};
+
+	//const float VC2[] = {
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f)
+	//};
+
+	//const float VC3[] = {
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f),
+	//this->RG.RandFloat(0.0f,1.0f)
+	//};
+
+
+
+	this->ResisterVertex(Vertex_1, TVertex, V1);
+	this->ResisterVertex(Vertex_2, TVertex, V2);
+	this->ResisterVertex(Vertex_3, TVertex, V3);
+
+
+	this->ResisterVertex(Vertex_1, TColor, VC1);
+	this->ResisterVertex(Vertex_2, TColor, VC2);
+	this->ResisterVertex(Vertex_3, TColor, VC3);
+
+	// ¹Ý½Ã°è!
+
+
+
+	
+
+
+	return RETURNVOID();
+}
+
+RETURNVOID RightTriangle::Properties(PropertiesType T, float Cx, float Cy, float s)
+{
+
+	if (T == Random) {
+		this->Center.x = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Center.y = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Center.z = 0.0f;
+
+		this->Side = this->RG.RandFloat(0.1f, 0.3f);
+	}
+	else {
+		this->Center.x = Cx;
+		this->Center.y = Cy;
+		this->Center.z = 0.0f;
+
+		this->Side = s;
+	}
+
+
+	return RETURNVOID();
+}
+
+RETURNVOID RightTriangle::Render()
+{
+
+	VertexObject::Render();
+	glDrawArrays(GL_TRIANGLES, 0, 3);
+	return RETURNVOID();
+}
+
+
+//============================Rectangle==========================================================
+
+RETURNVOID Rectangle_::Resister()
+{
+	this->T1.Properties(Defined, this->Center.x - this->Side / 2, this->Center.y - this->Side / 2, this->Side);
+
+	this->T2.Properties(Defined, this->Center.x + this->Side / 2, this->Center.y + this->Side / 2, -this->Side);
+
+	this->T1.Resister();
+	this->T2.Resister();
+
+	return RETURNVOID();
+}
+
+
+
+RETURNVOID Rectangle_::Properties(PropertiesType T, float Cx, float Cy, float s) {
+
+	if (T == Random) {
+
+		this->Center.x = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Center.y = this->RG.RandFloat(-1.0f, 1.0f);
+		this->Side = this->RG.RandFloat(0.1f, 0.5f);
+
+
+	}
+	else if (T == Defined) {
+		this->Center.x = Cx;
+		this->Center.y = Cy;
+		this->Center.z = 0.0f;
+
+		this->Side = s;
+	}
+
+
+
+}
+
+RETURNVOID Rectangle_::Render()
+{
+	T1.Render();
+	T2.Render();
+	return RETURNVOID();
+}
+
+
+
+
+
+
+
+
+
 
 //============================Dots==========================================================
 
@@ -204,6 +389,17 @@ RETURNVOID Scene3::NewDot(Dot D){
 	return RETURNVOID();
 }
 
+RETURNVOID Scene3::NewRect(Rectangle_ R) 
+{
+	if (this->ShapeCount < 100) {
+		this->Rectangles.push_back(R);
+		this->ShapeCount += 1;
+	}
+
+
+	return RETURNVOID();
+}
+
 
 
 
@@ -220,7 +416,7 @@ RETURNVOID Scene3_CallBackFunctions::Draw()
 {
 
 
-	Color4f BackGroundColor{ 1.f,1.f,1.f,1.f };
+	Color4f BackGroundColor{ 0.f,0.f,0.f,1.f };
 
 	glClearColor(BackGroundColor.r, BackGroundColor.g, BackGroundColor.b, BackGroundColor.a);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -231,6 +427,10 @@ RETURNVOID Scene3_CallBackFunctions::Draw()
 	}
 
 	for (auto& i : Scene3_CallBackFunctions::SC3.GetDots()) {
+		i.Render();
+	}
+
+	for (auto& i : Scene3_CallBackFunctions::SC3.GetRects()) {
 		i.Render();
 	}
 
@@ -273,6 +473,13 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 
 	}
 
+	if (key == 'r' || key == 'R') {
+		Rectangle_ newRect;
+		newRect.Properties(Random, 0.0f, 0.0f, 0.0f);
+		newRect.Resister();
+		SC3.NewRect(newRect);
+
+	}
 
 	glutPostRedisplay();
 

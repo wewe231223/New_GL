@@ -32,17 +32,43 @@ public:
 
 class RightTriangle : public VertexObject {
 private:
-	
+	Point3F Center{};
+	GLfloat Side{};
+
+	RandomGenerater RG;
+
+public:
+	RightTriangle() { this->Init(); };
+
+	RETURNVOID Resister();
+	RETURNVOID Properties(PropertiesType, float, float, float);
+	virtual RETURNVOID Render() override;
+
 
 
 };
 
 
 
-class Rectangle {
+class Rectangle_ {
 
 private:
+	RightTriangle T1{};
+	RightTriangle T2{};
+
 	
+	Point3F Center{};
+	GLfloat Side{};
+
+
+	RandomGenerater RG{};
+
+public:
+	Rectangle_() {}
+
+	RETURNVOID Resister();
+	RETURNVOID Properties(PropertiesType, float, float, float);
+	RETURNVOID Render();
 
 
 
@@ -85,6 +111,7 @@ private:
 
 	std::vector<IsoscelesTriangle> Triangles{};
 	std::vector<Dot> Dots{};
+	std::vector<Rectangle_> Rectangles{};
 
 	int ShapeCount = 0;
 
@@ -93,11 +120,13 @@ public:
 	Scene3() {  };
 	std::vector<IsoscelesTriangle> GetTriangles() { return this->Triangles; };
 	std::vector<Dot> GetDots() { return this->Dots; }
+	std::vector<Rectangle_> GetRects() { return this->Rectangles; }
+
 
 
 	RETURNVOID NewTriangle(IsoscelesTriangle);
 	RETURNVOID NewDot(Dot);
-
+	RETURNVOID NewRect(Rectangle_);
 	
 
 

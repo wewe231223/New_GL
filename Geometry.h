@@ -23,7 +23,6 @@ typedef Point2F Vector2F;
 
 
 
-
 typedef struct _SIZE2I{
 	int Width;
 	int Height;
@@ -56,3 +55,15 @@ typedef struct _VERTEXPACKAGE {
 	Point3F VertexPosition{};
 	Color3f VertexColor{};
 }VertexElement;
+
+
+inline Point2F Translate(int PixelX, int PixelY,float DisplayWidth,float DisplayHeight) {
+
+	Point2F result{};
+	 
+	result.x = static_cast<float>(PixelX) / DisplayWidth * 2.0f - 1.0f;
+	result.y = 1.0f - static_cast<float>(PixelY) / DisplayHeight * 2.0f;
+	
+
+	return result;
+}

@@ -31,7 +31,7 @@ public:
 
 	VertexObject() {}
 	RETURNVOID Init();
-	RETURNVOID ResisterVertex(VertexNo,VertexType,float*);
+	RETURNVOID ResisterVertex(VertexNo,VertexType,const float*);
 	RETURNVOID Render();
 };
 

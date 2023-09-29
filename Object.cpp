@@ -16,7 +16,7 @@ RETURNVOID VertexObject::Init()
 	return RETURNVOID();
 }
 
-RETURNVOID VertexObject::ResisterVertex(VertexNo T,VertexType V,float* Array) {
+RETURNVOID VertexObject::ResisterVertex(VertexNo T,VertexType V,const float* Array) {
 	if (V == TVertex) {
 		if (T == Vertex_1) {
 			this->Vertex1.VertexPosition.x = Array[0];

@@ -141,7 +141,9 @@
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Scene3.cpp" />
+    <ClCompile Include="Scene4.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="StandardShape.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h" />
@@ -156,7 +158,9 @@
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Scene3.h" />
+    <ClInclude Include="Scene4.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="StandardShape.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Fragment.glsl" />

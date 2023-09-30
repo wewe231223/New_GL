@@ -13,93 +13,117 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="소스 파일\Regacy">
+      <UniqueIdentifier>{15e1ae14-4ba7-475e-bc2c-004cd3b04d14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\System">
+      <UniqueIdentifier>{d0f283c5-30ce-40ca-b69b-455865a636e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Scene">
+      <UniqueIdentifier>{d6a57bb9-bcff-43f8-8b52-e593d5f05fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\Shape">
+      <UniqueIdentifier>{93674187-119f-437f-853e-44a56f845bd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Regacy">
+      <UniqueIdentifier>{577cf529-9244-4aa3-9392-0ab706ed84b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\System">
+      <UniqueIdentifier>{4959eed8-4167-474f-a863-2ffb35c616f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Scene">
+      <UniqueIdentifier>{5e12c602-f021-478f-9b81-070bb4ad80b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Shape">
+      <UniqueIdentifier>{adfdc4c1-473a-42f1-b6ef-f29e4e658307}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NewGL.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GLW.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomGenerater.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="Collider.cpp">
+      <Filter>소스 파일\Regacy</Filter>
     </ClCompile>
     <ClCompile Include="Rect.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene1.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Collider.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene2.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Regacy</Filter>
     </ClCompile>
     <ClCompile Include="FileReader.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\System</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="RandomGenerater.cpp">
+      <Filter>소스 파일\System</Filter>
     </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="GLW.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="NewGL.cpp">
+      <Filter>소스 파일\System</Filter>
     </ClCompile>
     <ClCompile Include="Scene3.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="StandardShape.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene4.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
+    <ClCompile Include="StandardShape.cpp">
+      <Filter>소스 파일\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>소스 파일\Shape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GLH.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="GLW.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomGenerater.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Collider.h">
+      <Filter>헤더 파일\Regacy</Filter>
     </ClInclude>
     <ClInclude Include="Rect.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Geometry.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Regacy</Filter>
     </ClInclude>
     <ClInclude Include="Definition.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene1.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Collider.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene2.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\System</Filter>
     </ClInclude>
     <ClInclude Include="FileReader.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\System</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Geometry.h">
+      <Filter>헤더 파일\System</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="GLH.h">
+      <Filter>헤더 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="GLW.h">
+      <Filter>헤더 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomGenerater.h">
+      <Filter>헤더 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene1.h">
+      <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene3.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="StandardShape.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="Scene2.h">
+      <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene4.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>헤더 파일\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardShape.h">
+      <Filter>헤더 파일\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>헤더 파일\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

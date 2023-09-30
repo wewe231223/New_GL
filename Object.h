@@ -2,6 +2,8 @@
 #include "Geometry.h"
 #include "GLH.h"
 
+#include <iostream>
+
 enum VertexNo {
 	Vertex_1,
 	Vertex_2,

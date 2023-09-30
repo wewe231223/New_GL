@@ -72,3 +72,10 @@ enum PropertiesType {
 	Defined,
 	Random
 };
+
+enum Direction {
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN
+};

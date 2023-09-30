@@ -13,7 +13,6 @@ RETURNVOID VertexObject::Init()
 	glGenBuffers(1, &(this->VBO_Position));
 	glGenBuffers(1, &(this->VBO_Color));
 
-	return RETURNVOID();
 }
 
 RETURNVOID VertexObject::ResisterVertex(VertexNo T,VertexType V,const float* Array) {
@@ -55,7 +54,6 @@ RETURNVOID VertexObject::ResisterVertex(VertexNo T,VertexType V,const float* Arr
 
 
 
-	return RETURNVOID();
 }
 
 
@@ -78,8 +76,12 @@ RETURNVOID VertexObject::Render()
 	};
 
 
+//	std::cout << this->Vertex1.VertexColor.r << std::endl;
+
+
+
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO_Position);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Verties), Verties, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Verties), Verties, GL_DYNAMIC_DRAW);
 
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);

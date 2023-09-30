@@ -69,6 +69,10 @@ RETURNVOID GLW::ResisterCallBackFunctions(CallbackFunc CF) {
 		glutKeyboardFunc(CF.KeyboardInputCall);
 	}
 
+	if (CF.KeyboardOffCall != nullptr) {
+		glutKeyboardUpFunc(CF.KeyboardOffCall);
+	}
+
 
 	if (CF.MouseCall != nullptr) {
 		glutMouseFunc(CF.MouseCall);

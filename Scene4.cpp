@@ -192,6 +192,108 @@ RETURNVOID Scene4::Render()
 	return RETURNVOID();
 }
 
+RETURNVOID Scene4::Clicked(Qudrant Q, Point2F GP)
+{
+	float Width{};
+	float Height{};
+
+	if (Q == Q1) {
+
+		
+		Width = this->RG.RandFloat(0.1f, 0.5f);
+		Height = this->RG.RandFloat(0.1f, 0.5f);
+
+
+
+
+		this->T1.Properties(Defined,
+			GP.x,
+			GP.y,
+			Width,
+			Height,
+			Color3f{
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f)
+			}
+		);
+		this->T1.Resister();
+
+	}
+	else if (Q == Q2) {
+		Width = this->RG.RandFloat(0.1f, 0.5f);
+		Height = this->RG.RandFloat(0.1f, 0.5f);
+
+
+
+
+		this->T2.Properties(Defined,
+			GP.x,
+			GP.y,
+			Width,
+			Height,
+			Color3f{
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f)
+			}
+		);
+		this->T2.Resister();
+	}
+	else if (Q == Q3) {
+		Width = this->RG.RandFloat(0.1f, 0.5f);
+		Height = this->RG.RandFloat(0.1f, 0.5f);
+
+
+
+
+		this->T3.Properties(Defined,
+			GP.x,
+			GP.y,
+			Width,
+			Height,
+			Color3f{
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f)
+			}
+		);
+		this->T3.Resister();
+
+
+
+
+
+	}
+	else {
+		Width = this->RG.RandFloat(0.1f, 0.5f);
+		Height = this->RG.RandFloat(0.1f, 0.5f);
+
+
+
+
+		this->T4.Properties(Defined,
+			GP.x,
+			GP.y,
+			Width,
+			Height,
+			Color3f{
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f),
+				this->RG.RandFloat(0.f,1.f)
+			}
+		);
+		this->T4.Resister();
+	}
+
+
+
+
+
+
+	return RETURNVOID();
+}
+
 
 RETURNVOID Scene4::Reset()
 {
@@ -328,14 +430,53 @@ namespace Scene4_CallBackFunctions {
 	{
 
 		if (Key == 'r' || Key == 'R') {
-
 			SC4.Reset();
+		}
+
+
+		glutPostRedisplay();
+		return RETURNVOID();
+	}
+
+	RETURNVOID MouseInput(int Key, int State, int x, int y)
+	{
+		Point2F GLPoint = Translate(x, y, static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)),static_cast<float>( glutGet(GLUT_WINDOW_HEIGHT)));
+
+
+		if (State == GLUT_DOWN) {
+			if (GLPoint.x < 0 && GLPoint.y > 0) {
+				//1사분면
+				SC4.Clicked(Q1, GLPoint);
+			}
+
+			if (GLPoint.x > 0 && GLPoint.y > 0) {
+				//2사분면
+				SC4.Clicked(Q2, GLPoint);
+
+			}
+
+
+			if (GLPoint.x < 0 && GLPoint.y < 0) {
+				//3사분면
+				SC4.Clicked(Q3, GLPoint);
+
+			}
+
+
+			if (GLPoint.x > 0 && GLPoint.y < 0) {
+				//4사분면
+				SC4.Clicked(Q4, GLPoint);
+
+			}
+
+
 
 
 		}
 
 
 		glutPostRedisplay();
+
 		return RETURNVOID();
 	}
 
@@ -350,7 +491,7 @@ namespace Scene4_CallBackFunctions {
 
 		result.DrawCall = Scene4_CallBackFunctions::Draw;
 		result.KeyboardInputCall = KeyboardInput;
-
+		result.MouseCall = MouseInput;
 
 
 		return result;

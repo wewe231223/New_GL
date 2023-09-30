@@ -2,13 +2,13 @@
 #include "StandardShape.h"
 
 
-enum ResetFlag {
-	RF_T1,
-	RF_T2,
-	RF_T3,
-	RF_T4
-};
 
+enum Qudrant {
+	Q1, // 1	사분면
+	Q2, // 2	사분면
+	Q3, // 3	사분면
+	Q4  // 4	사분면
+};
 
 class Scene4 {
 private:
@@ -34,6 +34,7 @@ public:
 	RETURNVOID Init();
 	RETURNVOID Render();
 
+	RETURNVOID Clicked(Qudrant, Point2F);
 
 	RETURNVOID Reset();
 
@@ -47,6 +48,8 @@ namespace Scene4_CallBackFunctions{
 	RETURNVOID Draw();
 
 	RETURNVOID KeyboardInput(unsigned char, int, int);
+	RETURNVOID MouseInput(int, int, int, int);
+
 
 	CallbackFunc Resister_Scene4(PARAMETERVOID);
 }

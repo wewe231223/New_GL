@@ -24,10 +24,17 @@ public:
 	RETURNVOID Properties(PropertiesType, float, float, float, float, Color3f);
 	virtual RETURNVOID Render() override;
 
+
 	RETURNVOID Move(Vector2F);
 
+	Point3F GetCenter() { return this->Center; }
+	GLfloat GetWidth() { return this->Width; }
+	GLfloat GetHeight() { return this->Height; }
 
 };
+
+
+
 
 class RightTriangle : public VertexObject {
 private:

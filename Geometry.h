@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 typedef struct _POINT2I {
 	int x;
@@ -67,6 +68,12 @@ inline Point2F Translate(int PixelX, int PixelY,float DisplayWidth,float Display
 
 	return result;
 }
+
+inline float Triangle_Area(Point2F p1, Point2F p2, Point2F p3) {
+// From Gauss's Triangle Area Formula
+	return abs((p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) / 2.0f);
+}
+
 
 enum PropertiesType {
 	Defined,

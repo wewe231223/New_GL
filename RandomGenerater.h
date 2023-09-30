@@ -4,14 +4,12 @@
 #include "Definition.h"
 
 
-class RandomGenerater{
-private:
-	std::mt19937 gen;
-	
-	
+
+
+class RandomGenerater{	
 public:
 
-	RandomGenerater(PARAMETERVOID) : gen(std::random_device{}()) {}
+	RandomGenerater(PARAMETERVOID) {}
 	
 	int RandInt(int min,int max);
 	float RandFloat(float min,float max);

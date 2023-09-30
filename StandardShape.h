@@ -16,7 +16,7 @@ private:
 
 
 public:
-	IsoscelesTriangle() { this->Init(); };
+	IsoscelesTriangle() { };
 
 	RETURNVOID Resister();
 
@@ -70,6 +70,8 @@ private:
 public:
 	Rectangle_() {}
 
+	RETURNVOID Init();
+
 	RETURNVOID Resister();
 	RETURNVOID Properties(PropertiesType, float, float, float, Color3f);
 	RETURNVOID Render();
@@ -92,7 +94,7 @@ private:
 	RandomGenerater RG;
 
 public:
-	Dot() { this->Init(); };
+	Dot() { };
 
 	RETURNVOID Resister();
 	RETURNVOID Properties(PropertiesType, float, float, float, Color3f);
@@ -110,12 +112,15 @@ private:
 	Point3F End{};
 	Color3f Color{};
 
+	GLfloat Thickness = 5.0f;
+
 	RandomGenerater RG;
 public:
-	Line() { this->Init(); }
+	Line() { }
 
 	RETURNVOID Resister();
 	RETURNVOID Properties(PropertiesType, Point2F, Point2F, Color3f);
+	RETURNVOID ApplyThickness(GLfloat);
 	virtual RETURNVOID Render() override;
 
 	RETURNVOID Move(Vector2F);

@@ -222,6 +222,7 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 	if (key == 't' || key == 'T') {
 		
 		IsoscelesTriangle newTriangle;
+		newTriangle.Init();
 		newTriangle.Properties(Random, 0.f, 0.f, 0.f, 0.f, Color3f{});
 		SC3.NewTriangle(newTriangle);
 	} 
@@ -229,6 +230,7 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 	if (key == 'p' || key == 'P') {
 
 		Dot newDot;
+		newDot.Init();
 		newDot.Properties(Random, 0.0f, 0.0f, 0.0f, Color3f{});
 		SC3.NewDot(newDot);
 
@@ -236,6 +238,7 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 
 	if (key == 'r' || key == 'R') {
 		Rectangle_ newRect;
+		
 		newRect.Properties(Random, 0.0f, 0.0f, 0.0f, Color3f{});
 		SC3.NewRect(newRect);
 
@@ -243,6 +246,7 @@ RETURNVOID Scene3_CallBackFunctions::KeyboardInput(unsigned char key, int x, int
 	
 	if (key == 'l' || key == 'L') {
 		Line newLine;
+		newLine.Init();
 		newLine.Properties(Random, Point2F{0.0f,0.0f}, Point2F{ 0.0f,0.0f }, Color3f{0.0f,0.f,0.f});
 		SC3.NewLine(newLine);
 	}

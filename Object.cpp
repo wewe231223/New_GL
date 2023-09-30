@@ -5,6 +5,8 @@
 
 RETURNVOID VertexObject::Init()
 {
+	
+
 
 	glGenVertexArrays(1, &(this->VAO));
 	glBindVertexArray(this->VAO);

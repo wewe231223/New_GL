@@ -4,11 +4,12 @@
 #include "GLH.h"
 #include "GLW.h"
 
+#include "Shader.h"
 
 #include "Scene1.h"
 #include "Scene2.h"
 #include "Scene3.h"
-#include "Shader.h"
+#include "Scene4.h"
 #include "FileReader.h"
 
 
@@ -33,7 +34,11 @@ int main(int argc, char** argv) {
 	MainShader->LINK_SHADER();
 
 
-	MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
+	//MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
+	
+	
+	
+	MAINWINDOW->ResisterCallBackFunctions(Scene4_CallBackFunctions::Resister_Scene4());
 	MAINWINDOW->Run();
 
 

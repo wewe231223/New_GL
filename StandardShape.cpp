@@ -253,6 +253,13 @@ RETURNVOID RightTriangle::Move(Vector2F V)
 
 //============================Rectangle==========================================================
 
+RETURNVOID Rectangle_::Init()
+{
+	this->T1.Init();
+	this->T2.Init();
+	return RETURNVOID();
+}
+
 RETURNVOID Rectangle_::Resister()
 {
 
@@ -458,13 +465,20 @@ RETURNVOID Line::Properties(PropertiesType T, Point2F S, Point2F E, Color3f C) {
 	return RETURNVOID();
 }
 
+RETURNVOID Line::ApplyThickness(GLfloat T)
+{
+
+	this->Thickness = T;
+	return RETURNVOID();
+}
+
 
 
 RETURNVOID Line::Render()
 {
 	this->Resister();
 
-	glLineWidth(5.f);
+	glLineWidth(this->Thickness);
 
 	VertexObject::Render();
 	glDrawArrays(GL_LINES, 0, 2);

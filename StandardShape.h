@@ -14,6 +14,7 @@ private:
 
 	RandomGenerater RG;
 
+	GLenum DrawMode = GL_TRIANGLES;
 
 public:
 	IsoscelesTriangle() { };
@@ -22,9 +23,11 @@ public:
 
 
 	RETURNVOID Properties(PropertiesType, float, float, float, float, Color3f);
+	RETURNVOID RenderMode(GLenum);
 	virtual RETURNVOID Render() override;
 
 
+	
 	RETURNVOID Move(Vector2F);
 
 	Point3F GetCenter() { return this->Center; }

@@ -19,12 +19,9 @@ private:
 
 	Line Horizen{};
 	Line Vertial{};
-	Line GuideLine1{};
-	Line GuideLine2{};
-	Line GuideLine3{};
-	Line GuideLine4{};
 
 
+	
 
 	RandomGenerater RG{};
 
@@ -38,6 +35,7 @@ public:
 
 	RETURNVOID Reset();
 
+	RETURNVOID Mode(GLenum);
 
 };
 

@@ -37,3 +37,7 @@ public:
 	virtual RETURNVOID Render();
 };
 
+class Object {
+private:
+
+};

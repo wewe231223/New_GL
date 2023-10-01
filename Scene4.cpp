@@ -17,43 +17,6 @@ RETURNVOID Scene4::Init()
 	this->Horizen.Init();
 	this->Vertial.Init();
 
-	this->GuideLine1.Init();
-	this->GuideLine2.Init();
-	this->GuideLine3.Init();
-	this->GuideLine4.Init();
-
-
-
-	//========================Lines================================================
-
-	this->Horizen.Properties(Defined, Point2F{ -1.0f,0.f }, Point2F{ 1.0f,0.f }, Color3f{ 1.f,1.f,1.f });
-	this->Horizen.Resister();
-	this->Horizen.ApplyThickness(0.3f);
-
-
-	this->Vertial.Properties(Defined, Point2F{ 0.0f,-1.f }, Point2F{ 0.0f,1.f }, Color3f{ 1.f,1.f,1.f });
-	this->Vertial.Resister();
-	this->Vertial.ApplyThickness(0.3f);
-
-	this->GuideLine1.Properties(Defined, Point2F{ -1.f,-1.f }, Point2F{ -1.f,1.f }, Color3f{ 1.f,1.f,1.f });
-	this->GuideLine1.Resister();
-	this->GuideLine1.ApplyThickness(0.3f);
-
-
-	this->GuideLine2.Properties(Defined, Point2F{ -1.f,1.f }, Point2F{ 1.f,1.f }, Color3f{ 1.f,1.f,1.f });
-	this->GuideLine2.Resister();
-	this->GuideLine2.ApplyThickness(0.3f);
-
-
-	this->GuideLine3.Properties(Defined, Point2F{ 1.f,1.f }, Point2F{ 1.f,-1.f }, Color3f{ 1.f,1.f,1.f });
-	this->GuideLine3.Resister();
-	this->GuideLine3.ApplyThickness(0.3f);
-
-
-	this->GuideLine4.Properties(Defined, Point2F{ 1.f,-1.f }, Point2F{ -1.f,-1.f }, Color3f{ 1.f,1.f,1.f });
-	this->GuideLine4.Resister();
-	this->GuideLine4.ApplyThickness(0.3f);
-
 
 
 	//=======================Lines===============================================
@@ -177,10 +140,6 @@ RETURNVOID Scene4::Render()
 	this->Horizen.Render();
 	this->Vertial.Render();
 
-	this->GuideLine1.Render();
-	this->GuideLine2.Render();
-	this->GuideLine3.Render();
-	this->GuideLine4.Render();
 
 
 	this->T1.Render();
@@ -403,6 +362,18 @@ RETURNVOID Scene4::Reset()
 	return RETURNVOID();
 }
 
+RETURNVOID Scene4::Mode(GLenum M)
+{
+
+	this->T1.RenderMode(M);
+	this->T2.RenderMode(M);
+	this->T3.RenderMode(M);
+	this->T4.RenderMode(M);
+
+
+	return RETURNVOID();
+}
+
 
 namespace Scene4_CallBackFunctions {
 	
@@ -431,6 +402,12 @@ namespace Scene4_CallBackFunctions {
 
 		if (Key == 'r' || Key == 'R') {
 			SC4.Reset();
+		}
+		if (Key == 'a' || Key == 'A') {
+			SC4.Mode(GL_TRIANGLES);
+		} 
+		if (Key == 'b' || Key == 'B') {
+			SC4.Mode(GL_LINE_LOOP);
 		}
 
 

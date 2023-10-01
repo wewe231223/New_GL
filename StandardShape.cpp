@@ -97,6 +97,12 @@ RETURNVOID IsoscelesTriangle::Properties(PropertiesType T, float Cx, float Cy, f
 
 }
 
+RETURNVOID IsoscelesTriangle::RenderMode(GLenum M)
+{
+	this->DrawMode = M;
+	return RETURNVOID();
+}
+
 RETURNVOID IsoscelesTriangle::Render()
 {
 
@@ -105,8 +111,7 @@ RETURNVOID IsoscelesTriangle::Render()
 	this->Resister();
 	VertexObject::Render();
 
-	glDrawArrays(GL_TRIANGLES, 0, 3);
-
+	glDrawArrays(this->DrawMode, 0, 3);
 
 
 

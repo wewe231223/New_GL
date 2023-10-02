@@ -8,6 +8,10 @@ class Scene5
 private:
 	AdvanceShape::IsoscelesTriangle T1{};
 
+	GLfloat OldScreenWidth{};
+	GLfloat OldScreenHeight{};
+
+	RandomGenerater RG;
 
 public:
 	Scene5() {}
@@ -18,7 +22,7 @@ public:
 	RETURNVOID Render();
 
 
-
+	RETURNVOID Reshape(GLint NewScreenWidth,GLint NewScreenHeight);
 
 	
 

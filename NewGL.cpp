@@ -19,7 +19,7 @@ Shader* MainShader;
 
 int main(int argc, char** argv) {
 	INIT(&argc, argv);
-	GLW* MAINWINDOW = new GLW(800,600,"THIS IS TEST");
+	GLW* MAINWINDOW = new GLW(DEFAULT_SCREEN_WIDTH,DEFAULT_SCREEN_HEIGHT,"THIS IS TEST");
 
 
 	MainShader = new Shader;
@@ -35,6 +35,8 @@ int main(int argc, char** argv) {
 	MainShader->LINK_SHADER();
 
 
+
+	//MAINWINDOW->ResisterCallBackFunctions(Scene2_CallBackFunctions::CreateCallBackFunction());
 	//MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
 	//MAINWINDOW->ResisterCallBackFunctions(Scene4_CallBackFunctions::Resister_Scene4());
 	

@@ -1,4 +1,7 @@
 #pragma once
+
+#include <tuple>
+
 #include "Object.h"
 #include "RandomGenerater.h"
 
@@ -139,7 +142,11 @@ public:
 };
 
 
-//=================================OBJ=========================================
+/// <summary>
+/// Must Following this rules 
+/// 1. One class can express All Shapes
+/// 2. Use own Element Packgaes
+/// </summary>
 namespace AdvanceShape {
 	class Dot : public AdvanceObject::Object {
 	private:
@@ -168,14 +175,40 @@ namespace AdvanceShape {
 	};
 
 
+
+
+
+
+	/// <summary>
+	/// 1.Center
+	/// 2.Width
+	/// 3.Height
+	/// 4.Directrion
+	/// 5.Color
+	/// </summary>
+	typedef struct _ISOTRIANGLEPACKAGE {
+		Point3F Center;
+		GLfloat Width;
+		GLfloat Height;
+		Direction TopDirection;
+
+		Color3f Color;
+	}IsoTriElement;
+
+
+
+
+
 	class IsoscelesTriangle : public AdvanceObject::Object {
 	private:
-		std::vector < VertexElement> Vertex{};
-
+		std::vector <IsoTriElement> Properties{};
 
 
 		Direction TopDirection = UP;
 		RandomGenerater RG;
+
+
+		std::tuple<VertexElement,VertexElement,VertexElement> CalculateVertex(IsoTriElement);
 
 
 
@@ -183,20 +216,32 @@ namespace AdvanceShape {
 		IsoscelesTriangle() {}
 
 
-		//============
-
-		
+		//====Render======
 		virtual RETURNVOID Render() override;
 
-		//============
+		
+
+
+
+
 
 		//===New===================
-		RETURNVOID NewVertex(VertexElement);
-		RETURNVOID NewIsoscelesTriangle(Point3F,GLfloat,GLfloat,Direction);
+		RETURNVOID NewIsoscelesTriangle(IsoTriElement);
+
+
+
+		//============================
+		RETURNVOID Reshape(GLfloat XRatio, GLfloat YRatio);
 
 
 
 	};
+
+
+
+	//===============================================Structs
+
+
 
 
 

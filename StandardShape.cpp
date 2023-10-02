@@ -537,38 +537,55 @@ RETURNVOID AdvanceShape::Dot::Render() {
 
 //===============================Triangle====================================
 
-RETURNVOID AdvanceShape::IsoscelesTriangle::NewVertex(VertexElement e)
-{
-	this->Vertex.push_back(e);
-	return RETURNVOID();
-}
+
 
 RETURNVOID AdvanceShape::IsoscelesTriangle::Render() {
-	for (auto& i : this->Vertex) {
-		this->Resister(i);
+	
+	VertexElement V1{};
+	VertexElement V2{};
+	VertexElement V3{};
+
+
+
+	for (auto& i : this->Properties) {
+
+		std::tie(V1, V2, V3) = this->CalculateVertex(i);
+
+		this->Resister(V1);
+		this->Resister(V2);
+		this->Resister(V3);
+
+
 	}
 
+
+
+
+
+
+
 	AdvanceObject::Object::Render();
-	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(this->Vertex.size()));
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(this->Properties.size() * 3));
 }
 
 
-
-RETURNVOID AdvanceShape::IsoscelesTriangle::NewIsoscelesTriangle(Point3F Center,GLfloat Width ,GLfloat Height, Direction Dir)
+std::tuple<VertexElement, VertexElement, VertexElement> AdvanceShape::IsoscelesTriangle::CalculateVertex(IsoTriElement e)
 {
-	VertexElement Vertex1{ 
-		{0.f,},
-		{this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f)} 
-	};
+	std::tuple<VertexElement, VertexElement, VertexElement> result;
 
+	VertexElement Vertex1{
+	{0.f,},
+	{e.Color.r,e.Color.g,e.Color.b}
+	};
+	
 	VertexElement Vertex2{
-		{0.f,},
-		{this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f)}
+	{0.f,},
+	{e.Color.r,e.Color.g,e.Color.b}
 	};
 
 	VertexElement Vertex3{
-		{0.f,},
-		{this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f)}
+	{0.f,},
+	{e.Color.r,e.Color.g,e.Color.b}
 	};
 
 
@@ -576,77 +593,138 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::NewIsoscelesTriangle(Point3F Center,
 
 
 
-
-	switch (Dir)
-	{
-	case LEFT:
-		
-		Vertex1.VertexPosition.x = Center.x;
-		Vertex1.VertexPosition.y = Center.y - Width / 2;
-
-
-		Vertex2.VertexPosition.x = Center.x;
-		Vertex2.VertexPosition.y = Center.y + Width / 2;
-
-		Vertex3.VertexPosition.x = Center.x - Height;
-		Vertex3.VertexPosition.y = Center.y;
-
-		break;
-	case RIGHT:
-
-		Vertex1.VertexPosition.x = Center.x;
-		Vertex1.VertexPosition.y = Center.y - Width / 2;
-
-
-		Vertex2.VertexPosition.x = Center.x + Height;
-		Vertex2.VertexPosition.y = Center.y;
-
-		Vertex3.VertexPosition.x = Center.x;
-		Vertex3.VertexPosition.y = Center.y + Width / 2;
-
-		break;
+	switch (e.TopDirection){
 	case UP:
 
+		Vertex1.VertexPosition.x = e.Center.x - e.Width / 2;
+		Vertex1.VertexPosition.y = e.Center.y;
 
 
-		Vertex1.VertexPosition.x = Center.x - Width / 2;
-		Vertex1.VertexPosition.y = Center.y ;
+		Vertex2.VertexPosition.x = e.Center.x + e.Width / 2;
+		Vertex2.VertexPosition.y = e.Center.y;
 
-
-		Vertex2.VertexPosition.x = Center.x + Width / 2;
-		Vertex2.VertexPosition.y = Center.y ;
-
-		Vertex3.VertexPosition.x = Center.x;
-		Vertex3.VertexPosition.y = Center.y + Height;
-
-
-
-
+		Vertex3.VertexPosition.x = e.Center.x;
+		Vertex3.VertexPosition.y = e.Center.y + e.Height;
 
 
 		break;
 	case DOWN:
 
+		Vertex1.VertexPosition.x = e.Center.x - e.Width / 2;
+		Vertex1.VertexPosition.y = e.Center.y;
 
 
-		Vertex1.VertexPosition.x = Center.x - Width / 2;
-		Vertex1.VertexPosition.y = Center.y;
+		Vertex2.VertexPosition.x = e.Center.x;
+		Vertex2.VertexPosition.y = e.Center.y - e.Height;
+
+		Vertex3.VertexPosition.x = e.Center.x + e.Width / 2;
+		Vertex3.VertexPosition.y = e.Center.y;
 
 
-		Vertex2.VertexPosition.x = Center.x;
-		Vertex2.VertexPosition.y = Center.y - Height;
 
-		Vertex3.VertexPosition.x = Center.x + Width / 2;
-		Vertex3.VertexPosition.y = Center.y;
+
+		break;
+
+	case RIGHT:
+
+
+		Vertex1.VertexPosition.x = e.Center.x;
+		Vertex1.VertexPosition.y = e.Center.y - e.Width / 2;
+
+
+		Vertex2.VertexPosition.x = e.Center.x + e.Height;
+		Vertex2.VertexPosition.y = e.Center.y;
+
+		Vertex3.VertexPosition.x = e.Center.x;
+		Vertex3.VertexPosition.y = e.Center.y + e.Width / 2;
+
+
+		break;
+	case LEFT:
+
+
+		Vertex1.VertexPosition.x = e.Center.x;
+		Vertex1.VertexPosition.y = e.Center.y - e.Width / 2;
+
+
+		Vertex2.VertexPosition.x = e.Center.x;
+		Vertex2.VertexPosition.y = e.Center.y + e.Width / 2;
+
+		Vertex3.VertexPosition.x = e.Center.x - e.Height;
+		Vertex3.VertexPosition.y = e.Center.y;
+
+
+
+
 		break;
 	default:
 		break;
 	}
 
 
-	this->NewVertex(Vertex1);
-	this->NewVertex(Vertex2);
-	this->NewVertex(Vertex3);
+
+
+
+
+
+
+
+	return std::make_tuple(Vertex1, Vertex2, Vertex3);
+}
+
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::NewIsoscelesTriangle(IsoTriElement e)
+{
+
+
+
+	this->Properties.push_back(e);
+	return RETURNVOID();
+}
+
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::Reshape(GLfloat XRatio, GLfloat YRatio)
+{
+	GLfloat Width = GETWIN_WIDTH;
+	GLfloat Height = GETWIN_HEIGHT;
+
+	if (Width > Height) {
+		GLfloat Ratio = Height / Width;
+
+		for (auto& i : this->Properties) {
+
+			if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
+				i.Height *= Ratio;
+			}
+			else {
+				i.Width *= Ratio;
+			}
+
+		}
+
+
+
+	}
+	else if (Width < Height) {
+		GLfloat Ratio = Width / Height;
+
+		for (auto& i : this->Properties) {
+
+			if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
+				i.Width *= Ratio;
+			}
+			else {
+				i.Height *= Ratio;
+			}
+
+		}
+
+
+
+	}
+
 
 
 

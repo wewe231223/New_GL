@@ -138,3 +138,47 @@ public:
 
 };
 
+
+//=================================OBJ=========================================
+namespace AdvanceObject {
+	class Dot : public AdvanceObject::Object {
+	private:
+
+		std::vector<VertexElement> Vertex{};
+
+		GLfloat Size = 5.0f;
+
+		RandomGenerater RG;
+
+
+	public:
+
+		Dot() {};
+
+		//============
+		RETURNVOID NewVertex(VertexElement,GLfloat);
+		//============
+
+
+		RETURNVOID Movement(Vector2F);
+
+		
+		virtual RETURNVOID Render() override;
+
+
+
+
+
+
+
+
+	};
+
+
+
+
+
+
+
+
+}

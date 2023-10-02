@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include "GLH.h"
 
 typedef struct _POINT2I {
 	int x;
@@ -56,6 +57,20 @@ typedef struct _VERTEXPACKAGE {
 	Point3F VertexPosition{};
 	Color3f VertexColor{};
 }VertexElement;
+
+
+
+typedef struct _VERTEXBUFFEROBJECT {
+	GLuint Position;
+	GLuint Color;
+
+}VertexBufferObject;
+
+
+typedef	unsigned int VertexArrayObject;
+
+
+
 
 
 inline Point2F Translate(int PixelX, int PixelY,float DisplayWidth,float DisplayHeight) {

@@ -35,10 +35,14 @@ int main(int argc, char** argv) {
 
 
 	//MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
-	
-	
-	
 	MAINWINDOW->ResisterCallBackFunctions(Scene4_CallBackFunctions::Resister_Scene4());
+
+
+
+
+
+
+
 	MAINWINDOW->Run();
 
 

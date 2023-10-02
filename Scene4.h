@@ -20,7 +20,6 @@ private:
 	Line Horizen{};
 	Line Vertial{};
 
-
 	
 
 	RandomGenerater RG{};

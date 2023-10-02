@@ -1,8 +1,8 @@
 #pragma once
 #include "Geometry.h"
-#include "GLH.h"
 
 #include <iostream>
+#include <vector>
 
 enum VertexNo {
 	Vertex_1,
@@ -37,7 +37,29 @@ public:
 	virtual RETURNVOID Render();
 };
 
-class Object {
-private:
 
-};
+namespace AdvanceObject {
+	class Object {
+	private:
+		std::vector<GLfloat> VertexPosition{};
+		std::vector<GLfloat> VertexColor{};
+
+
+		VertexArrayObject VAO{};
+		VertexBufferObject VBO{};
+
+
+
+
+	public:
+		Object() {};
+		RETURNVOID Init();
+		RETURNVOID Resister(VertexElement&);
+
+		virtual RETURNVOID Render();
+
+
+
+
+	};
+}

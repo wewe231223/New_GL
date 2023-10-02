@@ -84,7 +84,6 @@ RETURNVOID VertexObject::Render()
 //	std::cout << this->Vertex1.VertexColor.r << std::endl;
 
 
-
 	glBindBuffer(GL_ARRAY_BUFFER, this->VBO_Position);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Verties), Verties, GL_DYNAMIC_DRAW);
 
@@ -106,3 +105,71 @@ RETURNVOID VertexObject::Render()
 
 }
 
+namespace AdvanceObject {
+
+	RETURNVOID Object::Init()
+	{
+		glGenVertexArrays(1, &(this->VAO));
+		glBindVertexArray(this->VAO);
+
+
+		glGenBuffers(1, &(this->VBO.Position));
+		glGenBuffers(1, &(this->VBO.Color));
+
+		return RETURNVOID();
+	}
+
+
+	RETURNVOID Object::Resister(VertexElement& e)
+	{
+		this->VertexPosition.push_back(e.VertexPosition.x);
+		this->VertexPosition.push_back(e.VertexPosition.y);
+		this->VertexPosition.push_back(e.VertexPosition.z);
+
+
+		this->VertexColor.push_back(e.VertexColor.r);
+		this->VertexColor.push_back(e.VertexColor.g);
+		this->VertexColor.push_back(e.VertexColor.b);
+
+
+		return RETURNVOID();
+	}
+
+
+	RETURNVOID Object::Render()
+	{
+
+
+
+		GLfloat* Pptr = new GLfloat[this->VertexPosition.size()];
+		GLfloat* Cptr = new GLfloat[this->VertexColor.size()];
+
+		std::copy(this->VertexPosition.begin(), this->VertexPosition.end(), Pptr);
+		std::copy(this->VertexColor.begin(), this->VertexColor.end(), Cptr);
+
+
+
+		glBindVertexArray(this->VAO);
+
+
+		glBindBuffer(GL_ARRAY_BUFFER, this->VBO.Position);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->VertexPosition.size(), Pptr, GL_DYNAMIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(0);
+
+
+		glBindBuffer(GL_ARRAY_BUFFER, this->VBO.Color);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * this->VertexColor.size(), Cptr, GL_DYNAMIC_DRAW);
+
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+		glEnableVertexAttribArray(1);
+
+
+		delete Pptr;
+		delete Cptr;
+
+		return RETURNVOID();
+	}
+
+}

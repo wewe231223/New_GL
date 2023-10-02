@@ -126,6 +126,11 @@ RETURNVOID Scene4::Init()
 	this->T4.Resister();
 
 
+	//=========================testarea===================================
+
+
+
+
 
 
 	return RETURNVOID();
@@ -141,11 +146,16 @@ RETURNVOID Scene4::Render()
 	this->Vertial.Render();
 
 
-
 	this->T1.Render();
 	this->T2.Render();
 	this->T3.Render();
 	this->T4.Render();
+
+	
+
+
+
+
 
 
 	return RETURNVOID();

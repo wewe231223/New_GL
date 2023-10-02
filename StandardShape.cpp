@@ -490,6 +490,7 @@ RETURNVOID Line::Render()
 	return RETURNVOID();
 }
 
+
 RETURNVOID Line::Move(Vector2F V)
 {
 
@@ -499,5 +500,36 @@ RETURNVOID Line::Move(Vector2F V)
 	this->End.x += V.x;
 	this->End.y += V.y;
 
+
+}
+
+
+//=================================OBJ=========================================
+
+
+RETURNVOID AdvanceObject::Dot::NewVertex(VertexElement e,GLfloat s)
+{
+	this->Vertex.push_back(e);
+	this->Size = s;
+
+	return RETURNVOID();
+}
+
+
+
+
+
+RETURNVOID AdvanceObject::Dot::Render() {
+
+
+
+	for (auto& i : this->Vertex) {
+		this->Resister(i);
+	}
+
+	AdvanceObject::Object::Render();
+	glPointSize(this->Size);
+	std::cout << this->Vertex.size() << std::endl;
+	glDrawArrays(GL_POINTS, 0, this->Vertex.size());
 
 }

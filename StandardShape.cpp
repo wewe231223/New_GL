@@ -507,7 +507,7 @@ RETURNVOID Line::Move(Vector2F V)
 //=================================OBJ=========================================
 
 
-RETURNVOID AdvanceObject::Dot::NewVertex(VertexElement e,GLfloat s)
+RETURNVOID AdvanceShape::Dot::NewVertex(VertexElement e,GLfloat s)
 {
 	this->Vertex.push_back(e);
 	this->Size = s;
@@ -519,7 +519,7 @@ RETURNVOID AdvanceObject::Dot::NewVertex(VertexElement e,GLfloat s)
 
 
 
-RETURNVOID AdvanceObject::Dot::Render() {
+RETURNVOID AdvanceShape::Dot::Render() {
 
 
 
@@ -529,7 +529,126 @@ RETURNVOID AdvanceObject::Dot::Render() {
 
 	AdvanceObject::Object::Render();
 	glPointSize(this->Size);
-	std::cout << this->Vertex.size() << std::endl;
-	glDrawArrays(GL_POINTS, 0, this->Vertex.size());
+	glDrawArrays(GL_POINTS, 0, static_cast<GLsizei>(this->Vertex.size()));
 
+}
+
+
+
+//===============================Triangle====================================
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::NewVertex(VertexElement e)
+{
+	this->Vertex.push_back(e);
+	return RETURNVOID();
+}
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::Render() {
+	for (auto& i : this->Vertex) {
+		this->Resister(i);
+	}
+
+	AdvanceObject::Object::Render();
+	glDrawArrays(GL_TRIANGLES, 0, static_cast<GLsizei>(this->Vertex.size()));
+}
+
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::NewIsoscelesTriangle(Point3F Center,GLfloat Width ,GLfloat Height, Direction Dir)
+{
+	VertexElement Vertex1{ 
+		{0.f,},
+		{this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f)} 
+	};
+
+	VertexElement Vertex2{
+		{0.f,},
+		{this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f)}
+	};
+
+	VertexElement Vertex3{
+		{0.f,},
+		{this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f)}
+	};
+
+
+
+
+
+
+
+	switch (Dir)
+	{
+	case LEFT:
+		
+		Vertex1.VertexPosition.x = Center.x;
+		Vertex1.VertexPosition.y = Center.y - Width / 2;
+
+
+		Vertex2.VertexPosition.x = Center.x;
+		Vertex2.VertexPosition.y = Center.y + Width / 2;
+
+		Vertex3.VertexPosition.x = Center.x - Height;
+		Vertex3.VertexPosition.y = Center.y;
+
+		break;
+	case RIGHT:
+
+		Vertex1.VertexPosition.x = Center.x;
+		Vertex1.VertexPosition.y = Center.y - Width / 2;
+
+
+		Vertex2.VertexPosition.x = Center.x + Height;
+		Vertex2.VertexPosition.y = Center.y;
+
+		Vertex3.VertexPosition.x = Center.x;
+		Vertex3.VertexPosition.y = Center.y + Width / 2;
+
+		break;
+	case UP:
+
+
+
+		Vertex1.VertexPosition.x = Center.x - Width / 2;
+		Vertex1.VertexPosition.y = Center.y ;
+
+
+		Vertex2.VertexPosition.x = Center.x + Width / 2;
+		Vertex2.VertexPosition.y = Center.y ;
+
+		Vertex3.VertexPosition.x = Center.x;
+		Vertex3.VertexPosition.y = Center.y + Height;
+
+
+
+
+
+
+		break;
+	case DOWN:
+
+
+
+		Vertex1.VertexPosition.x = Center.x - Width / 2;
+		Vertex1.VertexPosition.y = Center.y;
+
+
+		Vertex2.VertexPosition.x = Center.x;
+		Vertex2.VertexPosition.y = Center.y - Height;
+
+		Vertex3.VertexPosition.x = Center.x + Width / 2;
+		Vertex3.VertexPosition.y = Center.y;
+		break;
+	default:
+		break;
+	}
+
+
+	this->NewVertex(Vertex1);
+	this->NewVertex(Vertex2);
+	this->NewVertex(Vertex3);
+
+
+
+	return RETURNVOID();
 }

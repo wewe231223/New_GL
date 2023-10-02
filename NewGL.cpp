@@ -10,6 +10,7 @@
 #include "Scene2.h"
 #include "Scene3.h"
 #include "Scene4.h"
+#include "Scene5.h"
 #include "FileReader.h"
 
 
@@ -35,10 +36,10 @@ int main(int argc, char** argv) {
 
 
 	//MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
-	MAINWINDOW->ResisterCallBackFunctions(Scene4_CallBackFunctions::Resister_Scene4());
+	//MAINWINDOW->ResisterCallBackFunctions(Scene4_CallBackFunctions::Resister_Scene4());
+	
 
-
-
+	MAINWINDOW->ResisterCallBackFunctions(ResisterScene5());
 
 
 

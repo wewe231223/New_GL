@@ -140,7 +140,7 @@ public:
 
 
 //=================================OBJ=========================================
-namespace AdvanceObject {
+namespace AdvanceShape {
 	class Dot : public AdvanceObject::Object {
 	private:
 
@@ -160,21 +160,43 @@ namespace AdvanceObject {
 		//============
 
 
-		RETURNVOID Movement(Vector2F);
 
 		
 		virtual RETURNVOID Render() override;
 
 
+	};
+
+
+	class IsoscelesTriangle : public AdvanceObject::Object {
+	private:
+		std::vector < VertexElement> Vertex{};
 
 
 
+		Direction TopDirection = UP;
+		RandomGenerater RG;
+
+
+
+	public:
+		IsoscelesTriangle() {}
+
+
+		//============
+
+		
+		virtual RETURNVOID Render() override;
+
+		//============
+
+		//===New===================
+		RETURNVOID NewVertex(VertexElement);
+		RETURNVOID NewIsoscelesTriangle(Point3F,GLfloat,GLfloat,Direction);
 
 
 
 	};
-
-
 
 
 

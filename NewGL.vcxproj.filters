@@ -78,6 +78,9 @@
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Shape</Filter>
     </ClCompile>
+    <ClCompile Include="Scene5.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h">
@@ -124,6 +127,9 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>헤더 파일\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene5.h">
+      <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

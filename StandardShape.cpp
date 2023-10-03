@@ -657,7 +657,10 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 	for (auto& i : this->Properties) {
 		switch (i.MovementType){
 		case Rand:
-			i.Vector = Point2I{ this->RG.RandInt(-3,3),this->RG.RandInt(-3,3) };
+			i.Vector = Vector2I{ this->RG.RandInt(-3,3),this->RG.RandInt(-3,3) };
+			break;
+		case ZigZag:
+			i.Vector = Vector2I{1,0};
 			break;
 		default:
 			break;
@@ -680,26 +683,99 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 	int Boundary_Y_Min =  - GET_WINDOW_HEIGHTI / 2;
 
 
+
+
 	for (auto& i : this->Properties) {
-		if (i.Center.x <= Boundary_X_Min) {
-			i.TopDirection = RIGHT;
-			i.Vector.x *= -1;
+		switch (i.MovementType){
+		case Rand:
+			if (i.Center.x <= Boundary_X_Min) {
+				i.TopDirection = RIGHT;
+				i.Vector.x *= -1;
+			}
+
+			if (i.Center.x >= Boundary_X_Max) {
+				i.TopDirection = LEFT;
+				i.Vector.x *= -1;
+			}
+
+			if (i.Center.y <= Boundary_Y_Min) {
+				i.TopDirection = UP;
+				i.Vector.y *= -1;
+			}
+
+			if (i.Center.y >= Boundary_Y_Max) {
+				i.TopDirection = DOWN;
+				i.Vector.y *= -1;
+			}
+			break;
+		case ZigZag:
+
+			if (i.Center.x >= Boundary_X_Max) {
+
+				if (this->ZigZag_Going_Down) {
+
+					i.TopDirection = DOWN;
+					i.Center.x -= 10;
+					i.Vector.y = -1 * abs(i.Vector.x);
+					i.Vector.x = 0;
+				}
+				else {
+
+					i.TopDirection = UP;
+					i.Center.x -= 10;
+					i.Vector.y = abs(i.Vector.x);
+					i.Vector.x = 0;
+
+
+				}
+			}
+
+			if (i.Center.x <= Boundary_X_Min) {
+				if (this->ZigZag_Going_Down) {
+					i.TopDirection = DOWN;
+					i.Center.x += 10;
+					i.Vector.y = -1 * abs(i.Vector.x);
+					i.Vector.x = 0;
+				}
+				else {
+					i.TopDirection = UP;
+					i.Center.x += 10;
+					i.Vector.y = abs(i.Vector.x);
+					i.Vector.x = 0;
+
+
+
+				}
+			}
+
+
+
+			if (i.Center.y <= Boundary_Y_Min) {
+				i.TopDirection = UP;
+				i.Center.y += 10;
+				i.Vector.y = abs(i.Vector.y);
+				i.Vector.x = 0;
+				this->ZigZag_Going_Down = false;
+			}
+
+
+			if (i.Center.y >= Boundary_Y_Max) {
+				i.TopDirection = DOWN;
+				i.Center.y -= 10;
+				i.Vector.y = -abs(i.Vector.y);
+				i.Vector.x = 0;
+				this->ZigZag_Going_Down = true;
+			}
+
+			break;
+		default:
+			break;
 		}
 
-		if (i.Center.x >= Boundary_X_Max) {
-			i.TopDirection = LEFT;
-			i.Vector.x *= -1;
-		}
 
-		if (i.Center.y <= Boundary_Y_Min) {
-			i.TopDirection = UP;
-			i.Vector.y *= -1;
-		}
 
-		if (i.Center.y >= Boundary_Y_Max) {
-			i.TopDirection = DOWN;
-			i.Vector.y *= -1;
-		}
+
+
 
 
 	}
@@ -715,13 +791,64 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Movement(PARAMETERVOID)
 
 	this->Vector_Reflection();
 
+	
 	for (auto& i : this->Properties) {
-
-
-
 		i.Center.x += i.Vector.x;
 		i.Center.y += i.Vector.y;
 	}
+
+	return RETURNVOID();
+}
+
+
+
+
+
+
+//========================================================For Scene 5 =================================================================
+
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_ZigZag_Movement(PARAMETERVOID)
+{
+	for (auto& i : this->Properties) {
+		if (i.MovementType == ZigZag) {
+
+			if (i.TopDirection == DOWN) {
+				if (i.Center.x > 0) {
+					i.TopDirection = LEFT;
+					i.Vector.x = -1 * abs(i.Vector.y);
+					i.Vector.y = 0;
+				}
+				else if (i.Center.x < 0) {
+					i.TopDirection = RIGHT;
+					i.Vector.x = abs(i.Vector.y);
+					i.Vector.y = 0;
+				}
+			}
+			else if (i.TopDirection == UP) {
+
+				if (i.Center.x > 0) {
+					i.TopDirection = LEFT;
+					i.Vector.x = -1 * abs(i.Vector.y);
+					i.Vector.y = 0;
+				}
+				else if (i.Center.x < 0) {
+					i.TopDirection = RIGHT;
+					i.Vector.x  = abs(i.Vector.y);
+					i.Vector.y = 0;
+				}
+
+
+			}
+
+		}
+	}
+
+
+
+
+
 
 
 

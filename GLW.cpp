@@ -82,6 +82,9 @@ RETURNVOID GLW::ResisterCallBackFunctions(CallbackFunc CF) {
 		glutMotionFunc(CF.MouseDragCall);
 	}
 
+	if (CF.TimerCall != nullptr) {
+		glutTimerFunc(10, CF.TimerCall, 1);
+	}
 
 
 }

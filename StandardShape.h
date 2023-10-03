@@ -223,6 +223,7 @@ namespace AdvanceShape {
 		std::tuple<VertexElement,VertexElement,VertexElement> CalculateVertex(IsoTriElement);
 
 
+		bool ZigZag_Going_Down = true;
 
 	public:
 		IsoscelesTriangle() {}
@@ -256,8 +257,8 @@ namespace AdvanceShape {
 		RETURNVOID Vector_Movement(PARAMETERVOID);
 
 
-
-
+		RETURNVOID Vector_ZigZag_Movement(PARAMETERVOID);
+		
 
 
 	};

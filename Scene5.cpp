@@ -8,40 +8,16 @@ RETURNVOID Scene5::Init()
 
 
 
-
-
-	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-		{0,0,0},
-		200,
-		200,
-		UP,
-		{this->RG.RandFloat(0.f,1.f),
-		this->RG.RandFloat(0.f,1.f),
-		this->RG.RandFloat(0.f,1.f)}
-		}
-	);
-
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
 	{0,0,0},
 	200,
 	200,
-	LEFT,
+	RIGHT,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
-	this->RG.RandFloat(0.f,1.f)}
-		}
-	);
-
-
-
-	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{0,0,0},
-	200,
-	200,
-	DOWN,
-	{this->RG.RandFloat(0.f,1.f),
-	this->RG.RandFloat(0.f,1.f),
-	this->RG.RandFloat(0.f,1.f)}
+	this->RG.RandFloat(0.f,1.f)},
+	{0,0},
+	AdvanceShape::ZigZag
 		}
 	);
 
@@ -121,6 +97,15 @@ RETURNVOID Scene5_CallBackFunctions::IdleCall(PARAMETERVOID) {
 }
 
 
+RETURNVOID Scene5_CallBackFunctions::TimerCall(int value)
+{
+	SC5.SpecialMovement();
+	glutPostRedisplay();
+
+	return glutTimerFunc(500, Scene5_CallBackFunctions::TimerCall, value);
+}
+
+
 
 CallbackFunc ResisterScene5()
 {
@@ -131,9 +116,11 @@ CallbackFunc ResisterScene5()
 	result.DrawCall = Scene5_CallBackFunctions::Draw;
 	result.ReShapeCall = Scene5_CallBackFunctions::Reshape;
 	result.IdleCall = Scene5_CallBackFunctions::IdleCall;
-
+	result.TimerCall = Scene5_CallBackFunctions::TimerCall;
 
 
 
 	return result;
 }
+
+

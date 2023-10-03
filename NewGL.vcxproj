@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Constant.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GLW.cpp" />
     <ClCompile Include="NewGL.cpp" />

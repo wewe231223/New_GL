@@ -1,5 +1,8 @@
 #pragma once
 #include "StandardShape.h"
+#include <cmath>
+
+
 
 
 
@@ -16,6 +19,7 @@ private:
 public:
 	Scene5() {}
 	RETURNVOID Init();
+	
 
 
 
@@ -24,7 +28,7 @@ public:
 
 
 	RETURNVOID Move(PARAMETERVOID) { T1.Vector_Movement(); }
-
+	RETURNVOID SpecialMovement(PARAMETERVOID) { T1.Vector_ZigZag_Movement(); }
 
 
 };
@@ -38,7 +42,7 @@ namespace Scene5_CallBackFunctions {
 	RETURNVOID IdleCall(PARAMETERVOID);
 
 
-
+	RETURNVOID TimerCall(int);
 
 
 

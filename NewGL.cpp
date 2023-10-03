@@ -6,8 +6,7 @@
 
 #include "Shader.h"
 
-#include "Scene1.h"
-#include "Scene2.h"
+
 #include "Scene3.h"
 #include "Scene4.h"
 #include "Scene5.h"
@@ -36,7 +35,6 @@ int main(int argc, char** argv) {
 
 
 
-	//MAINWINDOW->ResisterCallBackFunctions(Scene2_CallBackFunctions::CreateCallBackFunction());
 	//MAINWINDOW->ResisterCallBackFunctions(Scene3_CallBackFunctions::CreateCallBackFuctions());
 	//MAINWINDOW->ResisterCallBackFunctions(Scene4_CallBackFunctions::Resister_Scene4());
 	

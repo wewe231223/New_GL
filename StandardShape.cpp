@@ -572,103 +572,70 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Render() {
 
 std::tuple<VertexElement, VertexElement, VertexElement> AdvanceShape::IsoscelesTriangle::CalculateVertex(IsoTriElement e)
 {
-	std::tuple<VertexElement, VertexElement, VertexElement> result;
+	VertexElement Vertex1{ {0.f,},{e.Color.r,e.Color.g,e.Color.b} };
+	VertexElement Vertex2{ {0.f,},{e.Color.r,e.Color.g,e.Color.b} };
+	VertexElement Vertex3{ {0.f,},{e.Color.r,e.Color.g,e.Color.b} };
 
-	VertexElement Vertex1{
-	{0.f,},
-	{e.Color.r,e.Color.g,e.Color.b}
-	};
-	
-	VertexElement Vertex2{
-	{0.f,},
-	{e.Color.r,e.Color.g,e.Color.b}
-	};
-
-	VertexElement Vertex3{
-	{0.f,},
-	{e.Color.r,e.Color.g,e.Color.b}
-	};
+	Point2I PixelVertex1 = { 0, };
+	Point2I PixelVertex2 = { 0, };
+	Point2I PixelVertex3 = { 0, };
 
 
+	switch (e.TopDirection) {
+	case LEFT:
+
+		PixelVertex1.x = e.Center.x;
+		PixelVertex1.y = e.Center.y - e.Width / 2;
+
+		PixelVertex2.x = e.Center.x;
+		PixelVertex2.y = e.Center.y + e.Width / 2;
+
+		PixelVertex3.x = e.Center.x - e.Height;
+		PixelVertex3.y = e.Center.y;
 
 
 
 
-	switch (e.TopDirection){
+
+		break;
+	case RIGHT:
+
+		PixelVertex1.x = e.Center.x;
+		PixelVertex1.y = e.Center.y - e.Width / 2;
+
+		PixelVertex2.x = e.Center.x + e.Height;
+		PixelVertex2.y = e.Center.y;
+
+
+		PixelVertex3.x = e.Center.x;
+		PixelVertex3.y = e.Center.y + e.Width / 2;
+
+		break;
+
 	case UP:
 
-		Vertex1.VertexPosition.x = e.Center.x - e.Width / 2;
-		Vertex1.VertexPosition.y = e.Center.y;
+		PixelVertex1 = Point2I{ e.Center.x + e.Width / 2,e.Center.y };
+		PixelVertex2 = Point2I{ e.Center.x ,e.Center.y + e.Height};
+		PixelVertex3 = Point2I{ e.Center.x - e.Width / 2,e.Center.y };
 
-
-		Vertex2.VertexPosition.x = e.Center.x + e.Width / 2;
-		Vertex2.VertexPosition.y = e.Center.y;
-
-		Vertex3.VertexPosition.x = e.Center.x;
-		Vertex3.VertexPosition.y = e.Center.y + e.Height;
 
 
 		break;
 	case DOWN:
-
-		Vertex1.VertexPosition.x = e.Center.x - e.Width / 2;
-		Vertex1.VertexPosition.y = e.Center.y;
-
-
-		Vertex2.VertexPosition.x = e.Center.x;
-		Vertex2.VertexPosition.y = e.Center.y - e.Height;
-
-		Vertex3.VertexPosition.x = e.Center.x + e.Width / 2;
-		Vertex3.VertexPosition.y = e.Center.y;
-
-
-
-
+		PixelVertex1 = Point2I{ e.Center.x + e.Width / 2,e.Center.y };
+		PixelVertex2 = Point2I{ e.Center.x - e.Width / 2,e.Center.y };
+		PixelVertex3 = Point2I{ e.Center.x ,e.Center.y - e.Height };
 		break;
-
-	case RIGHT:
-
-
-		Vertex1.VertexPosition.x = e.Center.x;
-		Vertex1.VertexPosition.y = e.Center.y - e.Width / 2;
-
-
-		Vertex2.VertexPosition.x = e.Center.x + e.Height;
-		Vertex2.VertexPosition.y = e.Center.y;
-
-		Vertex3.VertexPosition.x = e.Center.x;
-		Vertex3.VertexPosition.y = e.Center.y + e.Width / 2;
-
-
-		break;
-	case LEFT:
-
-
-		Vertex1.VertexPosition.x = e.Center.x;
-		Vertex1.VertexPosition.y = e.Center.y - e.Width / 2;
-
-
-		Vertex2.VertexPosition.x = e.Center.x;
-		Vertex2.VertexPosition.y = e.Center.y + e.Width / 2;
-
-		Vertex3.VertexPosition.x = e.Center.x - e.Height;
-		Vertex3.VertexPosition.y = e.Center.y;
-
-
-
-
-		break;
+		
 	default:
 		break;
+		
+
 	}
 
-
-
-
-
-
-
-
+	Vertex1.VertexPosition = Translate(PixelVertex1);
+	Vertex2.VertexPosition = Translate(PixelVertex2);
+	Vertex3.VertexPosition = Translate(PixelVertex3);
 
 
 	return std::make_tuple(Vertex1, Vertex2, Vertex3);
@@ -678,107 +645,64 @@ std::tuple<VertexElement, VertexElement, VertexElement> AdvanceShape::IsoscelesT
 
 RETURNVOID AdvanceShape::IsoscelesTriangle::NewIsoscelesTriangle(IsoTriElement e)
 {
-
-
-
 	this->Properties.push_back(e);
-	return RETURNVOID();
-}
-
-
-
-RETURNVOID AdvanceShape::IsoscelesTriangle::Reshape(GLfloat XRatio, GLfloat YRatio)
-{
-	GLfloat Width = GETWIN_WIDTH;
-	GLfloat Height = GETWIN_HEIGHT;
-
-	//if (Width > Height) {
-	//	GLfloat Ratio = Height / Width;
-
-	//	for (auto& i : this->Properties) {
-
-	//		if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
-	//			i.Height *= Ratio;
-	//		}
-	//		else {
-	//			i.Width *= Ratio;
-	//		}
-
-	//	}
-
-
-
-	//}
-	//else if (Width < Height) {
-	//	GLfloat Ratio = Width / Height;
-
-	//	for (auto& i : this->Properties) {
-
-	//		if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
-	//			i.Width *= Ratio;
-	//		}
-	//		else {
-	//			i.Height *= Ratio;
-	//		}
-
-	//	}
-
-
-
-	//}
-
-
-
 
 	return RETURNVOID();
 }
 
+RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 
-RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(PARAMETERVOID)
-{
+	
+
 	for (auto& i : this->Properties) {
-		i.Vector.x = this->RG.RandFloat(-0.005f, 0.005f);
-		i.Vector.y = this->RG.RandFloat(-0.005f, 0.005f);
+		switch (i.MovementType){
+		case Rand:
+			i.Vector = Point2I{ this->RG.RandInt(-3,3),this->RG.RandInt(-3,3) };
+			break;
+		default:
+			break;
+		}
 	}
 
 
 	return RETURNVOID();
 }
-
 
 
 
 RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 {
-	
+
+	int Boundary_X_Max = GET_WINDOW_WIDTHI / 2;
+	int Boundary_X_Min = - GET_WINDOW_WIDTHI / 2;
+
+	int Boundary_Y_Max = GET_WINDOW_HEIGHTI / 2;
+	int Boundary_Y_Min =  - GET_WINDOW_HEIGHTI / 2;
+
+
 	for (auto& i : this->Properties) {
-		if (i.Center.x >= 1.f) {
-			i.TopDirection = LEFT;
-			i.Vector.x *= -1.f;
-		}
-
-		if (i.Center.x <= -1.f) {
+		if (i.Center.x <= Boundary_X_Min) {
 			i.TopDirection = RIGHT;
-			i.Vector.x *= -1.f;
+			i.Vector.x *= -1;
 		}
 
-
-		if (i.Center.y >= 1.f) {
-			i.TopDirection = DOWN;
-			i.Vector.y *= -1.f;
+		if (i.Center.x >= Boundary_X_Max) {
+			i.TopDirection = LEFT;
+			i.Vector.x *= -1;
 		}
 
-		
-
-		if (i.Center.y <= -1.f) {
+		if (i.Center.y <= Boundary_Y_Min) {
 			i.TopDirection = UP;
-			i.Vector.y *= -1.f;
+			i.Vector.y *= -1;
 		}
+
+		if (i.Center.y >= Boundary_Y_Max) {
+			i.TopDirection = DOWN;
+			i.Vector.y *= -1;
+		}
+
+
 	}
-
-
-
-
 
 
 	return RETURNVOID();
@@ -786,17 +710,19 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 
 
 
-
 RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Movement(PARAMETERVOID)
 {
+
 	this->Vector_Reflection();
 
 	for (auto& i : this->Properties) {
+
+
+
 		i.Center.x += i.Vector.x;
 		i.Center.y += i.Vector.y;
 	}
 
-	
 
 
 	return RETURNVOID();

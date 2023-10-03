@@ -427,8 +427,9 @@ namespace Scene4_CallBackFunctions {
 
 	RETURNVOID MouseInput(int Key, int State, int x, int y)
 	{
-		Point2F GLPoint = Translate(x, y, static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)),static_cast<float>( glutGet(GLUT_WINDOW_HEIGHT)));
-
+		
+		Point3F temp = WindowCoord_to_GLCoord(x, y, static_cast<float>(glutGet(GLUT_WINDOW_WIDTH)),static_cast<float>( glutGet(GLUT_WINDOW_HEIGHT)));
+		Point2F GLPoint = Point2F{ temp.x,temp.y };
 
 		if (State == GLUT_DOWN) {
 			if (GLPoint.x < 0 && GLPoint.y > 0) {

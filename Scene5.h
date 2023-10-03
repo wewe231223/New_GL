@@ -22,7 +22,6 @@ public:
 	RETURNVOID Render();
 
 
-	RETURNVOID Reshape(GLint NewScreenWidth,GLint NewScreenHeight);
 
 	RETURNVOID Move(PARAMETERVOID) { T1.Vector_Movement(); }
 

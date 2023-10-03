@@ -177,6 +177,12 @@ namespace AdvanceShape {
 
 
 
+	enum VectorType {
+		Rand,
+		ZigZag
+	};
+
+
 
 
 	/// <summary>
@@ -187,15 +193,19 @@ namespace AdvanceShape {
 	/// 5.Color
 	/// </summary>
 	typedef struct _ISOTRIANGLEPACKAGE {
-		Point3F Center;
-		GLfloat Width;
-		GLfloat Height;
+		Point3I Center;
+		GLint Width;
+		GLint Height;
 		Direction TopDirection;
+		
 
 		Color3f Color;
 
-		Vector2F Vector = { 0.f, };
+
+		Vector2I Vector = { 0, };
+		VectorType MovementType = Rand;
 	}IsoTriElement;
+
 
 
 
@@ -233,7 +243,6 @@ namespace AdvanceShape {
 
 
 		//============================
-		RETURNVOID Reshape(GLfloat XRatio, GLfloat YRatio);
 
 
 
@@ -242,7 +251,7 @@ namespace AdvanceShape {
 
 
 
-		RETURNVOID Vector_Apply(PARAMETERVOID);
+		RETURNVOID Vector_Apply();
 		RETURNVOID Vector_Reflection(PARAMETERVOID);
 		RETURNVOID Vector_Movement(PARAMETERVOID);
 

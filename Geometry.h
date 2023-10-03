@@ -7,6 +7,12 @@ typedef struct _POINT2I {
 	int y;
 }Point2I;
 
+typedef struct _POINT3I {
+	int x;
+	int y;
+	int z;
+}Point3I;
+
 
 typedef struct _POINT2f {
 	float x;
@@ -22,6 +28,7 @@ typedef struct _POINT3F {
 
 typedef Point2F PIVOT;
 typedef Point2F Vector2F;
+typedef Point2I Vector2I;
 
 
 
@@ -73,9 +80,9 @@ typedef	unsigned int VertexArrayObject;
 
 
 
-inline Point2F Translate(int PixelX, int PixelY,float DisplayWidth,float DisplayHeight) {
+inline Point3F WindowCoord_to_GLCoord(int PixelX, int PixelY,float DisplayWidth,float DisplayHeight) {
 
-	Point2F result{};
+	Point3F result{0.f,};
 	 
 	result.x = static_cast<float>(PixelX) / DisplayWidth * 2.0f - 1.0f;
 	result.y = 1.0f - static_cast<float>(PixelY) / DisplayHeight * 2.0f;
@@ -83,6 +90,22 @@ inline Point2F Translate(int PixelX, int PixelY,float DisplayWidth,float Display
 
 	return result;
 }
+
+
+inline Point3F Translate(Point2I Pixel) {
+	
+	return Point3F{
+		Pixel.x / (GET_WINDOW_WIDTHF / 2.f),
+		Pixel.y / (GET_WINDOW_HEIGHTF / 2.f),
+		0.f
+	};
+
+
+
+}
+
+
+
 
 inline float Triangle_Area(Point2F p1, Point2F p2, Point2F p3) {
 // From Gauss's Triangle Area Formula

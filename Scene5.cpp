@@ -11,19 +11,20 @@ RETURNVOID Scene5::Init()
 
 
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-		{0.f,0.f,0.f},
-		0.5f,
-		0.5f,
+		{0,0,0},
+		200,
+		200,
 		UP,
 		{this->RG.RandFloat(0.f,1.f),
 		this->RG.RandFloat(0.f,1.f),
 		this->RG.RandFloat(0.f,1.f)}
 		}
 	);
+
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{0.f,0.f,0.f},
-	0.5f,
-	0.5f,
+	{0,0,0},
+	200,
+	200,
 	LEFT,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
@@ -31,22 +32,12 @@ RETURNVOID Scene5::Init()
 		}
 	);
 
-	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{0.f,0.f,0.f},
-	0.5f,
-	0.5f,
-	RIGHT,
-	{this->RG.RandFloat(0.f,1.f),
-	this->RG.RandFloat(0.f,1.f),
-	this->RG.RandFloat(0.f,1.f)}
-		}
-	);
 
 
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{0.f,0.3f,0.0f},
-	0.5f,
-	0.5f,
+	{0,0,0},
+	200,
+	200,
 	DOWN,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
@@ -57,35 +48,16 @@ RETURNVOID Scene5::Init()
 
 
 
-	this->OldScreenWidth = GETWIN_WIDTH;
-	this->OldScreenHeight = GETWIN_HEIGHT;
 
+	this->OldScreenWidth = GET_WINDOW_WIDTHF;
+	this->OldScreenHeight = GET_WINDOW_HEIGHTF;
+	
 	T1.Vector_Apply();
 
 
 	return RETURNVOID();
 }
 
-
-
-
-
-RETURNVOID Scene5::Reshape(GLint NewScreenWidth, GLint NewScreenHeight)
-{
-	GLfloat RatioX = this->OldScreenWidth / static_cast<float>(NewScreenWidth);
-	GLfloat RatioY = this->OldScreenHeight / static_cast<float>(NewScreenHeight);
-
-
-	this->T1.Reshape(RatioX, RatioY);
-
-
-	this->OldScreenWidth = GETWIN_WIDTH;
-	this->OldScreenHeight = GETWIN_HEIGHT;
-
-
-
-	return RETURNVOID();
-}
 
 
 
@@ -138,7 +110,6 @@ RETURNVOID Scene5_CallBackFunctions::Draw()
 
 RETURNVOID Scene5_CallBackFunctions::Reshape(int w, int h)
 {
-	SC5.Reshape(w, h);
 	// ºäÆ÷Æ® ¼³Á¤
 	glViewport(0, 0, w, h);
 	return RETURNVOID();

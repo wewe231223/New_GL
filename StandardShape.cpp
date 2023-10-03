@@ -710,62 +710,79 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 			break;
 		case ZigZag:
 
-			if (i.Center.x >= Boundary_X_Max) {
+			if (i.Center.x <= Boundary_X_Min || i.Center.x >= Boundary_X_Max) {
+				if (i.Center.x <= Boundary_X_Min) {
+					i.TopDirection = RIGHT;
+					i.Center.x = Boundary_X_Min + 5;
+				}
 
-				if (this->ZigZag_Going_Down) {
-
+				if (i.Center.x >= Boundary_X_Max) {
 					i.TopDirection = LEFT;
-					i.Center.x -= 10;
-					i.Vector.y = -1 * abs(i.Vector.x);
-					i.Vector.x = 0;
+					i.Center.x = Boundary_X_Max - 5;
+				}
+
+				if (i.ZigZag_Y_Factor == DOWN) {
+					i.Vector.y = -abs(i.Vector.x);
 				}
 				else {
-
-					i.TopDirection = LEFT;
-					i.Center.x -= 10;
 					i.Vector.y = abs(i.Vector.x);
-					i.Vector.x = 0;
-
-
 				}
-			}
 
-			if (i.Center.x <= Boundary_X_Min) {
-				if (this->ZigZag_Going_Down) {
-					i.TopDirection = RIGHT;
-					i.Center.x += 10;
-					i.Vector.y = -1 * abs(i.Vector.x);
-					i.Vector.x = 0;
-				}
-				else {
-					i.TopDirection = RIGHT;
-					i.Center.x += 10;
-					i.Vector.y = abs(i.Vector.x);
-					i.Vector.x = 0;
-
-
-
-				}
-			}
-
-
-
-			if (i.Center.y <= Boundary_Y_Min) {
-				//i.TopDirection = UP;
-				i.Center.y += 10;
-				i.Vector.y = abs(i.Vector.y);
 				i.Vector.x = 0;
-				this->ZigZag_Going_Down = false;
+				i.Distance_Y = i.Center.y;
 			}
 
 
-			if (i.Center.y >= Boundary_Y_Max) {
-				//i.TopDirection = DOWN;
-				i.Center.y -= 10;
-				i.Vector.y = -abs(i.Vector.y);
-				i.Vector.x = 0;
-				this->ZigZag_Going_Down = true;
+			if (i.Vector.y < 0) {
+				if (i.Center.y <= i.Distance_Y - Interval) {
+					if (i.TopDirection == RIGHT) {
+						i.Vector.x = abs(i.Vector.y);
+						i.Vector.y = 0;
+					}
+					else if(i.TopDirection == LEFT) {
+						i.Vector.x = -abs(i.Vector.y);
+						i.Vector.y = 0;
+					}
+
+					i.Distance_Y = 0;
+				}
+			}else if (i.Vector.y > 0) {
+				if (i.Center.y >= i.Distance_Y + Interval) {
+					if (i.TopDirection == RIGHT) {
+						i.Vector.x = abs(i.Vector.y);
+						i.Vector.y = 0;
+					}
+					else if (i.TopDirection == LEFT) {
+						i.Vector.x = -abs(i.Vector.y);
+						i.Vector.y = 0;
+					}
+
+					i.Distance_Y = 0;
+				}
+
+				
 			}
+
+
+			if (i.Center.y <= Boundary_Y_Min + Interval) {
+				i.ZigZag_Y_Factor = UP;
+			}
+
+			if (i.Center.y >= Boundary_Y_Max - Interval ) {
+				i.ZigZag_Y_Factor = DOWN;
+			}
+
+			break;
+		case RectSpiral:
+
+
+
+
+
+
+
+
+
 
 			break;
 		default:
@@ -809,48 +826,3 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Movement(PARAMETERVOID)
 
 
 
-RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_ZigZag_Movement(PARAMETERVOID)
-{
-	for (auto& i : this->Properties) {
-		if (i.MovementType == ZigZag) {
-
-			if (i.Vector.y < 0) {
-				if (i.Center.x > 0) {
-					//i.TopDirection = LEFT;
-					i.Vector.x = -1 * abs(i.Vector.y);
-					i.Vector.y = 0;
-				}
-				else if (i.Center.x < 0) {
-					//i.TopDirection = RIGHT;
-					i.Vector.x = abs(i.Vector.y);
-					i.Vector.y = 0;
-				}
-			}
-			else if (i.Vector.y > 0) {
-
-				if (i.Center.x > 0) {
-					//i.TopDirection = LEFT;
-					i.Vector.x = -1 * abs(i.Vector.y);
-					i.Vector.y = 0;
-				}
-				else if (i.Center.x < 0) {
-					//i.TopDirection = RIGHT;
-					i.Vector.x  = abs(i.Vector.y);
-					i.Vector.y = 0;
-				}
-
-
-			}
-
-		}
-	}
-
-
-
-
-
-
-
-
-	return RETURNVOID();
-}

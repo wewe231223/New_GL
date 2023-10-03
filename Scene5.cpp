@@ -9,14 +9,17 @@ RETURNVOID Scene5::Init()
 
 
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{0,0,0},
-	200,
-	200,
-	RIGHT,
+	{
+	this->RG.RandInt( -DEFAULT_SCREEN_WIDTH / 2,0),
+	this->RG.RandInt(0,DEFAULT_SCREEN_HEIGHT / 2),
+	0},
+	20,
+	40,
+	UP,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f)},
-	{this->RG.RandInt(5,15),10},
+	{this->RG.RandInt(5,10),10},
 	AdvanceShape::ZigZag
 		}
 	);
@@ -24,17 +27,63 @@ RETURNVOID Scene5::Init()
 
 
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{200,100,0},
-	200,
-	200,
-	RIGHT,
+		{
+	this->RG.RandInt(0,DEFAULT_SCREEN_WIDTH / 2),
+	this->RG.RandInt(0,DEFAULT_SCREEN_HEIGHT / 2),
+	0 },
+	20,
+	40,
+	DOWN,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f)},
-	{2,0},
+	{this->RG.RandInt(5,10),0},
 	AdvanceShape::ZigZag
 		}
 	);
+
+
+	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
+	{
+	this->RG.RandInt( -DEFAULT_SCREEN_WIDTH / 2 , 0),
+	this->RG.RandInt(- DEFAULT_SCREEN_HEIGHT / 2 , 0),
+	0 },
+	20,
+	40,
+	DOWN,
+	{this->RG.RandFloat(0.f,1.f),
+	this->RG.RandFloat(0.f,1.f),
+	this->RG.RandFloat(0.f,1.f)},
+	{this->RG.RandInt(5,10),0},
+	AdvanceShape::ZigZag
+		}
+	);
+
+
+
+
+
+	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
+	{
+	this->RG.RandInt(0,DEFAULT_SCREEN_WIDTH / 2),
+	this->RG.RandInt(-DEFAULT_SCREEN_HEIGHT / 2 , 0),
+	0 },
+	20,
+	40,
+	DOWN,
+	{this->RG.RandFloat(0.f,1.f),
+	this->RG.RandFloat(0.f,1.f),
+	this->RG.RandFloat(0.f,1.f)},
+	{this->RG.RandInt(5,10),0},
+	AdvanceShape::ZigZag
+		}
+	);
+
+
+
+
+
+
 
 
 
@@ -118,7 +167,7 @@ RETURNVOID Scene5_CallBackFunctions::TimerCall(int value)
 	SC5.SpecialMovement();
 	glutPostRedisplay();
 
-	return glutTimerFunc(200, Scene5_CallBackFunctions::TimerCall, value);
+	return glutTimerFunc(100, Scene5_CallBackFunctions::TimerCall, value);
 }
 
 

@@ -179,10 +179,12 @@ namespace AdvanceShape {
 
 	enum VectorType {
 		Rand,
-		ZigZag
+		ZigZag,
+		RectSpiral
 	};
 
 
+constexpr auto Interval = 100;
 
 
 	/// <summary>
@@ -204,6 +206,19 @@ namespace AdvanceShape {
 
 		Vector2I Vector = { 0, };
 		VectorType MovementType = Rand;
+
+
+
+
+		//=======AnimationFactor============
+
+		Direction ZigZag_Y_Factor = DOWN;
+		GLint Distance_Y = 0;
+
+
+
+		GLint NextDistance = 20;
+
 	}IsoTriElement;
 
 
@@ -224,6 +239,10 @@ namespace AdvanceShape {
 
 
 		bool ZigZag_Going_Down = true;
+
+
+		
+
 
 	public:
 		IsoscelesTriangle() {}
@@ -256,8 +275,13 @@ namespace AdvanceShape {
 		RETURNVOID Vector_Reflection(PARAMETERVOID);
 		RETURNVOID Vector_Movement(PARAMETERVOID);
 
+		//==========================Animations======================================
 
-		RETURNVOID Vector_ZigZag_Movement(PARAMETERVOID);
+
+
+
+		RETURNVOID ResetAnimationFactors(PARAMETERVOID);
+		
 		
 
 

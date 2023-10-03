@@ -44,7 +44,7 @@ RETURNVOID Scene5::Init()
 
 
 	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
-	{0.f,0.f,0.f},
+	{0.f,0.3f,0.0f},
 	0.5f,
 	0.5f,
 	DOWN,
@@ -60,6 +60,7 @@ RETURNVOID Scene5::Init()
 	this->OldScreenWidth = GETWIN_WIDTH;
 	this->OldScreenHeight = GETWIN_HEIGHT;
 
+	T1.Vector_Apply();
 
 
 	return RETURNVOID();
@@ -68,17 +69,11 @@ RETURNVOID Scene5::Init()
 
 
 
-#include <Windows.h>
 
 RETURNVOID Scene5::Reshape(GLint NewScreenWidth, GLint NewScreenHeight)
 {
 	GLfloat RatioX = this->OldScreenWidth / static_cast<float>(NewScreenWidth);
 	GLfloat RatioY = this->OldScreenHeight / static_cast<float>(NewScreenHeight);
-
-
-
-
-
 
 
 	this->T1.Reshape(RatioX, RatioY);
@@ -107,9 +102,6 @@ RETURNVOID Scene5::Reshape(GLint NewScreenWidth, GLint NewScreenHeight)
 
 RETURNVOID Scene5::Render()
 {
-
-
-
 	this->T1.Render();
 
 	return RETURNVOID();
@@ -152,6 +144,11 @@ RETURNVOID Scene5_CallBackFunctions::Reshape(int w, int h)
 	return RETURNVOID();
 }
 
+RETURNVOID Scene5_CallBackFunctions::IdleCall(PARAMETERVOID) {
+	SC5.Move();
+	glutPostRedisplay();
+}
+
 
 
 CallbackFunc ResisterScene5()
@@ -162,7 +159,7 @@ CallbackFunc ResisterScene5()
 
 	result.DrawCall = Scene5_CallBackFunctions::Draw;
 	result.ReShapeCall = Scene5_CallBackFunctions::Reshape;
-
+	result.IdleCall = Scene5_CallBackFunctions::IdleCall;
 
 
 

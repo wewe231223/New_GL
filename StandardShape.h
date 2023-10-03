@@ -193,6 +193,8 @@ namespace AdvanceShape {
 		Direction TopDirection;
 
 		Color3f Color;
+
+		Vector2F Vector = { 0.f, };
 	}IsoTriElement;
 
 
@@ -232,6 +234,20 @@ namespace AdvanceShape {
 
 		//============================
 		RETURNVOID Reshape(GLfloat XRatio, GLfloat YRatio);
+
+
+
+
+
+
+
+
+		RETURNVOID Vector_Apply(PARAMETERVOID);
+		RETURNVOID Vector_Reflection(PARAMETERVOID);
+		RETURNVOID Vector_Movement(PARAMETERVOID);
+
+
+
 
 
 

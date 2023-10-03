@@ -54,6 +54,7 @@ namespace AdvanceObject {
 	public:
 		Object() {};
 		RETURNVOID Init();
+		RETURNVOID ClearBuffer(PARAMETERVOID);
 		RETURNVOID Resister(VertexElement&);
 
 		virtual RETURNVOID Render();

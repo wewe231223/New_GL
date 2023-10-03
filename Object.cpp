@@ -118,10 +118,18 @@ namespace AdvanceObject {
 
 		return RETURNVOID();
 	}
+	RETURNVOID AdvanceObject::Object::ClearBuffer(PARAMETERVOID)
+	{
+		std::vector<GLfloat>().swap(this->VertexPosition);
+		std::vector<GLfloat>().swap(this->VertexColor);
 
+		return RETURNVOID();
+	}
 
 	RETURNVOID Object::Resister(VertexElement& e)
 	{
+
+
 		this->VertexPosition.push_back(e.VertexPosition.x);
 		this->VertexPosition.push_back(e.VertexPosition.y);
 		this->VertexPosition.push_back(e.VertexPosition.z);
@@ -166,8 +174,8 @@ namespace AdvanceObject {
 		glEnableVertexAttribArray(1);
 
 
-		delete Pptr;
-		delete Cptr;
+		delete[] Pptr;
+		delete[] Cptr;
 
 		return RETURNVOID();
 	}

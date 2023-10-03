@@ -545,9 +545,10 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Render() {
 	VertexElement V2{};
 	VertexElement V3{};
 
-
+	this->ClearBuffer();
 
 	for (auto& i : this->Properties) {
+
 
 		std::tie(V1, V2, V3) = this->CalculateVertex(i);
 
@@ -669,6 +670,7 @@ std::tuple<VertexElement, VertexElement, VertexElement> AdvanceShape::IsoscelesT
 
 
 
+
 	return std::make_tuple(Vertex1, Vertex2, Vertex3);
 }
 
@@ -690,42 +692,111 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Reshape(GLfloat XRatio, GLfloat YRat
 	GLfloat Width = GETWIN_WIDTH;
 	GLfloat Height = GETWIN_HEIGHT;
 
-	if (Width > Height) {
-		GLfloat Ratio = Height / Width;
+	//if (Width > Height) {
+	//	GLfloat Ratio = Height / Width;
 
-		for (auto& i : this->Properties) {
+	//	for (auto& i : this->Properties) {
 
-			if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
-				i.Height *= Ratio;
-			}
-			else {
-				i.Width *= Ratio;
-			}
+	//		if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
+	//			i.Height *= Ratio;
+	//		}
+	//		else {
+	//			i.Width *= Ratio;
+	//		}
 
+	//	}
+
+
+
+	//}
+	//else if (Width < Height) {
+	//	GLfloat Ratio = Width / Height;
+
+	//	for (auto& i : this->Properties) {
+
+	//		if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
+	//			i.Width *= Ratio;
+	//		}
+	//		else {
+	//			i.Height *= Ratio;
+	//		}
+
+	//	}
+
+
+
+	//}
+
+
+
+
+	return RETURNVOID();
+}
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(PARAMETERVOID)
+{
+	for (auto& i : this->Properties) {
+		i.Vector.x = this->RG.RandFloat(-0.005f, 0.005f);
+		i.Vector.y = this->RG.RandFloat(-0.005f, 0.005f);
+	}
+
+
+	return RETURNVOID();
+}
+
+
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
+{
+	
+	for (auto& i : this->Properties) {
+		if (i.Center.x >= 1.f) {
+			i.TopDirection = LEFT;
+			i.Vector.x *= -1.f;
+		}
+
+		if (i.Center.x <= -1.f) {
+			i.TopDirection = RIGHT;
+			i.Vector.x *= -1.f;
 		}
 
 
-
-	}
-	else if (Width < Height) {
-		GLfloat Ratio = Width / Height;
-
-		for (auto& i : this->Properties) {
-
-			if (i.TopDirection == LEFT || i.TopDirection == RIGHT) {
-				i.Width *= Ratio;
-			}
-			else {
-				i.Height *= Ratio;
-			}
-
+		if (i.Center.y >= 1.f) {
+			i.TopDirection = DOWN;
+			i.Vector.y *= -1.f;
 		}
 
+		
 
-
+		if (i.Center.y <= -1.f) {
+			i.TopDirection = UP;
+			i.Vector.y *= -1.f;
+		}
 	}
 
 
+
+
+
+
+	return RETURNVOID();
+}
+
+
+
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Movement(PARAMETERVOID)
+{
+	this->Vector_Reflection();
+
+	for (auto& i : this->Properties) {
+		i.Center.x += i.Vector.x;
+		i.Center.y += i.Vector.y;
+	}
+
+	
 
 
 	return RETURNVOID();

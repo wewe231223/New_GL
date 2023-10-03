@@ -12,10 +12,7 @@ namespace RandomEngine {
 
 
 int RandomGenerater::RandInt(int min, int max){
-
-
 	std::uniform_int_distribution<int>rdi(min,max);
-
 	return rdi(RandomEngine::gen);
 }
 

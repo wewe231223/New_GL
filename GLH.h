@@ -6,6 +6,7 @@
 
 #include "Definition.h"
 
+#define UPDATE glutPostRedisplay()
 
 
 typedef struct _CALLBACKFUNC {

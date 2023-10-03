@@ -24,7 +24,7 @@ public:
 
 	RETURNVOID Reshape(GLint NewScreenWidth,GLint NewScreenHeight);
 
-	
+	RETURNVOID Move(PARAMETERVOID) { T1.Vector_Movement(); }
 
 
 
@@ -36,7 +36,7 @@ namespace Scene5_CallBackFunctions {
 	RETURNVOID Reshape(int,int);
 
 
-
+	RETURNVOID IdleCall(PARAMETERVOID);
 
 
 

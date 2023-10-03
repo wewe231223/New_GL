@@ -180,12 +180,14 @@ namespace AdvanceShape {
 	enum VectorType {
 		Rand,
 		ZigZag,
-		RectSpiral
+		RectSpiral,
+		Spiral
 	};
 
 
 constexpr auto Interval = 100;
-
+constexpr auto RectSpiral_Interval = 10;
+constexpr auto pi = 3.141592;
 
 	/// <summary>
 	/// 1.Center
@@ -213,11 +215,18 @@ constexpr auto Interval = 100;
 		//=======AnimationFactor============
 
 		Direction ZigZag_Y_Factor = DOWN;
-		GLint Distance_Y = 0;
+		
+
+		GLint OldX = 0;
+		GLint OldY = 0;
 
 
 
 		GLint NextDistance = 20;
+
+
+		GLint Theta = 1;
+
 
 	}IsoTriElement;
 
@@ -272,7 +281,7 @@ constexpr auto Interval = 100;
 
 
 		RETURNVOID Vector_Apply();
-		RETURNVOID Vector_Reflection(PARAMETERVOID);
+		RETURNVOID Vector_Animation(PARAMETERVOID);
 		RETURNVOID Vector_Movement(PARAMETERVOID);
 
 		//==========================Animations======================================

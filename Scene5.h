@@ -28,7 +28,7 @@ public:
 
 
 	RETURNVOID Move(PARAMETERVOID) { T1.Vector_Movement(); }
-	RETURNVOID SpecialMovement(PARAMETERVOID) { T1.Vector_ZigZag_Movement(); }
+	RETURNVOID SpecialMovement(PARAMETERVOID) {  }
 
 
 };

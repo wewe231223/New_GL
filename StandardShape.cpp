@@ -662,6 +662,11 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 		case ZigZag:
 			i.Vector = Vector2I{i.Vector.x,0};
 			break;
+		case RectSpiral:
+			i.Vector = Vector2I{ i.Vector.x,0 };
+			i.OldX = i.Center.x;
+			i.OldY = i.Center.y;
+			break;
 		default:
 			break;
 		}
@@ -673,7 +678,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 
 
 
-RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
+RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Animation(PARAMETERVOID)
 {
 
 	int Boundary_X_Max = GET_WINDOW_WIDTHI / 2;
@@ -729,12 +734,12 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 				}
 
 				i.Vector.x = 0;
-				i.Distance_Y = i.Center.y;
+				i.OldY = i.Center.y;
 			}
 
 
 			if (i.Vector.y < 0) {
-				if (i.Center.y <= i.Distance_Y - Interval) {
+				if (i.Center.y <= i.OldY - Interval) {
 					if (i.TopDirection == RIGHT) {
 						i.Vector.x = abs(i.Vector.y);
 						i.Vector.y = 0;
@@ -744,10 +749,10 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 						i.Vector.y = 0;
 					}
 
-					i.Distance_Y = 0;
+					i.OldY = 0;
 				}
 			}else if (i.Vector.y > 0) {
-				if (i.Center.y >= i.Distance_Y + Interval) {
+				if (i.Center.y >= i.OldY + Interval) {
 					if (i.TopDirection == RIGHT) {
 						i.Vector.x = abs(i.Vector.y);
 						i.Vector.y = 0;
@@ -757,7 +762,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 						i.Vector.y = 0;
 					}
 
-					i.Distance_Y = 0;
+					i.OldY = 0;
 				}
 
 				
@@ -775,7 +780,76 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 			break;
 		case RectSpiral:
 
+			if (i.Center.x <= Boundary_X_Min) {
+				i.TopDirection = RIGHT;
+				i.Vector = Vector2I{ 0,0 };
+			}
 
+			if (i.Center.x >= Boundary_X_Max) {
+				i.TopDirection = LEFT;
+				i.Vector = Vector2I{ 0,0 };
+			}
+
+			if (i.Center.y <= Boundary_Y_Min) {
+				i.TopDirection = UP;
+				i.Vector = Vector2I{ 0,0 };
+			}
+
+			if (i.Center.y >= Boundary_Y_Max) {
+				i.TopDirection = DOWN;
+				i.Vector = Vector2I{ 0,0 };
+			}
+
+			if (i.Vector.x > 0 && i.Vector.y == 0) {
+				if (i.Center.x >= i.OldX + i.NextDistance) {
+					i.Vector.y = -abs(i.Vector.x);
+					i.Vector.x = 0;
+					i.OldX = i.Center.x;
+					i.OldY = i.Center.y;
+					i.NextDistance += RectSpiral_Interval;
+				}
+			}
+
+
+			if (i.Vector.y < 0 && i.Vector.x == 0) {
+				if (i.Center.y <= i.OldY - i.NextDistance) {
+					i.Vector.x = -abs(i.Vector.y);
+					i.Vector.y = 0;
+
+					i.OldX = i.Center.x;
+					i.OldY = i.Center.y;
+
+					i.NextDistance += RectSpiral_Interval;
+				}
+			}
+
+
+
+			if (i.Vector.x < 0 && i.Vector.y == 0) {
+				if (i.Center.x <= i.OldX - i.NextDistance) {
+					i.Vector.y = abs(i.Vector.x);
+					i.Vector.x = 0;
+					i.OldX = i.Center.x;
+					i.OldY = i.Center.y;
+					i.NextDistance += RectSpiral_Interval;
+				}
+			}
+
+			if (i.Vector.y > 0 && i.Vector.x == 0) {
+				if (i.Center.y >= i.OldY + i.NextDistance) {
+					i.Vector.x = abs(i.Vector.y);
+					i.Vector.y = 0;
+
+					i.OldX = i.Center.x;
+					i.OldY = i.Center.y;
+
+					i.NextDistance += RectSpiral_Interval;
+				}
+			}
+
+
+			break;
+		case Spiral:
 
 
 
@@ -806,7 +880,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Movement(PARAMETERVOID)
 {
 
-	this->Vector_Reflection();
+	this->Vector_Animation();
 
 	
 	for (auto& i : this->Properties) {

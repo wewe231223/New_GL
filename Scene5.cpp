@@ -13,8 +13,8 @@ RETURNVOID Scene5::Init()
 	this->RG.RandInt( -DEFAULT_SCREEN_WIDTH / 2,0),
 	this->RG.RandInt(0,DEFAULT_SCREEN_HEIGHT / 2),
 	0},
-	20,
-	40,
+	50,
+	100,
 	UP,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
@@ -31,14 +31,14 @@ RETURNVOID Scene5::Init()
 	this->RG.RandInt(0,DEFAULT_SCREEN_WIDTH / 2),
 	this->RG.RandInt(0,DEFAULT_SCREEN_HEIGHT / 2),
 	0 },
-	20,
-	40,
+	50,
+	100,
 	DOWN,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f)},
 	{this->RG.RandInt(5,10),0},
-	AdvanceShape::ZigZag
+	AdvanceShape::Rand
 		}
 	);
 
@@ -48,8 +48,8 @@ RETURNVOID Scene5::Init()
 	this->RG.RandInt( -DEFAULT_SCREEN_WIDTH / 2 , 0),
 	this->RG.RandInt(- DEFAULT_SCREEN_HEIGHT / 2 , 0),
 	0 },
-	20,
-	40,
+	50,
+	100,
 	DOWN,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
@@ -67,15 +67,16 @@ RETURNVOID Scene5::Init()
 	{
 	this->RG.RandInt(0,DEFAULT_SCREEN_WIDTH / 2),
 	this->RG.RandInt(-DEFAULT_SCREEN_HEIGHT / 2 , 0),
+
 	0 },
-	20,
-	40,
+	50,
+	100,
 	DOWN,
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f)},
-	{this->RG.RandInt(5,10),0},
-	AdvanceShape::ZigZag
+	{3,0},
+	AdvanceShape::RectSpiral
 		}
 	);
 

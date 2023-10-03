@@ -16,10 +16,26 @@ RETURNVOID Scene5::Init()
 	{this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f),
 	this->RG.RandFloat(0.f,1.f)},
-	{0,0},
+	{this->RG.RandInt(5,15),10},
 	AdvanceShape::ZigZag
 		}
 	);
+
+
+
+	T1.NewIsoscelesTriangle(AdvanceShape::IsoTriElement{
+	{200,100,0},
+	200,
+	200,
+	RIGHT,
+	{this->RG.RandFloat(0.f,1.f),
+	this->RG.RandFloat(0.f,1.f),
+	this->RG.RandFloat(0.f,1.f)},
+	{2,0},
+	AdvanceShape::ZigZag
+		}
+	);
+
 
 
 
@@ -102,7 +118,7 @@ RETURNVOID Scene5_CallBackFunctions::TimerCall(int value)
 	SC5.SpecialMovement();
 	glutPostRedisplay();
 
-	return glutTimerFunc(500, Scene5_CallBackFunctions::TimerCall, value);
+	return glutTimerFunc(200, Scene5_CallBackFunctions::TimerCall, value);
 }
 
 

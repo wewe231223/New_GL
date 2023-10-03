@@ -660,7 +660,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 			i.Vector = Vector2I{ this->RG.RandInt(-3,3),this->RG.RandInt(-3,3) };
 			break;
 		case ZigZag:
-			i.Vector = Vector2I{1,0};
+			i.Vector = Vector2I{i.Vector.x,0};
 			break;
 		default:
 			break;
@@ -714,14 +714,14 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 
 				if (this->ZigZag_Going_Down) {
 
-					i.TopDirection = DOWN;
+					i.TopDirection = LEFT;
 					i.Center.x -= 10;
 					i.Vector.y = -1 * abs(i.Vector.x);
 					i.Vector.x = 0;
 				}
 				else {
 
-					i.TopDirection = UP;
+					i.TopDirection = LEFT;
 					i.Center.x -= 10;
 					i.Vector.y = abs(i.Vector.x);
 					i.Vector.x = 0;
@@ -732,13 +732,13 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 
 			if (i.Center.x <= Boundary_X_Min) {
 				if (this->ZigZag_Going_Down) {
-					i.TopDirection = DOWN;
+					i.TopDirection = RIGHT;
 					i.Center.x += 10;
 					i.Vector.y = -1 * abs(i.Vector.x);
 					i.Vector.x = 0;
 				}
 				else {
-					i.TopDirection = UP;
+					i.TopDirection = RIGHT;
 					i.Center.x += 10;
 					i.Vector.y = abs(i.Vector.x);
 					i.Vector.x = 0;
@@ -751,7 +751,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 
 
 			if (i.Center.y <= Boundary_Y_Min) {
-				i.TopDirection = UP;
+				//i.TopDirection = UP;
 				i.Center.y += 10;
 				i.Vector.y = abs(i.Vector.y);
 				i.Vector.x = 0;
@@ -760,7 +760,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Reflection(PARAMETERVOID)
 
 
 			if (i.Center.y >= Boundary_Y_Max) {
-				i.TopDirection = DOWN;
+				//i.TopDirection = DOWN;
 				i.Center.y -= 10;
 				i.Vector.y = -abs(i.Vector.y);
 				i.Vector.x = 0;
@@ -814,27 +814,27 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_ZigZag_Movement(PARAMETERVOID
 	for (auto& i : this->Properties) {
 		if (i.MovementType == ZigZag) {
 
-			if (i.TopDirection == DOWN) {
+			if (i.Vector.y < 0) {
 				if (i.Center.x > 0) {
-					i.TopDirection = LEFT;
+					//i.TopDirection = LEFT;
 					i.Vector.x = -1 * abs(i.Vector.y);
 					i.Vector.y = 0;
 				}
 				else if (i.Center.x < 0) {
-					i.TopDirection = RIGHT;
+					//i.TopDirection = RIGHT;
 					i.Vector.x = abs(i.Vector.y);
 					i.Vector.y = 0;
 				}
 			}
-			else if (i.TopDirection == UP) {
+			else if (i.Vector.y > 0) {
 
 				if (i.Center.x > 0) {
-					i.TopDirection = LEFT;
+					//i.TopDirection = LEFT;
 					i.Vector.x = -1 * abs(i.Vector.y);
 					i.Vector.y = 0;
 				}
 				else if (i.Center.x < 0) {
-					i.TopDirection = RIGHT;
+					//i.TopDirection = RIGHT;
 					i.Vector.x  = abs(i.Vector.y);
 					i.Vector.y = 0;
 				}

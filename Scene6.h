@@ -2,36 +2,67 @@
 #include "StandardShape.h"
 #include <cmath>
 
-constexpr auto pi = 3.141592;
+constexpr auto pi = 3.141592f;
+constexpr auto MaxSpiral = 200;
+constexpr auto MaxTheta = 1080;
+constexpr auto Positive = 1.f;
+constexpr auto Negative = -1.f;
 
+enum SpiralType {
+	LEFTPART,RIGHTPART
+};
 
-class Spiral : public AdvanceShape::Dot {
+class Spiral : public AdvanceObject::Object {
+
 private:
-	GLfloat Theta = 0.f;
-	GLfloat Radius = 0.f;
+
+
+	GLfloat dt{};
+	GLfloat dr{};
+
+	
+	GLenum RenderMode = GL_LINE_STRIP;
+	//GLenum RenderMode = GL_POINTS;
+	
+	GLfloat PointSize = 5.f;
+
+	
+
+	std::vector<VertexElement> VertexArray{};
 
 
 
-
-	RandomGenerater RG;
-	Point2F Center{ 0,0 };
-	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
+	RandomGenerater RG{};
 
 public:
+	GLint RenderSize = 1;
+	GLint RenderDirection = 1;
 
-	RETURNVOID NextDot();
-	
+	Spiral(Point2F);
+
+
+	RETURNVOID ChangeRenderMode(GLenum Mode) { this->RenderMode = Mode; }
+	RETURNVOID NextFrame();
+
+	virtual RETURNVOID Render() final override;
+
 
 };
 
 
 
 
+
+
+
+
 class Scene6 {
 private:
-	std::vector<Spiral> Shapes{};
 
-	AdvanceShape::Dot d{};
+	std::vector<Spiral> Shapes{};
+	RandomGenerater RG{};
+	Color4f BackGroundColor{ 0.f,0.f,0.f,0.f };
+
 
 public:
 	Scene6() {}
@@ -40,8 +71,20 @@ public:
 
 
 	RETURNVOID NewSpiral();
+	RETURNVOID Reset();
 
-	RETURNVOID Continue();
+	RETURNVOID ResetBackGroundColor() { 
+		this->BackGroundColor.r = this->RG.RandFloat(0.f, 1.f); 
+		this->BackGroundColor.g = this->RG.RandFloat(0.f, 1.f);
+		this->BackGroundColor.b = this->RG.RandFloat(0.f, 1.f);
+		this->BackGroundColor.a = 0.f;}
+
+	Color4f GetBackColor() { return this->BackGroundColor; }
+
+	RETURNVOID ShapesRenderMode(GLenum M);
+
+
+	RETURNVOID Timer();
 
 
 

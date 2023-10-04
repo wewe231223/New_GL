@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 enum VertexNo {
 	Vertex_1,
@@ -56,6 +57,9 @@ namespace AdvanceObject {
 		RETURNVOID Init();
 		RETURNVOID ClearBuffer(PARAMETERVOID);
 		RETURNVOID Resister(VertexElement&);
+
+		
+
 
 		virtual RETURNVOID Render();
 

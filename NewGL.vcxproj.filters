@@ -81,6 +81,12 @@
     <ClCompile Include="Scene5.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scene6.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Constant.cpp">
+      <Filter>소스 파일\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h">
@@ -129,6 +135,9 @@
       <Filter>헤더 파일\System</Filter>
     </ClInclude>
     <ClInclude Include="Scene5.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene6.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>

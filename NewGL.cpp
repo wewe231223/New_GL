@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 	MainShader->LINK_SHADER();
 
 
-
+	//MAINWINDOW->ResisterCallBackFunctions(ResisterScene5());
 	MAINWINDOW->ResisterCallBackFunctions(ResisterScene6());
 
 

@@ -510,6 +510,8 @@ RETURNVOID Line::Move(Vector2F V)
 RETURNVOID AdvanceShape::Dot::NewVertex(VertexElement e,GLfloat s)
 {
 	this->Vertex.push_back(e);
+	std::cout << this->Vertex.size() << std::endl;
+
 	this->Size = s;
 
 	return RETURNVOID();
@@ -521,7 +523,7 @@ RETURNVOID AdvanceShape::Dot::NewVertex(VertexElement e,GLfloat s)
 
 RETURNVOID AdvanceShape::Dot::Render() {
 
-
+	this->ClearBuffer();
 
 	for (auto& i : this->Vertex) {
 		this->Resister(i);
@@ -576,9 +578,9 @@ std::tuple<VertexElement, VertexElement, VertexElement> AdvanceShape::IsoscelesT
 	VertexElement Vertex2{ {0.f,},{e.Color.r,e.Color.g,e.Color.b} };
 	VertexElement Vertex3{ {0.f,},{e.Color.r,e.Color.g,e.Color.b} };
 
-	Point2I PixelVertex1 = { 0, };
-	Point2I PixelVertex2 = { 0, };
-	Point2I PixelVertex3 = { 0, };
+	Point2F PixelVertex1 = { 0, };
+	Point2F PixelVertex2 = { 0, };
+	Point2F PixelVertex3 = { 0, };
 
 
 	switch (e.TopDirection) {
@@ -614,17 +616,17 @@ std::tuple<VertexElement, VertexElement, VertexElement> AdvanceShape::IsoscelesT
 
 	case UP:
 
-		PixelVertex1 = Point2I{ e.Center.x + e.Width / 2,e.Center.y };
-		PixelVertex2 = Point2I{ e.Center.x ,e.Center.y + e.Height};
-		PixelVertex3 = Point2I{ e.Center.x - e.Width / 2,e.Center.y };
+		PixelVertex1 = Point2F{ e.Center.x + e.Width / 2,e.Center.y };
+		PixelVertex2 = Point2F{ e.Center.x ,e.Center.y + e.Height};
+		PixelVertex3 = Point2F{ e.Center.x - e.Width / 2,e.Center.y };
 
 
 
 		break;
 	case DOWN:
-		PixelVertex1 = Point2I{ e.Center.x + e.Width / 2,e.Center.y };
-		PixelVertex2 = Point2I{ e.Center.x - e.Width / 2,e.Center.y };
-		PixelVertex3 = Point2I{ e.Center.x ,e.Center.y - e.Height };
+		PixelVertex1 = Point2F{ e.Center.x + e.Width / 2,e.Center.y };
+		PixelVertex2 = Point2F{ e.Center.x - e.Width / 2,e.Center.y };
+		PixelVertex3 = Point2F{ e.Center.x ,e.Center.y - e.Height };
 		break;
 		
 	default:
@@ -657,15 +659,19 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 	for (auto& i : this->Properties) {
 		switch (i.MovementType){
 		case Rand:
-			i.Vector = Vector2I{ this->RG.RandInt(-3,3),this->RG.RandInt(-3,3) };
+			i.Vector = Vector2F{ this->RG.RandFloat(-3.f,3.f),this->RG.RandFloat(-3.f,3.f) };
 			break;
 		case ZigZag:
-			i.Vector = Vector2I{i.Vector.x,0};
+			i.Vector = Vector2F{i.Vector.x,0};
 			break;
 		case RectSpiral:
-			i.Vector = Vector2I{ i.Vector.x,0 };
+			i.Vector = Vector2F{ i.Vector.x,0 };
 			i.OldX = i.Center.x;
 			i.OldY = i.Center.y;
+			break;
+
+		case Spiral:
+			i.Vector = Vector2F{ 0.f,0.f };
 			break;
 		default:
 			break;
@@ -681,11 +687,11 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Apply(){
 RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Animation(PARAMETERVOID)
 {
 
-	int Boundary_X_Max = GET_WINDOW_WIDTHI / 2;
-	int Boundary_X_Min = - GET_WINDOW_WIDTHI / 2;
+	GLfloat Boundary_X_Max = GET_WINDOW_WIDTHF / 2;
+	GLfloat Boundary_X_Min = - GET_WINDOW_WIDTHF / 2;
 
-	int Boundary_Y_Max = GET_WINDOW_HEIGHTI / 2;
-	int Boundary_Y_Min =  - GET_WINDOW_HEIGHTI / 2;
+	GLfloat Boundary_Y_Max = GET_WINDOW_HEIGHTF / 2;
+	GLfloat Boundary_Y_Min =  - GET_WINDOW_HEIGHTF / 2;
 
 
 
@@ -782,22 +788,22 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Animation(PARAMETERVOID)
 
 			if (i.Center.x <= Boundary_X_Min) {
 				i.TopDirection = RIGHT;
-				i.Vector = Vector2I{ 0,0 };
+				i.Vector = Vector2F{ 0,0 };
 			}
 
 			if (i.Center.x >= Boundary_X_Max) {
 				i.TopDirection = LEFT;
-				i.Vector = Vector2I{ 0,0 };
+				i.Vector = Vector2F{ 0,0 };
 			}
 
 			if (i.Center.y <= Boundary_Y_Min) {
 				i.TopDirection = UP;
-				i.Vector = Vector2I{ 0,0 };
+				i.Vector = Vector2F{ 0,0 };
 			}
 
 			if (i.Center.y >= Boundary_Y_Max) {
 				i.TopDirection = DOWN;
-				i.Vector = Vector2I{ 0,0 };
+				i.Vector = Vector2F{ 0,0 };
 			}
 
 			if (i.Vector.x > 0 && i.Vector.y == 0) {
@@ -809,7 +815,7 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Animation(PARAMETERVOID)
 					i.NextDistance += RectSpiral_Interval;
 				}
 			}
-
+			
 
 			if (i.Vector.y < 0 && i.Vector.x == 0) {
 				if (i.Center.y <= i.OldY - i.NextDistance) {
@@ -850,8 +856,36 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Animation(PARAMETERVOID)
 
 			break;
 		case Spiral:
+			
+			if (i.Center.x <= Boundary_X_Min) {
+				i.TopDirection = RIGHT;
+				i.Coefficieient = -1.f;
+			}
+
+			if (i.Center.x >= Boundary_X_Max) {
+				i.TopDirection = LEFT;
+				i.Coefficieient = -1.f;
+			}
+
+			if (i.Center.y <= Boundary_Y_Min) {
+				i.TopDirection = UP;
+				i.Coefficieient = -1.f;
+			}
+
+			if (i.Center.y >= Boundary_Y_Max) {
+				i.TopDirection = DOWN;
+				i.Coefficieient = -1.f;
+			}
+
+			if (i.Coefficieient == -1.f) {
+				if (i.Radius <= 0.f) {
+					i.Coefficieient = 1.f;
+				}
+			}
 
 
+			i.Vector.x = i.Coefficieient * i.Radius * ((float)cos(i.Theta * pi / 180.0));
+			i.Vector.y = i.Coefficieient * i.Radius * ((float)sin(i.Theta * pi / 180.0));
 
 
 
@@ -900,3 +934,36 @@ RETURNVOID AdvanceShape::IsoscelesTriangle::Vector_Movement(PARAMETERVOID)
 
 
 
+RETURNVOID AdvanceShape::IsoscelesTriangle::ResetAnimationFactors(VectorType t)
+{
+	for (auto& i : this->Properties) {
+		i.MovementType = t;
+
+		i.ZigZag_Y_Factor = DOWN;
+		i.OldX = 0;
+		i.OldY = 0;
+		i.NextDistance = 20;
+		i.Theta = 0;
+		i.Radius = 0;
+		i.Coefficieient = 1.f;
+
+	}
+
+
+
+	this->Vector_Apply();
+	return RETURNVOID();
+}
+
+RETURNVOID AdvanceShape::IsoscelesTriangle::AddSpiral(PARAMETERVOID)
+{
+
+	for (auto& i : this->Properties) {
+		if (i.MovementType == Spiral) {
+			i.Radius += 0.0005f * i.Coefficieient ;
+			i.Theta += 1.f * i.Coefficieient;
+		}
+	}
+
+	return RETURNVOID();
+}

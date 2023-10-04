@@ -28,8 +28,8 @@ public:
 
 
 	RETURNVOID Move(PARAMETERVOID) { T1.Vector_Movement(); }
-	RETURNVOID SpecialMovement(PARAMETERVOID) {  }
-
+	RETURNVOID SpecialMovement(PARAMETERVOID) { T1.AddSpiral(); }
+	RETURNVOID NewMovement(AdvanceShape::VectorType T);
 
 };
 
@@ -45,7 +45,7 @@ namespace Scene5_CallBackFunctions {
 	RETURNVOID TimerCall(int);
 
 
-
+	RETURNVOID KeyBoardInputCall(unsigned char, int, int);
 
 }
 

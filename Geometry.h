@@ -92,7 +92,7 @@ inline Point3F WindowCoord_to_GLCoord(int PixelX, int PixelY,float DisplayWidth,
 }
 
 
-inline Point3F Translate(Point2I Pixel) {
+inline Point3F Translate(Point2F Pixel) {
 	
 	return Point3F{
 		Pixel.x / (GET_WINDOW_WIDTHF / 2.f),

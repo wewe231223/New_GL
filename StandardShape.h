@@ -197,17 +197,17 @@ constexpr auto pi = 3.141592;
 	/// 5.Color
 	/// </summary>
 	typedef struct _ISOTRIANGLEPACKAGE {
-		Point3I Center;
-		GLint Width;
-		GLint Height;
+		Point3F Center;
+		GLfloat Width;
+		GLfloat Height;
 		Direction TopDirection;
 		
 
 		Color3f Color;
 
 
-		Vector2I Vector = { 0, };
-		VectorType MovementType = Rand;
+		Vector2F Vector = { 0, };
+		VectorType MovementType;
 
 
 
@@ -217,15 +217,17 @@ constexpr auto pi = 3.141592;
 		Direction ZigZag_Y_Factor = DOWN;
 		
 
-		GLint OldX = 0;
-		GLint OldY = 0;
+		GLfloat OldX = 0;
+		GLfloat OldY = 0;
 
 
 
-		GLint NextDistance = 20;
+		GLfloat NextDistance = 20;
 
 
-		GLint Theta = 1;
+		GLfloat Theta = 0;
+		GLfloat Radius = 0;
+		GLfloat Coefficieient = 1.f;
 
 
 	}IsoTriElement;
@@ -289,8 +291,8 @@ constexpr auto pi = 3.141592;
 
 
 
-		RETURNVOID ResetAnimationFactors(PARAMETERVOID);
-		
+		RETURNVOID ResetAnimationFactors(VectorType t);
+		RETURNVOID AddSpiral(PARAMETERVOID);
 		
 
 

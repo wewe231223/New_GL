@@ -146,6 +146,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Scene5.cpp" />
+    <ClCompile Include="Scene6.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="StandardShape.cpp" />
   </ItemGroup>
@@ -166,6 +167,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="Scene5.h" />
+    <ClInclude Include="Scene6.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="StandardShape.h" />
   </ItemGroup>

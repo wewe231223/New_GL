@@ -56,7 +56,7 @@ namespace AdvanceObject {
 		Object() {};
 		RETURNVOID Init();
 		RETURNVOID ClearBuffer(PARAMETERVOID);
-		RETURNVOID Resister(VertexElement&);
+		RETURNVOID Resister(VertexElement);
 
 		
 

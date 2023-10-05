@@ -80,16 +80,29 @@ typedef	unsigned int VertexArrayObject;
 
 
 
-inline Point3F WindowCoord_to_GLCoord(int PixelX, int PixelY,float DisplayWidth,float DisplayHeight) {
+inline Point3F WindowCoord_to_GLCoord___REGACY(int PixelX, int PixelY) {
 
 	Point3F result{0.f,};
 	 
-	result.x = static_cast<float>(PixelX) / DisplayWidth * 2.0f - 1.0f;
-	result.y = 1.0f - static_cast<float>(PixelY) / DisplayHeight * 2.0f;
+	result.x = static_cast<float>(PixelX) / GET_WINDOW_WIDTHF * 2.0f - 1.0f;
+	result.y = 1.0f - static_cast<float>(PixelY) / GET_WINDOW_HEIGHTF * 2.0f;
 	
 
 	return result;
 }
+
+
+inline Point3F WindowCoord_to_GLCoord(int pixelX, int PixelY) {
+
+
+	
+	GLfloat x = static_cast<float>(pixelX) - GET_WINDOW_WIDTHF / 2;
+	GLfloat y = GET_WINDOW_HEIGHTF / 2 - static_cast<float>(PixelY);
+
+	return Point3F{ x,y,0.f };
+}
+
+
 
 
 inline Point3F Translate(Point2F Pixel) {

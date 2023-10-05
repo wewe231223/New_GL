@@ -90,6 +90,9 @@
     <ClCompile Include="Scene7.cpp">
       <Filter>소스 파일\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scene8.cpp">
+      <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h">
@@ -144,6 +147,9 @@
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene7.h">
+      <Filter>헤더 파일\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene8.h">
       <Filter>헤더 파일\Scene</Filter>
     </ClInclude>
   </ItemGroup>

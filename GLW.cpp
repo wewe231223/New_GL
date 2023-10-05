@@ -60,6 +60,10 @@ RETURNVOID GLW::ResisterCallBackFunctions(CallbackFunc CF) {
 		glutReshapeFunc(DEFAULTRESHAPE);
 	}
 
+
+
+
+
 	if (CF.IdleCall != nullptr) {
 		glutIdleFunc(CF.IdleCall);
 	}

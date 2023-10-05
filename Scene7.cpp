@@ -64,7 +64,7 @@ RETURNVOID Polygon_Pentagon::Update()
 	if (this->Polymorph) {
 
 
-		if (this->Radius <= 10.f) {
+		if (this->Radius <= 1.f) {
 
 			return RETURNVOID();
 		}

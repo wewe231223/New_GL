@@ -126,7 +126,7 @@ namespace AdvanceObject {
 		return RETURNVOID();
 	}
 
-	RETURNVOID Object::Resister(VertexElement& e)
+	RETURNVOID Object::Resister(VertexElement e)
 	{
 
 

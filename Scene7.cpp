@@ -14,39 +14,31 @@ RETURNVOID Polygon_Pentagon::Initialize(Point2F Center){
 	
 
 
-	Point2F Point1{ Center.x + this->Radius * cosf(theta * pi / 180.f),Center.y + this->Radius * sinf(theta * pi / 180.f) };
+	Point2F Point1{ Center.x + this->Radius * cosf(90.f * pi / 180.f),Center.y + this->Radius * sinf(90.f * pi / 180.f) };
+	Point2F Point2{ Center.x + this->Radius * cosf(162.f * pi / 180.f),Center.y + this->Radius * sinf(162.f * pi / 180.f) };
+	Point2F Point3{ Center.x + this->Radius * cosf(234.f * pi / 180.f),Center.y + this->Radius * sinf(234.f * pi / 180.f) };
+	Point2F Point4{ Center.x + this->Radius * cosf(306.f * pi / 180.f),Center.y + this->Radius * sinf(306.f * pi / 180.f) };
+	Point2F Point5{ Center.x + this->Radius * cosf(378.f * pi / 180.f),Center.y + this->Radius * sinf(378.f * pi / 180.f) };
 
-	theta += 72.f;
-	Point2F Point2{ Center.x + this->Radius * cosf(theta * pi / 180.f),Center.y + this->Radius * sinf(theta * pi / 180.f) };
+	this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point1),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
 
-	theta += 72.f;
-	Point2F Point3{ Center.x + this->Radius * cosf(theta * pi / 180.f),Center.y + this->Radius * sinf(theta * pi / 180.f) };
+	this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point3),this->Color });
 
-	theta += 72.f;
-	Point2F Point4{ Center.x + this->Radius * cosf(theta * pi / 180.f),Center.y + this->Radius * sinf(theta * pi / 180.f) };
+	this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point3),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
 
-	theta += 72.f;
-	Point2F Point5{ Center.x + this->Radius * cosf(theta * pi / 180.f),Center.y + this->Radius * sinf(theta * pi / 180.f) };
+	this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point5),this->Color });
 
-	this->VertexArray.push_back(VertexElement{ Translate(Center),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point1),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
-
-	this->VertexArray.push_back(VertexElement{ Translate(Center),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point3),Color });
-
-	this->VertexArray.push_back(VertexElement{ Translate(Center),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point3),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
-
-	this->VertexArray.push_back(VertexElement{ Translate(Center),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point5),Color });
-
-	this->VertexArray.push_back(VertexElement{ Translate(Center),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point5),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point1),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point5),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point1),this->Color });
 
 
 
@@ -67,6 +59,57 @@ RETURNVOID Polygon_Pentagon::Render()
 	return glDrawArrays(GL_TRIANGLES, 0, (GLsizei)this->VertexArray.size());
 }
 
+RETURNVOID Polygon_Pentagon::Update()
+{
+	if (this->Polymorph) {
+
+
+		if (this->Radius <= 10.f) {
+
+			return RETURNVOID();
+		}
+		else {
+			std::vector<VertexElement>().swap(this->VertexArray);
+			this->ClearBuffer();
+			this->Radius -= 1.f;
+
+
+			Point2F Point1{ Center.x + this->Radius * cosf(90.f * pi / 180.f),Center.y + this->Radius * sinf(90.f * pi / 180.f) };
+			Point2F Point2{ Center.x + this->Radius * cosf(162.f * pi / 180.f),Center.y + this->Radius * sinf(162.f * pi / 180.f) };
+			Point2F Point3{ Center.x + this->Radius * cosf(234.f * pi / 180.f),Center.y + this->Radius * sinf(234.f * pi / 180.f) };
+			Point2F Point4{ Center.x + this->Radius * cosf(306.f * pi / 180.f),Center.y + this->Radius * sinf(306.f * pi / 180.f) };
+			Point2F Point5{ Center.x + this->Radius * cosf(378.f * pi / 180.f),Center.y + this->Radius * sinf(378.f * pi / 180.f) };
+
+			this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point1),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+
+			this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point3),this->Color });
+
+			this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point3),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
+
+			this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point5),this->Color });
+
+			this->VertexArray.push_back(VertexElement{ Translate(Center),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point5),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point1),this->Color });
+		}
+	}
+	else {
+		return RETURNVOID();
+	}
+
+
+
+	return RETURNVOID();
+}
+
 
 
 RETURNVOID Polygon_Rectangle::Initialize(Point2F Center)
@@ -74,7 +117,6 @@ RETURNVOID Polygon_Rectangle::Initialize(Point2F Center)
 	this->Init();
 	this->Center = Center;
 
-	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
 
 
 
@@ -87,16 +129,16 @@ RETURNVOID Polygon_Rectangle::Initialize(Point2F Center)
 
 
 
-	this->VertexArray.push_back( VertexElement{Translate(Point1),Color});
-	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
+	this->VertexArray.push_back( VertexElement{Translate(Point1),this->Color});
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
 
 
 
 
-	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point3),Color });
-	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point3),this->Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
 
 
 
@@ -124,7 +166,74 @@ RETURNVOID Polygon_Rectangle::Render()
 	return RETURNVOID();
 }
 
+RETURNVOID Polygon_Rectangle::Update()
+{
+	if (this->Polymorph) {
 
+
+		if (this->t >= 0.99f) {
+
+			return RETURNVOID();
+		}
+		else {
+			std::vector<VertexElement>().swap(this->VertexArray);
+			this->ClearBuffer();
+			this->t += 0.01f;
+
+
+			Point2F Destined_Point1{ Center.x + this->size * cosf(90.f * pi / 180.f),Center.y + this->size * sinf(90.f * pi / 180.f) };
+			Point2F Destined_Point2{ Center.x + this->size * cosf(162.f * pi / 180.f),Center.y + this->size * sinf(162.f * pi / 180.f) };
+			Point2F Destined_Point3{ Center.x + this->size * cosf(234.f * pi / 180.f),Center.y + this->size * sinf(234.f * pi / 180.f) };
+			Point2F Destined_Point4{ Center.x + this->size * cosf(306.f * pi / 180.f),Center.y + this->size * sinf(306.f * pi / 180.f) };
+			Point2F Destined_Point5{ Center.x + this->size * cosf(378.f * pi / 180.f),Center.y + this->size * sinf(378.f * pi / 180.f) };
+
+
+			Point2F Old_Point1{ Center.x + this->size * cosf(45.f * pi / 180.f),Center.y + this->size * sinf(45.f * pi / 180.f) };
+			Point2F Old_Point2{ Center.x + this->size * cosf((135.f) * pi / 180.f),Center.y + this->size * sinf(135.f * pi / 180.f) };
+			Point2F Old_Point3{ Center.x + this->size * cosf((225.f) * pi / 180.f),Center.y + this->size * sinf(225.f * pi / 180.f) };
+			Point2F Old_Point4{ Center.x + this->size * cosf((315.f) * pi / 180.f),Center.y + this->size * sinf(315.f * pi / 180.f) };
+
+
+
+
+
+			Point2F Point1 = { (1 - this->t) * (Old_Point1.x) + this->t * (Destined_Point5.x),(1 - this->t) * (Old_Point1.y) + this->t * (Destined_Point5.y) };
+			Point2F Point2 = {  (1-this->t)*(Old_Point2.x) + this->t * (Destined_Point2.x),(1 - this->t) * (Old_Point2.y) + this->t * (Destined_Point2.y) };
+			Point2F Point3 = { (1 - this->t) * (Old_Point3.x) + this->t * (Destined_Point3.x),(1 - this->t) * (Old_Point3.y) + this->t * (Destined_Point3.y) };
+			Point2F Point4 = { (1 - this->t) * (Old_Point4.x) + this->t * (Destined_Point4.x),(1 - this->t) * (Old_Point4.y) + this->t * (Destined_Point4.y) };
+			Point2F Point5 = { (1 - this->t) * ((Point1.x + Point4.x) / 2 )+ this->t * (Destined_Point1.x),(1 - this->t) * (Point1.y) + this->t * (Destined_Point1.y) };
+
+
+			this->VertexArray.push_back(VertexElement{ Translate(Point1),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
+
+
+			this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point3),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point4),this->Color });
+
+
+			this->VertexArray.push_back(VertexElement{ Translate(Point2),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point1),this->Color });
+			this->VertexArray.push_back(VertexElement{ Translate(Point5),this->Color });
+
+
+
+
+
+
+
+		}
+	}
+	else {
+		return RETURNVOID();
+	}
+
+
+
+	return RETURNVOID();
+}
 
 
 
@@ -337,6 +446,8 @@ RETURNVOID Scene7::Update(){
 
 	this->L.Update();
 	this->T.Update();
+	this->R.Update();
+	this->P.Update();
 
 	return RETURNVOID();
 }
@@ -348,6 +459,12 @@ RETURNVOID Scene7::PolymorthSwitch(int Value){
 	}
 	else if(Value == 2) {
 		this->T.Polymorph_ON();
+	}
+	else if (Value == 3) {
+		this->R.Polymorph_ON();
+	}
+	else {
+		this->P.Polymorph_ON();
 	}
 
 
@@ -394,6 +511,12 @@ RETURNVOID Scene7_CallBackFunctions::KeyboardInput(unsigned char key, int, int){
 		SC7.PolymorthSwitch(2);
 	}
 
+	if (key == '3') {
+		SC7.PolymorthSwitch(3);
+	}
+	if (key == '4') {
+		SC7.PolymorthSwitch(4);
+	}
 
 	return RETURNVOID();
 }

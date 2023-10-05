@@ -11,11 +11,13 @@ private:
 	std::vector<VertexElement> VertexArray{};
 	RandomGenerater RG;
 
+	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
 	GLfloat Radius = 100.f;
 	Point2F Center;
 
 
 	bool Polymorph = false;
+	
 
 public:
 
@@ -23,6 +25,9 @@ public:
 
 
 	RETURNVOID Initialize(Point2F);
+
+	RETURNVOID Polymorph_ON() { this->Polymorph = true; }
+
 
 	RETURNVOID Update();
 
@@ -35,11 +40,13 @@ private:
 	std::vector<VertexElement> VertexArray{};
 	RandomGenerater RG;
 
+	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
 	GLfloat size = 100.f;
 	Point2F Center;
 
 
 	bool Polymorph = false;
+	GLfloat t = 0.f;
 
 public:
 	Polygon_Rectangle() = default;
@@ -47,6 +54,9 @@ public:
 
 
 	RETURNVOID Initialize(Point2F);
+
+	RETURNVOID Polymorph_ON() { this->Polymorph = true; }
+
 
 	RETURNVOID Update();
 

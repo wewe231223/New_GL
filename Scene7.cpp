@@ -2,7 +2,7 @@
 
 constexpr auto pi = 3.141592f;
 
-RETURNVOID Pentagon::Initialize(Point2F Center){
+RETURNVOID Polygon_Pentagon::Initialize(Point2F Center){
 
 	this->Init();
 
@@ -52,7 +52,7 @@ RETURNVOID Pentagon::Initialize(Point2F Center){
 
 }
 
-RETURNVOID Pentagon::Render()
+RETURNVOID Polygon_Pentagon::Render()
 {
 	this->ClearBuffer();
 
@@ -69,10 +69,71 @@ RETURNVOID Pentagon::Render()
 
 
 
+RETURNVOID Polygon_Rectangle::Initialize(Point2F Center)
+{
+	this->Init();
+
+	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
+
+	Point2F Point1{ Center.x + this->size, Center.y + this->size };
+	Point2F Point2{ Center.x - this->size, Center.y + this->size };
+	Point2F Point3{ Center.x - this->size, Center.y - this->size };
+	Point2F Point4{ Center.x + this->size, Center.y - this->size };
+
+	this->VertexArray.push_back(VertexElement{ Translate(Point1),Color});
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
+
+
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point3),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
+
+
+
+
+
+
+	return RETURNVOID();
+}
+
+
+
+RETURNVOID Polygon_Rectangle::Render()
+{
+	this->ClearBuffer();
+
+
+	for (auto& i : this->VertexArray) {
+		this->Resister(i);
+	}
+
+	AdvanceObject::Object::Render();
+
+
+	return glDrawArrays(GL_TRIANGLES, 0, (GLsizei)this->VertexArray.size());
+
+	return RETURNVOID();
+}
+
+
+
+
+
+RETURNVOID Polygon_Triangle::Initalize(Point2F)
+{
+	return RETURNVOID();
+}
+
+
+
+
+
+
 RETURNVOID Scene7::Init()
 {
 	this->P.Initialize(Point2F{0.f,0.f});
-
+	this->R.Initialize(Point2F{ 100.f, 100.f });
 	return RETURNVOID();
 }
 
@@ -83,6 +144,7 @@ RETURNVOID Scene7::Render()
 {
 
 	this->P.Render();
+	this->R.Render();
 
 	return RETURNVOID();
 }

@@ -3,16 +3,17 @@
 #include "RandomGenerater.h"
 #include <cmath>
 
+constexpr auto Triangle_Coefficient = 0.8660254f;
 
 
-class Pentagon : public AdvanceObject::Object {
+class Polygon_Pentagon : public AdvanceObject::Object {
 private:
 	std::vector<VertexElement> VertexArray{};
 	RandomGenerater RG;
 
-	GLfloat Radius = 100;
+	GLfloat Radius = 100.f;
 public:
-	Pentagon() {};
+	Polygon_Pentagon() = default;
 
 
 	RETURNVOID Initialize(Point2F);
@@ -20,10 +21,48 @@ public:
 };
 
 
+class Polygon_Rectangle : public AdvanceObject::Object {
+private:
+	std::vector<VertexElement> VertexArray{};
+	RandomGenerater RG;
+
+	GLfloat size = 50.f;
+
+public:
+	Polygon_Rectangle() = default;
+
+
+
+	RETURNVOID Initialize(Point2F);
+	virtual RETURNVOID Render() override final;
+	
+
+};
+
+
+class Polygon_Triangle : public AdvanceObject::Object {
+private:
+	std::vector<VertexElement> VertexArray{};
+	RandomGenerater RG;
+
+	GLfloat size = 100.f;
+
+public:
+
+	Polygon_Triangle() {}
+
+	RETURNVOID Initalize(Point2F);
+	virtual RETURNVOID Render() override final;
+
+
+
+
+};
 
 
 class Scene7{
-	Pentagon P{};
+	Polygon_Pentagon P{};
+	Polygon_Rectangle R{};
 
 public:
 	Scene7() {}

@@ -71,7 +71,6 @@ Spiral::Spiral(Point2F Center){
 
 	this->VertexArray.insert(iter, RightSpiral.begin(), RightSpiral.end());
 
-	std::cout << this->VertexArray.size() << std::endl;
 }
 
 

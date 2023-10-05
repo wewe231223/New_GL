@@ -75,20 +75,27 @@ RETURNVOID Polygon_Rectangle::Initialize(Point2F Center)
 
 	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
 
-	Point2F Point1{ Center.x + this->size, Center.y + this->size };
-	Point2F Point2{ Center.x - this->size, Center.y + this->size };
-	Point2F Point3{ Center.x - this->size, Center.y - this->size };
-	Point2F Point4{ Center.x + this->size, Center.y - this->size };
 
-	this->VertexArray.push_back(VertexElement{ Translate(Point1),Color});
+
+	GLfloat RectShape = 45.f;
+	
+	Point2F Point1{ Center.x + this->size * cosf(RectShape * pi / 180.f),Center.y + this->size * sinf(RectShape * pi / 180.f) };
+	Point2F Point2{ Center.x + this->size * cosf((180.f - RectShape) * pi / 180.f),Center.y + this->size * sinf((180.f - RectShape) * pi / 180.f)};
+	Point2F Point3{ Center.x + this->size * cosf((180.f + RectShape) * pi / 180.f),Center.y + this->size * sinf((180.f + RectShape) * pi / 180.f) };
+	Point2F Point4{ Center.x + this->size * cosf((360.f - RectShape) * pi / 180.f),Center.y + this->size * sinf((360.f - RectShape) * pi / 180.f) };
+
+
+
+	this->VertexArray.push_back( VertexElement{Translate(Point1),Color});
 	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
 	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
+
+
 
 
 	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
 	this->VertexArray.push_back(VertexElement{ Translate(Point3),Color });
 	this->VertexArray.push_back(VertexElement{ Translate(Point4),Color });
-
 
 
 
@@ -120,10 +127,66 @@ RETURNVOID Polygon_Rectangle::Render()
 
 
 
-RETURNVOID Polygon_Triangle::Initalize(Point2F)
+RETURNVOID Polygon_Triangle::Initalize(Point2F Center)
+{
+
+	this->Init();
+
+	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
+
+
+	// Á¤»ï°¢Çü 
+	GLfloat TriShape = 60.f;
+
+	Point2F Point1{ Center.x + this->size * cosf(90.f * pi / 180.f),Center.y + this->size * sinf(90.f * pi / 180.f) };
+	Point2F Point2{ Center.x + this->size * cosf((270.f - TriShape) * pi / 180.f),Center.y + this->size * sinf((270.f - TriShape) * pi / 180.f) };
+	Point2F Point3{ Center.x + this->size * cosf((270.f + TriShape) * pi / 180.f),Center.y + this->size * sinf((270.f + TriShape) * pi / 180.f) };
+
+
+
+	this->VertexArray.push_back(VertexElement{ Translate(Point1),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point2),Color });
+	this->VertexArray.push_back(VertexElement{ Translate(Point3),Color });
+
+
+
+
+
+
+	return RETURNVOID();
+}
+
+RETURNVOID Polygon_Triangle::Render()
+{
+	for (auto& i : this->VertexArray) {
+		this->Resister(i);
+	}
+	AdvanceObject::Object::Render();
+
+
+
+	return glDrawArrays(GL_TRIANGLES, 0, (GLsizei)this->VertexArray.size());
+}
+
+
+
+
+
+RETURNVOID Polygon_Line::Initialize(Point2F)
 {
 	return RETURNVOID();
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -134,6 +197,7 @@ RETURNVOID Scene7::Init()
 {
 	this->P.Initialize(Point2F{0.f,0.f});
 	this->R.Initialize(Point2F{ 100.f, 100.f });
+	this->T.Initalize(Point2F{ -100.f,-100.f });
 	return RETURNVOID();
 }
 
@@ -145,6 +209,7 @@ RETURNVOID Scene7::Render()
 
 	this->P.Render();
 	this->R.Render();
+	this->T.Render();
 
 	return RETURNVOID();
 }

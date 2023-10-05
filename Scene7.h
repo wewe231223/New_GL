@@ -26,7 +26,7 @@ private:
 	std::vector<VertexElement> VertexArray{};
 	RandomGenerater RG;
 
-	GLfloat size = 50.f;
+	GLfloat size = 100.f;
 
 public:
 	Polygon_Rectangle() = default;
@@ -49,20 +49,37 @@ private:
 
 public:
 
-	Polygon_Triangle() {}
+	Polygon_Triangle() = default;
 
 	RETURNVOID Initalize(Point2F);
 	virtual RETURNVOID Render() override final;
+};
 
+
+
+class Polygon_Line : public AdvanceObject::Object {
+private:
+	std::vector < VertexElement> VertexArray{};
+	RandomGenerater RG{};
+
+
+	GLfloat Length;
+	GLfloat Thickness;
+
+public:
+	Polygon_Line() = default;
+
+	RETURNVOID Initialize(Point2F);
+	virtual RETURNVOID Render() override final;
 
 
 
 };
 
-
 class Scene7{
 	Polygon_Pentagon P{};
 	Polygon_Rectangle R{};
+	Polygon_Triangle T{};
 
 public:
 	Scene7() {}

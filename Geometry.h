@@ -137,6 +137,19 @@ inline bool Is_Point_in_Polygon(std::vector<Point2F> polygon, Point2F point) {
 
 
 
+inline bool Polygon_Collider_by_Circle(Point2F Center1,Point2F Center2,GLfloat Radius1,GLfloat Radius2) {
+
+	if (std::powf(Center1.x - Center2.x,2.f) + std::pow(Center1.y - Center2.y,2.f) <= std::powf(Radius1 + Radius2,2.f)) {
+		return true;
+	}
+	return false;
+
+
+
+
+}
+
+
 enum PropertiesType {
 	Defined,
 	Random

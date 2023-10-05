@@ -4,7 +4,7 @@
 
 constexpr auto pi = 3.141592f;
 constexpr auto MaxSpiral = 200;
-constexpr auto MaxTheta = 1080;
+constexpr auto MaxTheta = 360.f * 3.f;
 constexpr auto Positive = 1.f;
 constexpr auto Negative = -1.f;
 
@@ -24,7 +24,7 @@ private:
 	GLenum RenderMode = GL_LINE_STRIP;
 	//GLenum RenderMode = GL_POINTS;
 	
-	GLfloat PointSize = 5.f;
+	GLfloat PointSize = 4.f;
 
 	
 

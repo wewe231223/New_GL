@@ -510,7 +510,6 @@ RETURNVOID Line::Move(Vector2F V)
 RETURNVOID AdvanceShape::Dot::NewVertex(VertexElement e,GLfloat s)
 {
 	this->Vertex.push_back(e);
-	std::cout << this->Vertex.size() << std::endl;
 
 	this->Size = s;
 
@@ -531,7 +530,7 @@ RETURNVOID AdvanceShape::Dot::Render() {
 
 	AdvanceObject::Object::Render();
 	glPointSize(this->Size);
-	glDrawArrays(GL_POINTS, 0, static_cast<GLsizei>(this->Vertex.size()));
+	glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLsizei>(this->Vertex.size()));
 
 }
 

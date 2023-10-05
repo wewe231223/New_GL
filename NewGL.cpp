@@ -7,10 +7,9 @@
 #include "Shader.h"
 
 
-#include "Scene3.h"
-#include "Scene4.h"
-#include "Scene5.h"
+
 #include "Scene6.h"
+#include "Scene7.h"
 
 #include "FileReader.h"
 
@@ -37,8 +36,8 @@ int main(int argc, char** argv) {
 
 
 	//MAINWINDOW->ResisterCallBackFunctions(ResisterScene5());
-	MAINWINDOW->ResisterCallBackFunctions(ResisterScene6());
-
+	//MAINWINDOW->ResisterCallBackFunctions(ResisterScene6());
+	MAINWINDOW->ResisterCallBackFunctions(ResisterScene7());
 
 	MAINWINDOW->Run();
 

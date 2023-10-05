@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <vector>
 #include "GLH.h"
 
 typedef struct _POINT2I {
@@ -118,12 +119,22 @@ inline Point3F Translate(Point2F Pixel) {
 }
 
 
-
-
-inline float Triangle_Area(Point2F p1, Point2F p2, Point2F p3) {
-// From Gauss's Triangle Area Formula
-	return abs((p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) / 2.0f);
+inline bool Is_Point_in_Polygon(std::vector<Point2F> polygon, Point2F point) {
+	int N = (int)polygon.size();
+	int counter = 0;
+	Point2F p1 = polygon[0];
+	for (int i = 1; i <= N; ++i) {
+		Point2F p2 = polygon[i % N];
+		if (point.y > std::min(p1.y, p2.y) && point.y <= std::max(p1.y, p2.y) && point.x <= std::max(p1.x, p2.x) && p1.y != p2.y) {
+			double xinters = (point.y - p1.y) * (p2.x - p1.x) / (p2.y - p1.y) + p1.x;
+			if (p1.x == p2.x || point.x <= xinters)
+				counter++;
+		}
+		p1 = p2;
+	}
+	return counter % 2 != 0;
 }
+
 
 
 enum PropertiesType {

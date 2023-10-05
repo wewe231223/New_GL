@@ -158,11 +158,9 @@ RETURNVOID Empty_Rectangle::Click(Point2F p)
 	}
 
 
-	if (p.x > this->Point3.x && p.x < this->Point2.x) {
-		if (p.y > this->Point3.y && p.y < this->Point2.y) {
-			this->Rect_Picked = true;
-			this->OldDrag = p;
-		}
+	if (Is_Point_in_Polygon(this->GetPointArr(), p)) {
+		this->Rect_Picked = true;
+		this->OldDrag = p;
 	}
 
 
@@ -335,3 +333,7 @@ CallbackFunc ResisterScene8()
 
 	return result;
 }
+
+
+
+

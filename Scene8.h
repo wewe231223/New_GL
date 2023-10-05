@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+
 #include "RandomGenerater.h"
 
 constexpr auto MouseCorrection = 50.f;
@@ -40,6 +41,16 @@ public:
 
 	RETURNVOID Initialize();
 	RETURNVOID Reset();
+
+	std::vector<Point2F> GetPointArr() {
+		std::vector<Point2F> result;
+		result.push_back(this->Point1);
+		result.push_back(this->Point2);
+		result.push_back(this->Point4);
+		result.push_back(this->Point3);
+
+		return result;
+	}
 
 	RETURNVOID Drag(Point2F);
 	RETURNVOID Click(Point2F);

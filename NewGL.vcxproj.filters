@@ -57,18 +57,6 @@
     <ClCompile Include="NewGL.cpp">
       <Filter>소스 파일\System</Filter>
     </ClCompile>
-    <ClCompile Include="Scene3.cpp">
-      <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene4.cpp">
-      <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene1.cpp">
-      <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene2.cpp">
-      <Filter>소스 파일\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>소스 파일\System</Filter>
     </ClCompile>
@@ -77,9 +65,6 @@
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>소스 파일\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene5.cpp">
-      <Filter>소스 파일\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene6.cpp">
       <Filter>소스 파일\Scene</Filter>
@@ -92,6 +77,21 @@
     </ClCompile>
     <ClCompile Include="Scene8.cpp">
       <Filter>소스 파일\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>소스 파일\Regacy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2.cpp">
+      <Filter>소스 파일\Regacy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>소스 파일\Regacy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene4.cpp">
+      <Filter>소스 파일\Regacy</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene5.cpp">
+      <Filter>소스 파일\Regacy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

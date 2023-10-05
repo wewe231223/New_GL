@@ -131,7 +131,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="Collider.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Constant.cpp" />
     <ClCompile Include="FileReader.cpp" />
     <ClCompile Include="GLW.cpp" />

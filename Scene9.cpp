@@ -196,8 +196,9 @@ RETURNVOID std::Polygon::Update(){
 RETURNVOID std::Polygon::Picking()
 {
 	this->Picked = true;
-	std::cout << "Picked" << std::endl;
 	this->Vector = { 0.f,0.f };
+
+	std::cout << "Picked : " << this->poly << std::endl;
 
 	return RETURNVOID();
 }
@@ -238,6 +239,8 @@ RETURNVOID Scene9::Init(){
 		this->Polygons.push_back(NewPolygon);
 	}
 
+	
+
 	return RETURNVOID();
 }
 
@@ -262,20 +265,40 @@ RETURNVOID Scene9::Update()
 RETURNVOID Scene9::Pick(Point3F Point)
 {
 	
-	std::vector<Point2F> pg{};
 
-	for (auto& i : this->Polygons) {
-		for (auto& j : i.GetVertex()) {
-			pg.push_back(Point2F{ j.VertexPosition.x,j.VertexPosition.y });
-		}
 
-		if (Is_Point_in_Polygon(pg, Point2F{ Point.x,Point.y })) {
+	Point3F TPoint = Translate(Point2F{ Point.x,Point.y });
+
+	std::vector<std::Polygon>::reverse_iterator riter(this->Polygons.rbegin());
+
+
+	for (; riter != this->Polygons.rend(); ++riter) {
+
+		if (std::Is_Point_in_Polygon((*riter).GetVertex(), Point2F{ TPoint.x,TPoint.y })) {
 			this->OldPoint = { Point.x,Point.y };
-			i.Picking();
+			(*riter).Picking();
+			return RETURNVOID();
 		}
 
-		std::vector<Point2F>().swap(pg);
 	}
+
+
+
+
+
+
+
+	//for (auto& i : this->Polygons) {
+	//
+
+
+	//	if (std::Is_Point_in_Polygon(i.GetVertex(), Point2F{TPoint.x,TPoint.y})) {
+	//		this->OldPoint = { Point.x,Point.y };
+	//		i.Picking();
+	//	}
+
+	//	
+	//}
 
 
 	return RETURNVOID();
@@ -283,12 +306,15 @@ RETURNVOID Scene9::Pick(Point3F Point)
 
 RETURNVOID Scene9::Drag(Point3F Point)
 {
+
+	Point3F TP = Translate(Point2F{ Point.x,Point.y });
+
 	for (auto& i : this->Polygons) {
 	
-		i.Drag(this->OldPoint.x - Point.x, this->OldPoint.y - Point.y);
-		this->OldPoint = { Point.x,Point.y };
+		i.Drag(Point.x - this->OldPoint.x, Point.y - this->OldPoint.y);
+		
 	}
-
+	this->OldPoint = { Point.x,Point.y };
 	return RETURNVOID();
 }
 
@@ -350,6 +376,8 @@ RETURNVOID Scene9_CallBackFunctions::MouseDrag(int x, int y)
 	Point3F p = WindowCoord_to_GLCoord(x, y);
 
 	SC9.Drag(p);
+
+	UPDATE;
 
 
 	return RETURNVOID();

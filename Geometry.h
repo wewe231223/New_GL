@@ -133,7 +133,6 @@ inline bool Is_Point_in_Polygon(std::vector<Point2F> polygon, Point2F point) {
 		p1 = p2;
 	}
 
-	printf("%d\n", counter);
 	return counter % 2 != 0;
 }
 
@@ -141,7 +140,7 @@ inline bool Is_Point_in_Polygon(std::vector<Point2F> polygon, Point2F point) {
 namespace std {
 
 
-	inline bool is_Point_in_Polygon(std::vector<VertexElement> VertexArray, Point2F point) {
+	inline bool Is_Point_in_Polygon(std::vector<VertexElement> VertexArray, Point2F point) {
 		int Arraysize = (int)VertexArray.size();
 		int counter = 0;
 
@@ -156,6 +155,8 @@ namespace std {
 
 			p1 = p2;
 		}
+		printf("%d\n", counter);
+
 		return counter % 2 != 0;
 	}
 

@@ -30,11 +30,22 @@ namespace std {
 
 		Polygon() = default;
 		RETURNVOID Initialize(int poly, Point2F Center, GLfloat Length);
+		
 		const std::vector<VertexElement> GetVertex();
+		const int GetPoly() { return this->poly; }
+		const Point2F GetCenter() { return this->Center; }
+		const GLfloat GetLength() { return this->Length; }
+		const GLboolean GetPicked() { return this->Picked; }
+
+
+
+		RETURNVOID ModifyPoly(int p) { this->poly = p; }
 		RETURNVOID Update();
 		RETURNVOID Picking();
 		RETURNVOID Drag(GLfloat dx,GLfloat dy);
 		RETURNVOID UnPicking();
+
+
 
 		RandomGenerater GetRandom() { return this->RG; }
 
@@ -72,6 +83,9 @@ public:
 	RETURNVOID Pick(Point3F );
 	RETURNVOID Drag(Point3F);
 	RETURNVOID UnPick();
+
+	RETURNVOID Collision();
+
 };
 
 

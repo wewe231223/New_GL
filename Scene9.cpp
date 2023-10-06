@@ -23,7 +23,7 @@ namespace std {
 		this->Color = { this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
 
 		if (poly == 1) {
-			this->VertexArray.push_back(VertexElement{ Point3F{Center.x,Center.y,0.0f},this->Color });
+			this->VertexArray.push_back(VertexElement{Translate(Point2F{this->Center.x,this->Center.y}),this->Color});
 			this->RenderType = GL_POINTS;
 			return RETURNVOID();
 		}
@@ -100,7 +100,7 @@ namespace std {
 
 		glLineWidth(5.f);
 		glPointSize(5.f);
-		glDrawArrays(this->RenderType, 0, (GLsizei)this->VertexArray.size());
+		glDrawArrays(this->RenderType, 0,this->poly);
 
 
 		return RETURNVOID();
@@ -121,8 +121,8 @@ RETURNVOID std::Polygon::Update(){
 		this->Vector.y *= -1.f;
 	}
 
-	//this->Center.x += this->Vector.x;
-	//this->Center.y += this->Vector.y;
+	this->Center.x += this->Vector.x;
+	this->Center.y += this->Vector.y;
 
 
 	GLfloat Unit_theta = 360.f / this->poly;
@@ -133,13 +133,16 @@ RETURNVOID std::Polygon::Update(){
 	Color3f Color{ this->RG.RandFloat(0.f,1.f),this->RG.RandFloat(0.f,1.f) ,this->RG.RandFloat(0.f,1.f) };
 
 	if (poly == 1) {
-		this->VertexArray.push_back(VertexElement{ Point3F{this->Center.x,this->Center.y,0.0f},this->Color });
+		this->VertexArray.push_back(VertexElement{ Translate(Point2F{this->Center.x,this->Center.y}),this->Color });
 		this->RenderType = GL_POINTS;
 		return RETURNVOID();
 	}
 
 	if (poly == 2) {
 		this->RenderType = GL_LINES;
+	}
+	else {
+		this->RenderType = GL_TRIANGLE_FAN;
 	}
 
 
@@ -198,7 +201,6 @@ RETURNVOID std::Polygon::Picking()
 	this->Picked = true;
 	this->Vector = { 0.f,0.f };
 
-	std::cout << "Picked : " << this->poly << std::endl;
 
 	return RETURNVOID();
 }
@@ -209,6 +211,11 @@ RETURNVOID std::Polygon::Drag(GLfloat dx,GLfloat dy)
 	if (this->Picked) {
 		this->Center.x += dx;
 		this->Center.y += dy;
+
+		
+
+
+
 	}
 
 	return RETURNVOID();
@@ -235,7 +242,7 @@ RETURNVOID Scene9::Init(){
 
 	for (auto i = 0; i < this->RG.RandInt(3, 7); ++i) {
 		std::Polygon NewPolygon{};
-		NewPolygon.Initialize(this->RG.RandInt(1, 5), Point2F{ this->RG.RandFloat(-200,200),this->RG.RandFloat(-200,200) }, this->RG.RandFloat(100, 200));
+		NewPolygon.Initialize(this->RG.RandInt(1, 7), Point2F{ this->RG.RandFloat(-200,200),this->RG.RandFloat(-200,200) }, this->RG.RandFloat(50, 100));
 		this->Polygons.push_back(NewPolygon);
 	}
 
@@ -256,9 +263,14 @@ RETURNVOID Scene9::Render()
 
 RETURNVOID Scene9::Update()
 {
+
+	this->Collision();
+
 	for (auto& i : this->Polygons) {
 		i.Update();
 	}
+
+	
 	return UPDATE;
 }
 
@@ -273,6 +285,23 @@ RETURNVOID Scene9::Pick(Point3F Point)
 
 
 	for (; riter != this->Polygons.rend(); ++riter) {
+
+		if ((*riter).GetPoly() <= 2) {
+			Point2F Center = (*riter).GetCenter();
+
+			if (Point.x < Center.x + 50.f && Point.x > Center.x - 50.f) {
+				if (Point.y < Center.y + 50.f && Point.y > Center.y - 50.f) {
+					this->OldPoint = { Point.x,Point.y };
+					(*riter).Picking();
+					return RETURNVOID();
+				}
+			}
+
+			
+
+		}
+
+
 
 		if (std::Is_Point_in_Polygon((*riter).GetVertex(), Point2F{ TPoint.x,TPoint.y })) {
 			this->OldPoint = { Point.x,Point.y };
@@ -323,6 +352,62 @@ RETURNVOID Scene9::UnPick(){
 	for (auto& i : this->Polygons) {
 		i.UnPicking();
 	}
+
+	return RETURNVOID();
+}
+
+RETURNVOID Scene9::Collision(){
+
+	std::vector<std::Polygon>::iterator iter(this->Polygons.begin());
+
+	bool nopick = true;
+
+	for (; iter != this->Polygons.end(); ++iter) {
+		if ((*iter).GetPicked()) {
+			nopick = false;
+			break;
+		}
+	}
+
+	if (nopick)return;
+
+
+	std::vector<std::Polygon>::iterator other(this->Polygons.begin());
+
+	
+	int count = 0;
+
+
+	for (; other != this->Polygons.end(); ++other) {
+
+		Point2F Center1 = (*iter).GetCenter();
+		Point2F Center2 = (*other).GetCenter();
+
+		GLfloat Rad1 = (*iter).GetLength();
+		GLfloat Rad2 = (*other).GetLength();
+
+		if (std::Polygon_Collider_by_Circle(Center1, Center2, Rad1,Rad2)) {
+
+
+			if (((*iter).GetPoly() + (*other).GetPoly()) == 7) {
+				(*iter).ModifyPoly(1);
+			}
+			else {
+
+				(*iter).ModifyPoly(((*iter).GetPoly() + (*other).GetPoly()) % 7);
+			}
+			this->Polygons.erase(other);
+			
+			return;
+
+		}
+		
+	}
+
+
+
+
+
 
 	return RETURNVOID();
 }

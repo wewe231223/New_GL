@@ -155,16 +155,20 @@ namespace std {
 
 			p1 = p2;
 		}
-		printf("%d\n", counter);
 
 		return counter % 2 != 0;
 	}
 
 
 
-	inline bool Polygon_Collider_by_Circle(Point2F Center1, Point2F Center2, GLfloat Radius1, GLfloat Radius2) {
+	inline const bool Polygon_Collider_by_Circle(const Point2F Center1, const Point2F Center2, const GLfloat Radius1, const GLfloat Radius2)  {
 
-		if (std::powf(Center1.x - Center2.x, 2.f) + std::pow(Center1.y - Center2.y, 2.f) <= std::powf(Radius1 + Radius2, 2.f)) {
+		if (Center1.x == Center2.x && Center1.y == Center2.y && Radius1 == Radius2) {
+			return false;
+		}
+
+
+		if (std::powf(Center2.x - Center1.x, 2.f) + std::powf(Center2.y - Center1.y, 2.f) <= std::powf(Radius1 + Radius2, 2.f)) {
 			return true;
 		}
 		return false;

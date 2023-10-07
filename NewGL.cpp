@@ -32,14 +32,10 @@ int main(int argc, char** argv) {
 
 	MainShader = new Shader;
 
-
 	MainShader->Resister_ShaderSource("Vertex.glsl", Vertex);
 	MainShader->Resister_ShaderSource("Fragment.glsl", Fragment);
-
 	MainShader->Create_Shader(Vertex);
 	MainShader->Create_Shader(Fragment);
-
-
 	MainShader->LINK_SHADER();
 
 	// # 10
@@ -73,12 +69,19 @@ RETURNVOID Draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+
+	glEnable(GL_DEPTH_TEST);
+
+	gluLookAt(10.0f, 0.0f, 12.0f, 0.0f, 0.0f, -10.f, 0.0f, 1.f, 0.f);
+
 	qobj = gluNewQuadric();
 
-	 gluQuadricDrawStyle(qobj, GLU_POINT);
+	 gluQuadricDrawStyle(qobj, GLU_LINE);
 	 gluQuadricNormals(qobj, GLU_SMOOTH);
 	 gluQuadricOrientation(qobj, GLU_OUTSIDE);
-	 gluSphere(qobj, 1.5, 50, 50); // 객체 만들기
+	 gluSphere(qobj, 0.5f, 50, 50); // 객체 만들기
 
 	 glutSwapBuffers();
 

@@ -202,6 +202,8 @@
     <ClInclude Include="StandardShape.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="3D_Fragment_Shader.glsl" />
+    <None Include="3D_Vertex_Shader.glsl" />
     <None Include="Fragment.glsl" />
     <None Include="Vertex.glsl" />
   </ItemGroup>

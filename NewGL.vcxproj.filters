@@ -99,6 +99,9 @@
     <ClCompile Include="Object3D.cpp">
       <Filter>소스 파일\Shape</Filter>
     </ClCompile>
+    <ClCompile Include="Scene3D.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Collider.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Object3D.h">
       <Filter>헤더 파일\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3D.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

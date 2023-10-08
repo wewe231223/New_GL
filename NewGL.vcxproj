@@ -139,6 +139,7 @@
     <ClCompile Include="GLW.cpp" />
     <ClCompile Include="NewGL.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Object3D.cpp" />
     <ClCompile Include="RandomGenerater.cpp" />
     <ClCompile Include="Rect.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -175,6 +176,7 @@
     <ClInclude Include="GLH.h" />
     <ClInclude Include="GLW.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Object3D.h" />
     <ClInclude Include="RandomGenerater.h" />
     <ClInclude Include="Rect.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -206,6 +208,17 @@
     <None Include="3D_Vertex_Shader.glsl" />
     <None Include="Fragment.glsl" />
     <None Include="Vertex.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Cube.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="penguin.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="teapot.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

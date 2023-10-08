@@ -76,7 +76,7 @@ typedef struct _VERTEXBUFFEROBJECT {
 
 
 typedef	unsigned int VertexArrayObject;
-
+typedef unsigned int VertexElementArrayObject;
 
 
 

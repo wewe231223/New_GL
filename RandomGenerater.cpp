@@ -23,3 +23,19 @@ double RandomGenerater::RandDouble(double min, double max)
 	std::uniform_real_distribution<double> rdd(min,max);
 	return rdd(RandomEngine::gen);
 }
+
+float RandomGenerater::RandF()
+{
+
+	if (this->FR_MIN == this->FR_MAX) {
+		throw std::string("ERROR : NOTHING RESISTERED");
+		return 0.0f;
+	}
+
+	std::uniform_real_distribution<float> rdf(this->FR_MIN, this->FR_MAX);
+	return rdf(RandomEngine::gen);
+
+}
+
+
+

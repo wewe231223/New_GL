@@ -52,6 +52,9 @@ bool FileReader::GetAvailable()
 
 char* FileReader::GetSource(PARAMETERVOID)
 {
+
+	
+
 	char* result = new char[this->Buffer->str().length() + 1];
 	
 	strcpy(result, this->Buffer->str().c_str());

@@ -15,6 +15,9 @@ bool Shader::Resister_ShaderSource(const char* path, ShaderType T)
 		}
 	}
 
+
+
+
 	if (T == Fragment) {
 		this->FragmentShader_FileReaderptr = new FileReader(path);
 		if (!this->FragmentShader_FileReaderptr->GetAvailable()) {
@@ -28,6 +31,10 @@ bool Shader::Resister_ShaderSource(const char* path, ShaderType T)
 		}
 		
 	}
+
+
+
+	
 
 	return true;
 }
@@ -143,7 +150,7 @@ GLuint Shader::GetInfo(DataName D)
 		return this->ShaderProgramID;
 	}
 
-	
+	return this->ShaderProgramID;
 }
 
 

@@ -4,10 +4,17 @@
 #include <gl/freeglut.h>
 #include <gl/freeglut_ext.h>
 
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <glm/ext/matrix_transform.hpp>
 
+
+// 컴퓨터에서 
+//#include <glm/glm.hpp>
+//#include <glm/ext.hpp>
+//#include <glm/ext/matrix_transform.hpp>
+//
+
+#include <gl/glm/glm.hpp>
+#include <gl/glm/ext.hpp>
+#include <gl/glm/gtc/matrix_transform.hpp>
 
 
 

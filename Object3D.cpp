@@ -35,6 +35,9 @@ RETURNVOID Object3D::Resister() {
 		if (head[0] == '#') {
 			getline(this->File, head);
 		}
+
+
+
 		if (head[0] == 'v' && head[1] == 't') {
 			glm::vec2 uv{};
 			this->File >> uv.x >> uv.y;
@@ -62,6 +65,8 @@ RETURNVOID Object3D::Resister() {
 			GLuint NormalIndex[3]{};
 
 			this->File >> Line[0] >> Line[1] >> Line[2];
+
+
 
 			for (auto i = 0; i < 3; ++i) {
 				std::istringstream iss(Line[i]);
@@ -105,6 +110,8 @@ RETURNVOID Object3D::Resister() {
 
 
 	}
+
+	this->File.close();
 
 
 	size_t Vertexnum = this->Verties.size();
@@ -185,8 +192,8 @@ RETURNVOID Object3D::Render() {
 	glm::mat4 Trans = glm::mat4(1.f);
 
 	Trans = glm::translate(Trans, this->Position);
-	Trans = glm::rotate(Trans, glm::radians(30.f + this->XRotate), glm::vec3(1.f, 0.f, 0.f));
-	Trans = glm::rotate(Trans, glm::radians(-30.f + this->YRotote), glm::vec3(0.f, 1.f, 0.f));
+	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
+	Trans = glm::rotate(Trans, glm::radians(this->YRotote), glm::vec3(0.f, 1.f, 0.f));
 	Trans = glm::scale(Trans, this->Scale);
 
 
@@ -210,6 +217,10 @@ RETURNVOID Object3D::SetProperty(Object3DBoolEnum Be, GLboolean Value) {
 
 	if (Be == Cull) {
 		this->Culling = Value;
+	}
+
+	if (Be == RandColor) {
+		this->RandomColor = Value;
 	}
 }
 

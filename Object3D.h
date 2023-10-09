@@ -1,6 +1,4 @@
 #pragma once
-
-
 #include <vector>
 #include <fstream>
 #include <sstream>
@@ -15,7 +13,8 @@
 
 enum Object3DBoolEnum {
 	Fill,
-	Cull
+	Cull,
+	RandColor
 };
 
 
@@ -59,17 +58,17 @@ private:
 
 
 
-	GLboolean Filled = false;
+	GLboolean Filled = true ;
 	GLboolean Culling = true;
 
 
-	glm::vec3 Position{0.f,0.f,0.f};
-	glm::vec3 Scale{ 0.3f,0.3f,0.3f };
+	glm::vec3 Position{0.f,0.f,0.5f};
+	glm::vec3 Scale{ 1.f,1.f,1.f };
 
 	GLfloat XRotate = 0.f;
 	GLfloat YRotote = 0.f;
 
-	GLboolean RandomColor = false;
+	GLboolean RandomColor = true;
 
 private:
 
@@ -94,10 +93,7 @@ public:
 	RETURNVOID Render();
 
 
-
 	RETURNVOID SetProperty(Object3DBoolEnum Be, GLboolean Value);
-
 	RETURNVOID Transition(Object3DVecEnum Ve,glm::vec3 vec);
-
 };
 

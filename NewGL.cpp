@@ -49,7 +49,12 @@ GLvoid drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
+	std::cout << "draw " << std::endl;
 	test.Render();
+	test.Transition(Movement, glm::vec3(0.01f, 0.001f, 0.01f));
+	test.Buffering();
+	test.Render();
+
 
 
 	glutSwapBuffers();
@@ -109,7 +114,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		isFill = true;
 		break;
 	case 'j':
-		xMove -= 0.1;
+			
 		break;
 	case 'l':
 		xMove += 0.1;
@@ -131,7 +136,7 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 }
 
 void Idle() {
-	test.Transition(RotateY, glm::vec3(0.f, 1.f, 0.f));
+	//test.Transition(RotateX, glm::vec3(0.f, 0.f, 0.f));
 	UPDATE;
 }
 
@@ -150,7 +155,7 @@ int main(int argc, char** argv)
 	//윈도우 생성
 	glutInit(&argc, argv);																// glut 초기화
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);				// 디스플레이 모드 설정
-	glutInitWindowPosition(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);								// 윈도우의 위치 지정
+	glutInitWindowPosition(10, 10);								// 윈도우의 위치 지정
 	glutInitWindowSize(DEFAULT_SCREEN_WIDTH, DEFAULT_SCREEN_HEIGHT);									// 윈도우의 크기 지정
 	glutCreateWindow("Example1");												// 윈도우 생성(윈도우 이름)
 
@@ -161,9 +166,9 @@ int main(int argc, char** argv)
 		std::cerr << "Unable to initialize GLEW" << std::endl;
 		exit(EXIT_FAILURE);
 	}
-	else
+	else {
 		std::cout << "GLEW Initialized\n";
-	
+	}
 
 	MainShader = new Shader;
 
@@ -179,7 +184,14 @@ int main(int argc, char** argv)
 	
 
 	test.Initialize("teapot.obj", MainShader->GetInfo(ShaderProgramID));
-	test.Transition(ObjectScale, glm::vec3(0.3f, 0.3f, 0.3f));
+	test.Transition(ObjectScale, glm::vec3(0.1f, 0.1f, 0.1f));
+	test.Transition(RotateX, glm::vec3(30.f, 0.f, 0.f));
+	test.Transition(RotateY, glm::vec3(0.f, 30.f, 0.f));
+	//test.SetProperty(RandColor, true);
+	test.Buffering();
+
+
+	test.Transition(Movement, glm::vec3(0.1f, 0.1f, 0.1f));
 	test.Buffering();
 
 
@@ -194,7 +206,7 @@ int main(int argc, char** argv)
 
 
 
-
+//
 //int main(int argc, char** argv) {
 //	INIT(&argc, argv);
 //	GLW* MAINWINDOW = new GLW(static_cast<int>(DEFAULT_SCREEN_WIDTH),static_cast<int>(DEFAULT_SCREEN_HEIGHT),"THIS IS TEST");

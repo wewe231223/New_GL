@@ -1,11 +1,12 @@
 #include "RandomGenerater.h"
 
-
+#ifndef __RANDOMENGINEDEFINED
+#define __RANDOMENGINEDEFINED
 namespace RandomEngine {
 	std::random_device rd;
 	std::mt19937 gen(rd());
 }
-
+#endif
 
 
 int RandomGenerater::RandInt(int min, int max){

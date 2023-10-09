@@ -17,7 +17,7 @@ public:
 	FileReader(const char*);
 	FileReader() {};
 	
-	
+	~FileReader();
 	
 	RETURNVOID ReleaseMemory(PARAMETERVOID);
 	RETURNVOID Debug(PARAMETERVOID);

@@ -124,6 +124,10 @@ RETURNVOID Shader:: LINK_SHADER(PARAMETERVOID) {
 	this->VertexShader_FileReaderptr->ReleaseMemory();
 	this->FragmentShader_FileReaderptr->ReleaseMemory();
 
+	delete this->FragmentShader_FileReaderptr;
+	delete this->VertexShader_FileReaderptr;
+
+
 
 	GLint result;
 	GLchar errorLog[512]{};

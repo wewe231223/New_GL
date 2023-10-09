@@ -27,6 +27,17 @@ FileReader::FileReader(const char* path){
 
 
 
+FileReader::~FileReader(){
+
+	this->Fptr->close();
+	
+
+
+	delete this->Fptr;
+	delete this->Buffer;
+
+}
+
 RETURNVOID FileReader::ReleaseMemory(PARAMETERVOID) {
 	delete this->toFree;
 }

@@ -1,8 +1,8 @@
 #pragma once
 
 
-#define DEFAULT_SCREEN_WIDTH		800.f
-#define DEFAULT_SCREEN_HEIGHT		800.f
+#define DEFAULT_SCREEN_WIDTH		1000.f
+#define DEFAULT_SCREEN_HEIGHT		500.f
 
 #define GET_WINDOW_WIDTHF static_cast<float>(glutGet(GLUT_WINDOW_WIDTH))
 #define GET_WINDOW_HEIGHTF static_cast<float>(glutGet(GLUT_WINDOW_HEIGHT))

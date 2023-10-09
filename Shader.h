@@ -34,7 +34,7 @@ private:
 public:
 
 	Shader() {}
-
+	
 	
 
 	bool Resister_ShaderSource(const char*,ShaderType);

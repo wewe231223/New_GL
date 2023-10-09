@@ -23,7 +23,7 @@ inline RETURNVOID DEFAULTRESHAPE(int w, int h) {
 
 inline RETURNVOID INIT(int* argc, char** argv) {
 	glutInit(argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
 	glewExperimental = GL_TRUE;
 	glewInit();
 }

@@ -53,7 +53,7 @@ private:
 
 	RandomGenerater ColorGenerater{0.f,1.f};
 
-
+	std::vector<Model*> Mem{};
 
 	//===========INITIALIZEDFIELD================
 
@@ -73,7 +73,7 @@ private:
 
 private:
 
-
+	
 
 public:
 
@@ -81,7 +81,7 @@ public:
 
 	Object3D() = default;
 	Object3D(const char* path,ShaderID ShaderProgramId) { this->Initialize(path,ShaderProgramId); }
-
+	~Object3D();
 
 
 public:
@@ -99,6 +99,7 @@ public:
 	
 };
 
+// 카메라 만들어!
 class Model {
 private:
 	GLboolean Culling = true;
@@ -115,9 +116,13 @@ private:
 
 public:
 	// For Initialization
-	ShaderID ShaderId{};
+	ShaderID ShaderId{NULL};
 	VertexArrayObject VAO{};
 	GLsizei VertexSize = {};
+
+
+
+
 
 public:
 

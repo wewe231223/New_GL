@@ -1,6 +1,15 @@
 #include "Object3D.h"
 
 
+Object3D::~Object3D()
+{
+	for (auto& i : this->Mem) {
+		delete i;
+	}
+
+
+}
+
 RETURNVOID Object3D::Initialize(const char* path, ShaderID ShaderProgramId) {
 	this->ShaderProgramId = ShaderProgramId;
 
@@ -102,7 +111,7 @@ RETURNVOID Object3D::Resister() {
 
 				}
 
-
+				
 
 
 			}
@@ -114,36 +123,45 @@ RETURNVOID Object3D::Resister() {
 	this->File.close();
 
 
-	size_t Vertexnum = this->Verties.size();
-
-	Color3f* BaseColor = new Color3f[Vertexnum];
-
-	for (auto i = 0; i < Vertexnum; ++i) {
-
-		if (this->RandomColor) {
-			BaseColor[i].r = this->ColorGenerater.RandF();
-			BaseColor[i].g = this->ColorGenerater.RandF();
-			BaseColor[i].b = this->ColorGenerater.RandF();
-		}
-		else {
-			BaseColor[i].r = 1.f;
-			BaseColor[i].g = 1.f;
-			BaseColor[i].b = 1.f;
-
-
-		}
-
-
-	}
+	this->Verties.shrink_to_fit();
+	this->UVs.shrink_to_fit();
+	this->Normals.shrink_to_fit();
+	this->Vertex_Indices.shrink_to_fit();
+	this->Normal_Indices.shrink_to_fit();
+	this->UV_Indices.shrink_to_fit();
 
 
 
+	//size_t Vertexnum = this->Verties.size();
 
-	for (const auto& i : this->Vertex_Indices) {
-		this->IndexedColor.push_back(BaseColor[i]);
-	}
+	//Color3f* BaseColor = new Color3f[Vertexnum];
 
-	delete[] BaseColor;
+	//for (auto i = 0; i < Vertexnum; ++i) {
+
+	//	if (this->RandomColor) {
+	//		BaseColor[i].r = this->ColorGenerater.RandF();
+	//		BaseColor[i].g = this->ColorGenerater.RandF();
+	//		BaseColor[i].b = this->ColorGenerater.RandF();
+	//	}
+	//	else {
+	//		BaseColor[i].r = 1.f;
+	//		BaseColor[i].g = 1.f;
+	//		BaseColor[i].b = 1.f;
+
+
+	//	}
+
+
+	//}
+
+
+
+
+	//for (const auto& i : this->Vertex_Indices) {
+	//	this->IndexedColor.push_back(BaseColor[i]);
+	//}
+
+	//delete[] BaseColor;
 }
 
 
@@ -169,13 +187,13 @@ RETURNVOID Object3D::Buffering() {
 	glEnableVertexAttribArray(0);
 
 
-	glGenBuffers(1, &(this->VBO.Color));
-	glBindBuffer(GL_ARRAY_BUFFER, this->VBO.Color);
+	//glGenBuffers(1, &(this->VBO.Color));
+	//glBindBuffer(GL_ARRAY_BUFFER, this->VBO.Color);
 
-	glBufferData(GL_ARRAY_BUFFER, this->IndexedColor.size() * sizeof(Color3f), &(this->IndexedColor[0]), GL_STATIC_DRAW);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	//glBufferData(GL_ARRAY_BUFFER, this->IndexedColor.size() * sizeof(Color3f), &(this->IndexedColor[0]), GL_STATIC_DRAW);
+	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	glEnableVertexAttribArray(1);
+	//glEnableVertexAttribArray(1);
 
 
 }
@@ -186,6 +204,9 @@ Model* Object3D::NewModel() {
 	newModel->ShaderId = this->ShaderProgramId;
 	newModel->VAO = VAO;
 	newModel->VertexSize = static_cast<GLsizei>(this->Vertex_Indices.size());
+
+	this->Mem.push_back(newModel);
+
 	return newModel;
 }
 
@@ -197,6 +218,11 @@ Model* Object3D::NewModel() {
 
 
 RETURNVOID Model::Render(){
+	
+	if (this == nullptr) {
+		return RETURNVOID();
+	}
+
 
 	this->Culling ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 	this->Culling ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
@@ -211,16 +237,20 @@ RETURNVOID Model::Render(){
 
 
 	GLuint WorldLocation = glGetUniformLocation(this->ShaderId, "transform");
+	GLuint PerspectiveLocation = glGetUniformLocation(this->ShaderId, "perspective");
 
 
 	Trans = glm::translate(Trans, this->Position);
-	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
-	Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
+//	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
+//	Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
 
+
+	glm::mat4 projection;
+	projection = glm::perspective(glm::radians(60.0f), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF , 10.f, 100.0f);
 
 
 	glUniformMatrix4fv(WorldLocation, 1, GL_FALSE, glm::value_ptr(Trans));
-
+	glUniformMatrix4fv(PerspectiveLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
 
 	glDrawElements(GL_TRIANGLES, this->VertexSize, GL_UNSIGNED_INT, 0);

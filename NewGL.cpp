@@ -33,7 +33,8 @@ GLfloat mx = 0.0f;
 GLfloat my = 0.0f;
 
 Object3D test{};
-
+Model* Model1{};
+Model* Model2{};
 
 
 
@@ -49,12 +50,9 @@ GLvoid drawScene()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-	std::cout << "draw " << std::endl;
-	test.Render();
-	test.Transition(Movement, glm::vec3(0.01f, 0.001f, 0.01f));
-	test.Buffering();
-	test.Render();
 
+	Model1->Render();
+	Model2->Render();
 
 
 	glutSwapBuffers();
@@ -93,7 +91,6 @@ GLvoid Keyboard(unsigned char key, int x, int y)
 		isCulling = 1 - isCulling;
 		break;
 	case 'x':
-		test.Transition(RotateX, glm::vec3(1.f, 0.f, 0.f));
 		break;
 	case 'X':
 		rotateKey = 2;
@@ -184,17 +181,24 @@ int main(int argc, char** argv)
 	
 
 	test.Initialize("teapot.obj", MainShader->GetInfo(ShaderProgramID));
-	test.Transition(ObjectScale, glm::vec3(0.1f, 0.1f, 0.1f));
-	test.Transition(RotateX, glm::vec3(30.f, 0.f, 0.f));
-	test.Transition(RotateY, glm::vec3(0.f, 30.f, 0.f));
-	//test.SetProperty(RandColor, true);
 	test.Buffering();
 
+	Model1 = test.NewModel();
+	Model2 = test.NewModel();
 
-	test.Transition(Movement, glm::vec3(0.1f, 0.1f, 0.1f));
-	test.Buffering();
+	Model1->Transition(ObjectScale, glm::vec3(0.2f, 0.2f, 0.2f));
+	Model2->Transition(ObjectScale, glm::vec3(0.2f, 0.2f, 0.2f));
+
+	Model1->Transition(RotateX, glm::vec3(30.f, 0.f, 0.f));
+	Model1->Transition(RotateY, glm::vec3(0.f, -30.f, 0.f));
+
+	Model2->Transition(RotateX, glm::vec3(30.f, 0.f, 0.f));
+	Model2->Transition(RotateY, glm::vec3(30.f, -30.f, 0.f));
 
 
+	Model1->Transition(Movement, glm::vec3(5.f, 1.f, 1.f));
+
+	
 
 	glutDisplayFunc(drawScene);													// 출력 함수의 지정
 	glutReshapeFunc(Reshape);														// 다시 그리기 함수 지정

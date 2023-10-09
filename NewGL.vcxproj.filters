@@ -187,5 +187,13 @@
     <Object Include="teapot.obj">
       <Filter>리소스 파일</Filter>
     </Object>
+    <Object Include="skull.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="abcd.obj">
+      <Filter>리소스 파일</Filter>
+    </Resource>
   </ItemGroup>
 </Project>

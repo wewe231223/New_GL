@@ -25,6 +25,7 @@ enum Object3DVecEnum {
 	ObjectScale
 };
 
+class Model;
 
 class Object3D{
 private:
@@ -44,7 +45,7 @@ private:
 
 	std::fstream File;
 
-	GLuint ShaderProgramId{};
+	ShaderID ShaderProgramId{};
 	VertexArrayObject VAO{};
 	VertexElementArrayObject EBO{};
 
@@ -73,27 +74,60 @@ private:
 private:
 
 
+
 public:
 
 
 
 	Object3D() = default;
-	Object3D(const char* path,GLuint ShaderProgramId) { this->Initialize(path,ShaderProgramId); }
+	Object3D(const char* path,ShaderID ShaderProgramId) { this->Initialize(path,ShaderProgramId); }
 
 
 
 public:
 
-	RETURNVOID Initialize(const char* path, GLuint ShaderProgramId);
+	RETURNVOID Initialize(const char* path, ShaderID ShaderProgramId);
 	RETURNVOID Resister();
 	RETURNVOID Buffering();
 
+
+	Model* NewModel();
+
+public:
+
+	
+	
+};
+
+class Model {
+private:
+	GLboolean Culling = true;
+	GLboolean Filled = false ;
+
+	glm::vec3 Position{};
+	glm::vec3 Scale{ 1.f,1.f,1.f };
+
+
+	GLfloat XRotate{};
+	GLfloat YRotate{};
+
+
+
+public:
+	// For Initialization
+	ShaderID ShaderId{};
+	VertexArrayObject VAO{};
+	GLsizei VertexSize = {};
+
+public:
+
+	Model() = default;
 
 
 	RETURNVOID Render();
 
 
-	RETURNVOID SetProperty(Object3DBoolEnum Be, GLboolean Value);
-	RETURNVOID Transition(Object3DVecEnum Ve,glm::vec3 vec);
-};
+	RETURNVOID Transition(Object3DVecEnum Ve, glm::vec3 Vector);
 
+
+};

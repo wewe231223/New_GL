@@ -1,7 +1,7 @@
 #include "Object3D.h"
 
 
-RETURNVOID Object3D::Initialize(const char* path, GLuint ShaderProgramId) {
+RETURNVOID Object3D::Initialize(const char* path, ShaderID ShaderProgramId) {
 	this->ShaderProgramId = ShaderProgramId;
 
 	this->File.open(path);
@@ -181,68 +181,86 @@ RETURNVOID Object3D::Buffering() {
 }
 
 
+Model* Object3D::NewModel() {
+	Model* newModel = new Model;
+	newModel->ShaderId = this->ShaderProgramId;
+	newModel->VAO = VAO;
+	newModel->VertexSize = static_cast<GLsizei>(this->Vertex_Indices.size());
+	return newModel;
+}
 
-RETURNVOID Object3D::Render() {
+
+
+
+
+
+
+
+RETURNVOID Model::Render(){
 
 	this->Culling ? glEnable(GL_DEPTH_TEST) : glDisable(GL_DEPTH_TEST);
 	this->Culling ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
 	this->Filled ? glPolygonMode(GL_FRONT_AND_BACK, GL_FILL) : glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
+	glBindVertexArray(this->VAO);
 
 	glm::mat4 Trans = glm::mat4(1.f);
 
-	Trans = glm::translate(Trans, this->Position);
-	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
-	Trans = glm::rotate(Trans, glm::radians(this->YRotote), glm::vec3(0.f, 1.f, 0.f));
 	Trans = glm::scale(Trans, this->Scale);
 
 
 
-	GLuint WorldLocation = glGetUniformLocation(this->ShaderProgramId, "transform");
+	GLuint WorldLocation = glGetUniformLocation(this->ShaderId, "transform");
+
+
+	Trans = glm::translate(Trans, this->Position);
+	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
+	Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
+
+
+
 	glUniformMatrix4fv(WorldLocation, 1, GL_FALSE, glm::value_ptr(Trans));
 
-	glBindVertexArray(this->VAO);
-
-	glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(this->Vertex_Indices.size()), GL_UNSIGNED_INT, 0);
 
 
+	glDrawElements(GL_TRIANGLES, this->VertexSize, GL_UNSIGNED_INT, 0);
 
+
+
+
+	return RETURNVOID();
 }
 
-
-RETURNVOID Object3D::SetProperty(Object3DBoolEnum Be, GLboolean Value) {
-	if (Be == Fill) {
-		this->Filled = Value;
-	}
-
-	if (Be == Cull) {
-		this->Culling = Value;
-	}
-
-	if (Be == RandColor) {
-		this->RandomColor = Value;
-	}
-}
-
-RETURNVOID Object3D::Transition(Object3DVecEnum Ve, glm::vec3 vec)
+RETURNVOID Model::Transition(Object3DVecEnum Ve, glm::vec3 Vector)
 {
-	if (Ve == RotateX) {
-		this->XRotate += vec.x;
+	switch (Ve)
+	{
+	case RotateX:
+
+		this->XRotate += Vector.x;
+
+
+		break;
+	case RotateY:
+
+		this->YRotate += Vector.y;
+
+		break;
+	case Movement:
+
+		this->Position += Vector;
+
+		break;
+	case ObjectScale:
+
+		this->Scale = Vector;
+
+		break;
+	default:
+		break;
 	}
 
-	if (Ve == RotateY) {
 
-		this->YRotote += vec.y;
-	}
-
-
-	if (Ve == Movement) {
-		this->Position = vec;
-	}
-
-	if (Ve == ObjectScale) {
-		this->Scale = vec;
-	}
 
 
 	return RETURNVOID();

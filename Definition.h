@@ -18,6 +18,7 @@
 typedef void RETURNVOID;
 typedef void PARAMETERVOID;
 
+typedef unsigned int ShaderID;
 
 
 

@@ -15,7 +15,8 @@ enum DataName {
 	ShaderProgramID
 };
 
-
+#define VERTEXSHADER_PATH "3D_Vertex_Shader.glsl"
+#define FRAGMENTSHADER_PATH "3D_Fragment_Shader.glsl"
 
 class Shader{
 private:
@@ -28,24 +29,21 @@ private:
 	GLuint ShaderProgramID{};
 	
 
+	Shader() {}	
+	Shader(const Shader& other) {}
+	Shader& operator=(const Shader& ohter) {}
 
 
+	static Shader* Instance;
 
-public:
 
-	Shader() {}
-	
-	
+private:
 
 	bool Resister_ShaderSource(const char*,ShaderType);
-
-
-
 	RETURNVOID Create_Shader(ShaderType);
 	RETURNVOID LINK_SHADER(PARAMETERVOID);
-
-
-	GLuint GetInfo(DataName);
-
+public:
+	static Shader* GetShaderInstance();
+	GLuint GetShaderID() { return this->ShaderProgramID; }
 };
 

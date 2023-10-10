@@ -1,4 +1,5 @@
 #include "Shader.h"
+Shader* Shader::Instance = nullptr;
 
 bool Shader::Resister_ShaderSource(const char* path, ShaderType T)
 {
@@ -148,13 +149,29 @@ RETURNVOID Shader:: LINK_SHADER(PARAMETERVOID) {
 
 }
 
-GLuint Shader::GetInfo(DataName D)
+
+
+Shader* Shader::GetShaderInstance()
 {
-	if (D == ShaderProgramID) {
-		return this->ShaderProgramID;
+	if (Instance == nullptr) {
+
+		Instance = new Shader;
+		Instance->Resister_ShaderSource(VERTEXSHADER_PATH, Vertex);
+		Instance->Resister_ShaderSource(FRAGMENTSHADER_PATH, Fragment);
+
+		Instance->Create_Shader(Vertex);
+		Instance->Create_Shader(Fragment);
+
+
+		Instance->LINK_SHADER();
+
+
 	}
 
-	return this->ShaderProgramID;
+
+
+
+	return Instance;
 }
 
 

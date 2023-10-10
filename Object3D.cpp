@@ -1,4 +1,5 @@
 #include "Object3D.h"
+#include "Shader.h"
 
 
 Object3D::~Object3D()
@@ -10,8 +11,8 @@ Object3D::~Object3D()
 
 }
 
-RETURNVOID Object3D::Initialize(const char* path, ShaderID ShaderProgramId) {
-	this->ShaderProgramId = ShaderProgramId;
+RETURNVOID Object3D::Initialize(const char* path) {
+	this->ShaderProgramId = Shader::GetShaderInstance()->GetShaderID();
 
 	this->File.open(path);
 
@@ -207,6 +208,7 @@ Model* Object3D::NewModel() {
 
 	this->Mem.push_back(newModel);
 
+
 	return newModel;
 }
 
@@ -239,16 +241,19 @@ RETURNVOID Model::Render(){
 	GLuint PerspectiveLocation = glGetUniformLocation(this->ShaderId, "perspective");
 	GLuint LookATLocation = glGetUniformLocation(this->ShaderId, "lookat");
 
+
+	//월드 변환 
 	Trans = glm::scale(Trans, this->Scale);
-	Trans = glm::rotate(Trans, -30.f, glm::vec3(1.f, 0.f, 0.f));
-	//Trans = glm::translate(Trans, this->Position);
+	Trans = glm::translate(Trans, this->Position);
 	//Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
 	//Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
 
+
+	//뷰 변환
 	glm::mat4 LookAT{ 1.f };
-	LookAT = glm::lookAt(glm::vec3(1.f,1.f,1.f),glm::vec3(0.f,0.f,0.f),glm::vec3(0.f,0.f,1.f));
+	LookAT = glm::lookAt(glm::vec3(0.f,-5.f,3.f),this->Position,glm::vec3(0.f,0.f,1.f));
 
-
+	//투영 변환
 	glm::mat4 projection;
 	projection = glm::perspective(glm::radians(60.0f), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF ,1.f, 100.0f);
 	
@@ -282,7 +287,7 @@ RETURNVOID Model::Transition(Object3DVecEnum Ve, glm::vec3 Vector)
 		break;
 	case Movement:
 
-		this->Position = Vector;
+		this->Position += Vector;
 
 		break;
 	case ObjectScale:

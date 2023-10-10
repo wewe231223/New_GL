@@ -29,7 +29,6 @@
 
 using namespace std;
 
-Shader* MainShader;
 const glm::vec3 background_rgb = glm::vec3(0.0f, 0.0f, 0.0f);
 
 
@@ -90,26 +89,15 @@ int main(int argc, char** argv)
 	INIT(&argc, argv);
 	GLW* MAINWINDOW = new GLW((int)DEFAULT_SCREEN_WIDTH, (int)DEFAULT_SCREEN_HEIGHT, "Computer Graphics");
 
-	MainShader = new Shader;
-
-
-
-	MainShader->Resister_ShaderSource("3D_Vertex_Shader.glsl", Vertex);
-	MainShader->Create_Shader(Vertex);
-	MainShader->Resister_ShaderSource("3D_Fragment_Shader.glsl", Fragment);
-	MainShader->Create_Shader(Fragment);
-
-	MainShader->LINK_SHADER();
 
 	
 	
 
-	test.Initialize("teapot.obj", MainShader->GetInfo(ShaderProgramID));
+	test.Initialize("skull.obj");
 	test.Buffering();
 
-	Model1 = test.NewModel();
-	Model2 = test.NewModel();
 
+	Model1 = test.NewModel();
 
 	//확대축소변환 
 	Model1->Transition(ObjectScale, glm::vec3(0.1f, 0.1f, 0.1f));
@@ -117,7 +105,7 @@ int main(int argc, char** argv)
 	//이게 카메라 변환 
 	Model1->Transition(RotateX, glm::vec3(30.f, 0.f, 0.f));
 	Model1->Transition(RotateY, glm::vec3(0.f,-40.f,0.f));
-	Model1->Transition(Movement, glm::vec3(-1.f, 0.f,-10.f));
+	Model1->Transition(Movement, glm::vec3(0.f, 0.f,0.f));
 
 
 	glutDisplayFunc(drawScene);													// 출력 함수의 지정

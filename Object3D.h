@@ -63,13 +63,13 @@ private:
 	GLboolean Culling = true;
 
 
-	glm::vec3 Position{0.f,0.f,0.5f};
+	glm::vec3 Position{ 0.f,0.f,0.f };
 	glm::vec3 Scale{ 1.f,1.f,1.f };
 
 	GLfloat XRotate = 0.f;
 	GLfloat YRotote = 0.f;
 
-	GLboolean RandomColor = true;
+	GLboolean RandomColor = false;
 
 private:
 
@@ -80,13 +80,13 @@ public:
 
 
 	Object3D() = default;
-	Object3D(const char* path,ShaderID ShaderProgramId) { this->Initialize(path,ShaderProgramId); }
+	Object3D(const char* path) { this->Initialize(path); }
 	~Object3D();
 
 
 public:
 
-	RETURNVOID Initialize(const char* path, ShaderID ShaderProgramId);
+	RETURNVOID Initialize(const char* path);
 	RETURNVOID Resister();
 	RETURNVOID Buffering();
 
@@ -130,8 +130,6 @@ public:
 
 
 	RETURNVOID Render();
-
-
 	RETURNVOID Transition(Object3DVecEnum Ve, glm::vec3 Vector);
 
 

@@ -132,36 +132,36 @@ RETURNVOID Object3D::Resister() {
 
 
 
-	//size_t Vertexnum = this->Verties.size();
+	size_t Vertexnum = this->Verties.size();
 
-	//Color3f* BaseColor = new Color3f[Vertexnum];
+	Color3f* BaseColor = new Color3f[Vertexnum];
 
-	//for (auto i = 0; i < Vertexnum; ++i) {
+	for (auto i = 0; i < Vertexnum; ++i) {
 
-	//	if (this->RandomColor) {
-	//		BaseColor[i].r = this->ColorGenerater.RandF();
-	//		BaseColor[i].g = this->ColorGenerater.RandF();
-	//		BaseColor[i].b = this->ColorGenerater.RandF();
-	//	}
-	//	else {
-	//		BaseColor[i].r = 1.f;
-	//		BaseColor[i].g = 1.f;
-	//		BaseColor[i].b = 1.f;
-
-
-	//	}
+		if (this->RandomColor) {
+			BaseColor[i].r = this->ColorGenerater.RandF();
+			BaseColor[i].g = this->ColorGenerater.RandF();
+			BaseColor[i].b = this->ColorGenerater.RandF();
+		}
+		else {
+			BaseColor[i].r = 1.f;
+			BaseColor[i].g = 1.f;
+			BaseColor[i].b = 1.f;
 
 
-	//}
+		}
+
+
+	}
 
 
 
 
-	//for (const auto& i : this->Vertex_Indices) {
-	//	this->IndexedColor.push_back(BaseColor[i]);
-	//}
+	for (const auto& i : this->Vertex_Indices) {
+		this->IndexedColor.push_back(BaseColor[i]);
+	}
 
-	//delete[] BaseColor;
+	delete[] BaseColor;
 }
 
 
@@ -187,13 +187,13 @@ RETURNVOID Object3D::Buffering() {
 	glEnableVertexAttribArray(0);
 
 
-	//glGenBuffers(1, &(this->VBO.Color));
-	//glBindBuffer(GL_ARRAY_BUFFER, this->VBO.Color);
+	glGenBuffers(1, &(this->VBO.Color));
+	glBindBuffer(GL_ARRAY_BUFFER, this->VBO.Color);
 
-	//glBufferData(GL_ARRAY_BUFFER, this->IndexedColor.size() * sizeof(Color3f), &(this->IndexedColor[0]), GL_STATIC_DRAW);
-	//glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glBufferData(GL_ARRAY_BUFFER, this->IndexedColor.size() * sizeof(Color3f), &(this->IndexedColor[0]), GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-	//glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(1);
 
 
 }
@@ -232,23 +232,27 @@ RETURNVOID Model::Render(){
 
 	glm::mat4 Trans = glm::mat4(1.f);
 
-	Trans = glm::scale(Trans, this->Scale);
 
 
 
 	GLuint WorldLocation = glGetUniformLocation(this->ShaderId, "transform");
 	GLuint PerspectiveLocation = glGetUniformLocation(this->ShaderId, "perspective");
+	GLuint LookATLocation = glGetUniformLocation(this->ShaderId, "lookat");
 
+	Trans = glm::scale(Trans, this->Scale);
+	Trans = glm::rotate(Trans, -30.f, glm::vec3(1.f, 0.f, 0.f));
+	//Trans = glm::translate(Trans, this->Position);
+	//Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
+	//Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
 
-	Trans = glm::translate(Trans, this->Position);
-//	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
-//	Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
+	glm::mat4 LookAT{ 1.f };
+	LookAT = glm::lookAt(glm::vec3(1.f,1.f,1.f),glm::vec3(0.f,0.f,0.f),glm::vec3(0.f,0.f,1.f));
 
 
 	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(60.0f), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF , 10.f, 100.0f);
-
-
+	projection = glm::perspective(glm::radians(60.0f), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF ,1.f, 100.0f);
+	
+	glUniformMatrix4fv(LookATLocation, 1, GL_FALSE, glm::value_ptr(LookAT));
 	glUniformMatrix4fv(WorldLocation, 1, GL_FALSE, glm::value_ptr(Trans));
 	glUniformMatrix4fv(PerspectiveLocation, 1, GL_FALSE, glm::value_ptr(projection));
 
@@ -278,7 +282,7 @@ RETURNVOID Model::Transition(Object3DVecEnum Ve, glm::vec3 Vector)
 		break;
 	case Movement:
 
-		this->Position += Vector;
+		this->Position = Vector;
 
 		break;
 	case ObjectScale:

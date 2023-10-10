@@ -59,7 +59,7 @@ GLvoid drawScene()
 
 
 	Model1->Render();
-	Model2->Render();
+	//Model2->Render();
 
 
 	glutSwapBuffers();
@@ -110,15 +110,15 @@ int main(int argc, char** argv)
 	Model1 = test.NewModel();
 	Model2 = test.NewModel();
 
-	Model1->Transition(ObjectScale, glm::vec3(0.01f, 0.01f, 0.01f));
-	Model2->Transition(ObjectScale, glm::vec3(0.2f, 0.2f, 0.2f));
 
+	//확대축소변환 
+	Model1->Transition(ObjectScale, glm::vec3(0.1f, 0.1f, 0.1f));
 
+	//이게 카메라 변환 
+	Model1->Transition(RotateX, glm::vec3(30.f, 0.f, 0.f));
+	Model1->Transition(RotateY, glm::vec3(0.f,-40.f,0.f));
+	Model1->Transition(Movement, glm::vec3(-1.f, 0.f,-10.f));
 
-
-	Model1->Transition(Movement, glm::vec3(0.f, -1.f, -10.f));
-
-	
 
 	glutDisplayFunc(drawScene);													// 출력 함수의 지정
 	glutReshapeFunc(Reshape);													// 다시 그리기 함수 지정

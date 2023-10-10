@@ -165,6 +165,7 @@ Shader* Shader::GetShaderInstance()
 
 		Instance->LINK_SHADER();
 
+		std::cout << "Shader Created" << std::endl;
 
 	}
 

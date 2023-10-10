@@ -59,7 +59,7 @@ private:
 
 
 
-	GLboolean Filled = true ;
+	GLboolean Filled = false ;
 	GLboolean Culling = true;
 
 
@@ -69,7 +69,7 @@ private:
 	GLfloat XRotate = 0.f;
 	GLfloat YRotote = 0.f;
 
-	GLboolean RandomColor = false;
+	GLboolean RandomColor = true;
 
 private:
 

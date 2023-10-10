@@ -238,28 +238,17 @@ RETURNVOID Model::Render(){
 
 
 	GLuint WorldLocation = glGetUniformLocation(this->ShaderId, "transform");
-	GLuint PerspectiveLocation = glGetUniformLocation(this->ShaderId, "perspective");
-	GLuint LookATLocation = glGetUniformLocation(this->ShaderId, "lookat");
 
 
 	//월드 변환 
 	Trans = glm::scale(Trans, this->Scale);
 	Trans = glm::translate(Trans, this->Position);
-	//Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
-	//Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
+	Trans = glm::rotate(Trans, glm::radians(this->XRotate), glm::vec3(1.f, 0.f, 0.f));
+	Trans = glm::rotate(Trans, glm::radians(this->YRotate), glm::vec3(0.f, 1.f, 0.f));
 
-
-	//뷰 변환
-	glm::mat4 LookAT{ 1.f };
-	LookAT = glm::lookAt(glm::vec3(0.f,-5.f,3.f),this->Position,glm::vec3(0.f,0.f,1.f));
-
-	//투영 변환
-	glm::mat4 projection;
-	projection = glm::perspective(glm::radians(60.0f), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF ,1.f, 100.0f);
 	
-	glUniformMatrix4fv(LookATLocation, 1, GL_FALSE, glm::value_ptr(LookAT));
 	glUniformMatrix4fv(WorldLocation, 1, GL_FALSE, glm::value_ptr(Trans));
-	glUniformMatrix4fv(PerspectiveLocation, 1, GL_FALSE, glm::value_ptr(projection));
+
 
 
 	glDrawElements(GL_TRIANGLES, this->VertexSize, GL_UNSIGNED_INT, 0);

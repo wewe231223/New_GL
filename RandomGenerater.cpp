@@ -33,8 +33,8 @@ float RandomGenerater::RandF()
 		return 0.0f;
 	}
 
-	std::uniform_real_distribution<float> rdf(this->FR_MIN, this->FR_MAX);
-	return rdf(RandomEngine::gen);
+	std::uniform_real_distribution<float> rdfd(this->FR_MIN, this->FR_MAX);
+	return rdfd(RandomEngine::gen);
 
 }
 

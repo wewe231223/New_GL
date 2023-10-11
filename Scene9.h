@@ -22,7 +22,7 @@ namespace std {
 
 		int poly = 0;
 
-		Vector2F Vector{ this->RG.RandFloat(-1.f,1.f), this->RG.RandFloat(-1.f,1.f)};
+		Vector2F Vector{ this->RG.RandFloat(-0.1f,0.1f), this->RG.RandFloat(-0.1f,0.1f)};
 		GLboolean Picked = false;
 
 

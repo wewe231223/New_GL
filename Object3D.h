@@ -91,7 +91,7 @@ public:
 	RETURNVOID Buffering();
 
 
-	Model* NewModel();
+	std::shared_ptr<Model> NewModel();
 
 public:
 
@@ -103,14 +103,14 @@ public:
 class Model {
 private:
 	GLboolean Culling = true;
-	GLboolean Filled = false ;
+	GLboolean Filled = true ;
 
 	glm::vec3 Position{};
 	glm::vec3 Scale{ 1.f,1.f,1.f };
 
 
-	GLfloat XRotate{};
-	GLfloat YRotate{};
+	GLfloat XRotate{0.f};
+	GLfloat YRotate{0.f};
 
 
 

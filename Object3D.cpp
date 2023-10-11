@@ -200,15 +200,12 @@ RETURNVOID Object3D::Buffering() {
 }
 
 
-Model* Object3D::NewModel() {
-	Model* newModel = new Model;
+std::shared_ptr<Model> Object3D::NewModel() {
+	std::shared_ptr<Model> newModel = std::make_shared<Model>();
 	this->Buffering();
 	newModel->ShaderId = this->ShaderProgramId;
 	newModel->VAO = VAO;
 	newModel->VertexSize = static_cast<GLsizei>(this->Vertex_Indices.size());
-
-	this->Mem.push_back(newModel);
-
 
 	return newModel;
 }
@@ -254,6 +251,8 @@ RETURNVOID Model::Render(){
 
 	glDrawElements(GL_TRIANGLES, this->VertexSize, GL_UNSIGNED_INT, 0);
 
+	Trans = glm::mat4(1.f);
+	glUniformMatrix4fv(WorldLocation, 1, GL_FALSE, glm::value_ptr(Trans));
 
 
 

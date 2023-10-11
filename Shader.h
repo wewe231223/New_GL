@@ -18,6 +18,7 @@ enum DataName {
 #define VERTEXSHADER_PATH "3D_Vertex_Shader.glsl"
 #define FRAGMENTSHADER_PATH "3D_Fragment_Shader.glsl"
 
+
 class Shader{
 private:
 	FileReader* VertexShader_FileReaderptr = nullptr;

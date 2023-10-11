@@ -14,6 +14,7 @@ public:
 namespace Scene10_ {
 	RETURNVOID Draw();
 	RETURNVOID Reshape(int, int);
+	RETURNVOID KeyboardSpcialInput(int, int, int);
 	CallbackFunc Run();
 }
 

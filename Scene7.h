@@ -3,6 +3,7 @@
 #include "RandomGenerater.h"
 #include <cmath>
 
+
 constexpr auto Triangle_Coefficient = 0.8660254f;
 
 
@@ -140,6 +141,8 @@ public:
 	RETURNVOID Update();
 	
 	RETURNVOID PolymorthSwitch(int);
+
+	RETURNVOID Reset();
 
 };
 

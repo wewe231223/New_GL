@@ -1,5 +1,5 @@
 #include "Scene9.h"
-
+#include "Shader.h"
 constexpr auto pi = 3.141592f;
 
 
@@ -12,6 +12,7 @@ namespace std {
 		this->Center = Center;
 		this->Length = Length;
 
+		Shader::GetShaderInstance();
 
 		GLfloat Unit_theta = 360.f / poly;
 
@@ -227,7 +228,7 @@ RETURNVOID std::Polygon::UnPicking()
 {
 	if (this->Picked) {
 		this->Picked = false;
-		this->Vector = { this->RG.RandFloat(-1.f,1.f), this->RG.RandFloat(-1.f,1.f) };
+		this->Vector = { this->RG.RandFloat(-0.1f,0.1f), this->RG.RandFloat(-0.1f,0.1f) };
 	}
 	return RETURNVOID();
 }
@@ -240,7 +241,7 @@ RETURNVOID std::Polygon::UnPicking()
 RETURNVOID Scene9::Init(){
 	
 
-	for (auto i = 0; i < this->RG.RandInt(3, 7); ++i) {
+	for (auto i = 0; i < this->RG.RandInt(8, 16); ++i) {
 		std::Polygon NewPolygon{};
 		NewPolygon.Initialize(this->RG.RandInt(1, 7), Point2F{ this->RG.RandFloat(-200,200),this->RG.RandFloat(-200,200) }, this->RG.RandFloat(50, 100));
 		this->Polygons.push_back(NewPolygon);

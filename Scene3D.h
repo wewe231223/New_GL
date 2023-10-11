@@ -1,9 +1,12 @@
 #pragma once
 #include <map>
+#include <Windows.h>
 
 #include "Object3D.h"
 #include "Shader.h"
 #include "GLH.h"
+
+
 class Camera {
 
 private:
@@ -12,24 +15,54 @@ private:
 	glm::vec3 CameraUp{};
 
 
+	GLfloat Fovy = 60.f;
+
 public:
 	Camera();
 
-	RETURNVOID CameraMovement(glm::vec3 pos) { this->CameraPosition += pos; };
+	RETURNVOID CameraMovement_R(glm::vec3 pos) { this->CameraPosition += pos; };
+	RETURNVOID CameraMovement_A(glm::vec3 pos) { this->CameraPosition = pos; };
+
 	RETURNVOID CameraFocusMovement(glm::vec3 fpos) { this->CameraFocusOn = fpos; }
+
+	GLfloat GetFov() { return this->Fovy; };
 
 
 	glm::mat4 CreateLookAtMatrix();
 };
 
+enum CameraMovement {
+	Realative,
+	Absolute
+};
+
+
+class Coordinate {
+private:
+
+
+
+	VertexArrayObject VAO{};
+	VertexBufferObject VBO{};
+public:
+	Coordinate() = default;
+
+	RETURNVOID Init();
+
+	RETURNVOID Render();
+
+};
+
+
 class Scene3D{
 private:
 	Camera MainCamera{};
+	Coordinate Coord{};
 	
 	std::map<std::string, Object3D*> MeshMap{};
-	std::vector<Model*> ModelArray{};
+	std::vector<std::shared_ptr<Model>> ModelArray{};
 
-	GLfloat FovY = 60.f;
+
 	GLfloat NearZ = 0.1f;
 	GLfloat FarZ = 100.f;
 
@@ -40,18 +73,21 @@ public:
 
 	
 	Scene3D() = default;
-	RETURNVOID Init_ShaderID() { this->Shaderid = Shader::GetShaderInstance()->GetShaderID(); };
+	RETURNVOID Init() { this->Shaderid = Shader::GetShaderInstance()->GetShaderID(); this->Coord.Init(); };
 
 	RETURNVOID NewMesh(std::string path);
-	RETURNVOID NewModel(std::string path);
+	std::shared_ptr<Model> NewModel(std::string path);
 
 	RETURNVOID Render();
+	RETURNVOID CoordRender() { this->Coord.Render(); };
 
 
 	RETURNVOID Reshape(int w,int h);
 
 	RETURNVOID ScaleModel(glm::vec3);
 
+	RETURNVOID MoveCamera(CameraMovement,glm::vec3);
 	
 };
+
 

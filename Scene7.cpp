@@ -1,7 +1,7 @@
 #include "Scene7.h"
 
 constexpr auto pi = 3.141592f;
-
+#include "Shader.h"
 RETURNVOID Polygon_Pentagon::Initialize(Point2F Center){
 
 	this->Init();
@@ -71,7 +71,7 @@ RETURNVOID Polygon_Pentagon::Update()
 		else {
 			std::vector<VertexElement>().swap(this->VertexArray);
 			this->ClearBuffer();
-			this->Radius -= 1.f;
+			this->Radius -= 0.1f;
 
 
 			Point2F Point1{ Center.x + this->Radius * cosf(90.f * pi / 180.f),Center.y + this->Radius * sinf(90.f * pi / 180.f) };
@@ -171,14 +171,14 @@ RETURNVOID Polygon_Rectangle::Update()
 	if (this->Polymorph) {
 
 
-		if (this->t >= 0.99f) {
+		if (this->t >= 0.999f) {
 
 			return RETURNVOID();
 		}
 		else {
 			std::vector<VertexElement>().swap(this->VertexArray);
 			this->ClearBuffer();
-			this->t += 0.01f;
+			this->t += 0.001f;
 
 
 			Point2F Destined_Point1{ Center.x + this->size * cosf(90.f * pi / 180.f),Center.y + this->size * sinf(90.f * pi / 180.f) };
@@ -290,7 +290,7 @@ RETURNVOID Polygon_Triangle::Update()
 		else {
 			std::vector<VertexElement>().swap(this->VertexArray);
 			this->ClearBuffer();
-			this->t += 0.01f;
+			this->t += 0.001f;
 
 			GLfloat TriShape = 60.f;
 
@@ -380,14 +380,14 @@ RETURNVOID Polygon_Line::Update()
 	if (this->Polymorph) {
 
 
-		if (this->Polymorph_theta == 90.f) {
+		if (this->Polymorph_theta >= 90.f) {
 			
 			return RETURNVOID();
 		}
 		else {
 			std::vector<VertexElement>().swap(this->VertexArray);
 			this->ClearBuffer();
-			this->Polymorph_theta += 1.f;
+			this->Polymorph_theta += 0.1f;
 
 
 
@@ -421,6 +421,9 @@ RETURNVOID Polygon_Line::Update()
 
 RETURNVOID Scene7::Init()
 {
+
+	Shader::GetShaderInstance();
+
 	this->L.Initialize(Point2F{  - DEFAULT_SCREEN_WIDTH / 4, DEFAULT_SCREEN_HEIGHT / 4});
 	this->T.Initialize(Point2F{ DEFAULT_SCREEN_WIDTH / 4 , DEFAULT_SCREEN_HEIGHT / 4  });
 	this->R.Initialize(Point2F{ -DEFAULT_SCREEN_WIDTH / 4,-DEFAULT_SCREEN_HEIGHT / 4 });
@@ -471,6 +474,23 @@ RETURNVOID Scene7::PolymorthSwitch(int Value){
 	return RETURNVOID();
 }
 
+RETURNVOID Scene7::Reset(){
+
+	this->P = Polygon_Pentagon{};
+	this->R = Polygon_Rectangle{};
+	this->T = Polygon_Triangle{};
+	this->L = Polygon_Line{};
+
+	this->L.Initialize(Point2F{ -DEFAULT_SCREEN_WIDTH / 4, DEFAULT_SCREEN_HEIGHT / 4 });
+	this->T.Initialize(Point2F{ DEFAULT_SCREEN_WIDTH / 4 , DEFAULT_SCREEN_HEIGHT / 4 });
+	this->R.Initialize(Point2F{ -DEFAULT_SCREEN_WIDTH / 4,-DEFAULT_SCREEN_HEIGHT / 4 });
+	this->P.Initialize(Point2F{ DEFAULT_SCREEN_WIDTH / 4,-DEFAULT_SCREEN_HEIGHT / 4 });
+
+	
+
+	return RETURNVOID();
+}
+
 
 RETURNVOID Scene7_CallBackFunctions::Draw()
 {
@@ -517,7 +537,9 @@ RETURNVOID Scene7_CallBackFunctions::KeyboardInput(unsigned char key, int, int){
 	if (key == '4') {
 		SC7.PolymorthSwitch(4);
 	}
-
+	if (key == 'a') {
+		SC7.Reset();
+	}
 	return RETURNVOID();
 }
 

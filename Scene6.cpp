@@ -1,10 +1,11 @@
 #include "Scene6.h"
+#include "Shader.h"
 
 Spiral::Spiral(Point2F Center){
 	
 	this->Init();
 
-
+	GLuint Shaderinit = Shader::GetShaderInstance()->GetShaderID();
 
 	this->dt = this->RG.RandFloat(5.0f, 10.f);
 	this->dr = this->RG.RandFloat(0.1f, 1.0f);

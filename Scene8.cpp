@@ -1,10 +1,11 @@
 #include "Scene8.h"
-
+#include "Shader.h"
 
 RETURNVOID Empty_Rectangle::Initialize()
 {
 	this->Init();
 
+	Shader::GetShaderInstance();
 
 	this->Point1  = { -DEFAULT_SCREEN_WIDTH / 4, DEFAULT_SCREEN_HEIGHT / 4  };
 	this->Point2 = { DEFAULT_SCREEN_WIDTH / 4 , DEFAULT_SCREEN_HEIGHT / 4 };

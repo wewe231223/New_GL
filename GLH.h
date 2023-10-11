@@ -7,15 +7,15 @@
 
 
 // 컴퓨터에서 
-#include <glm/glm.hpp>
-#include <glm/ext.hpp>
-#include <glm/ext/matrix_transform.hpp>
+//#include <glm/glm.hpp>
+//#include <glm/ext.hpp>
+//#include <glm/ext/matrix_transform.hpp>
 
 
-////
-//#include <gl/glm/glm.hpp>
-//#include <gl/glm/ext.hpp>
-//#include <gl/glm/gtc/matrix_transform.hpp>
+//
+#include <gl/glm/glm.hpp>
+#include <gl/glm/ext.hpp>
+#include <gl/glm/gtc/matrix_transform.hpp>
 
 
 

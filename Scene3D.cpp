@@ -2,8 +2,8 @@
 
 Camera::Camera(){
 
-	this->CameraPosition = glm::vec3(5.f, 5.f, 5.f);
-	this->CameraFocusOn = glm::vec3(0.f, 0.f, 0.f);
+	this->CameraPosition = glm::vec3(20.f, 5.f, -5.f);
+	this->CameraFocusOn = glm::vec3(1.f, 0.f, 0.f);
 	this->CameraUp = glm::vec3(0.f, 0.f, 1.f);
 
 }
@@ -44,18 +44,22 @@ RETURNVOID Scene3D::Render(){
 	GLuint CameraLookAtLocation = glGetUniformLocation(this->Shaderid, "lookat");
 
 	
-	//glm::mat4 Lookat = this->MainCamera.CreateLookAtMatrix();
-	//glm::mat4 Perspective = glm::perspective(glm::radians(this->FovY), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF, this->NearZ, this->FarZ);
+	glm::mat4 Lookat = this->MainCamera.CreateLookAtMatrix();
+	glm::mat4 Perspective = glm::perspective(glm::radians(this->FovY), GET_WINDOW_WIDTHF / GET_WINDOW_HEIGHTF, this->NearZ, this->FarZ);
 
 
-	//glUniformMatrix4fv(CameraLookAtLocation,1,GL_FALSE,glm::value_ptr(Lookat));
-	//glUniformMatrix4fv(PerspectiveLocation, 1, GL_FALSE, glm::value_ptr(Perspective));
+
+	glUniformMatrix4fv(CameraLookAtLocation,1,GL_FALSE,glm::value_ptr(Lookat));
+	glUniformMatrix4fv(PerspectiveLocation, 1, GL_FALSE, glm::value_ptr(Perspective));
 
 
-	for (auto& i : this->ModelArray) {
-		i->Render();
-	}
+	//glm::mat4 one = glm::mat4(1.f);
 
+	//glUniformMatrix4fv(CameraLookAtLocation, 1, GL_FALSE, glm::value_ptr(one));
+	//glUniformMatrix4fv(PerspectiveLocation, 1, GL_FALSE, glm::value_ptr(one));
+
+
+	this->ModelArray[0]->Render();
 
 	return RETURNVOID();
 }

@@ -202,6 +202,7 @@ RETURNVOID Object3D::Buffering() {
 
 Model* Object3D::NewModel() {
 	Model* newModel = new Model;
+	this->Buffering();
 	newModel->ShaderId = this->ShaderProgramId;
 	newModel->VAO = VAO;
 	newModel->VertexSize = static_cast<GLsizei>(this->Vertex_Indices.size());
@@ -249,7 +250,7 @@ RETURNVOID Model::Render(){
 	
 	glUniformMatrix4fv(WorldLocation, 1, GL_FALSE, glm::value_ptr(Trans));
 
-
+	glUseProgram(this->ShaderId);
 
 	glDrawElements(GL_TRIANGLES, this->VertexSize, GL_UNSIGNED_INT, 0);
 

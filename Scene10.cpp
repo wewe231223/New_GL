@@ -6,10 +6,10 @@ RETURNVOID Scene10::Init()
 {
 	this->Init_ShaderID();
 
-	this->NewMesh("Cube.obj");
-	this->NewModel("Cube.obj");
+	this->NewMesh("teapot.obj");
+	this->NewModel("teapot.obj");
 
-	this->ScaleModel(glm::vec3(0.1f, 0.1f, 0.1f));
+	
 
 	return RETURNVOID();
 }
@@ -29,7 +29,7 @@ RETURNVOID Scene10_::Draw()
 	std::cout << "Draw!" << std::endl;
 	SC10.Render();
 
-	return RETURNVOID();
+	return glutSwapBuffers();
 }
 
 RETURNVOID Scene10_::Reshape(int w, int h)
